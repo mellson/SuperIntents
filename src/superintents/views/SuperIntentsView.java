@@ -11,6 +11,8 @@ import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
 
+import superintents.control.SIHelper;
+
 
 /**
  * This sample class demonstrates how to plug-in a new
@@ -162,7 +164,7 @@ public class SuperIntentsView extends ViewPart {
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				showMessage("Double-click detected on "+obj.toString());
+				SIHelper.insertTestText(obj.toString());
 			}
 		};
 	}
