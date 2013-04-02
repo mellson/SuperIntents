@@ -164,7 +164,8 @@ public class SuperIntentsView extends ViewPart {
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				SIHelper.insertTestText(obj.toString());
+//				SIHelper.insertTestText(obj.toString());
+				SIHelper.insertBogusTest();
 			}
 		};
 	}

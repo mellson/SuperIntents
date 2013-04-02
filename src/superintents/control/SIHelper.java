@@ -13,7 +13,31 @@ import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
 
 public class SIHelper {
-	public static IDocument getCurrentDocument() {
+	private static String bogusString = "    /* INPUT:\n" + 
+			"    THIS IS AN INTENT DESCRIPTION\n" + 
+			"    OUTPUT:\n" + 
+			"    superintents.impl.DataImpl@1cb8deef (MIMEType: THIS IS A MIME TYPE, value: THISISAVALUE)\n" + 
+			"    */\n" + 
+			"    Intent i = new Intent(THIS IS AN ACTION, THISISDATA, getContext(), java.lang.String.class);\n" + 
+			"    i.setType(.mp3);\n" + 
+			"     \n" + 
+			"    i.addCategory(\"CATEGORY1\");\n" + 
+			"    i.addCategory(\"CATEGORY2\");\n" + 
+			"     \n" + 
+			"    i.putExtra(\"SECOND URL\", YOUR TEXT HERE);\n" + 
+			"    i.putExtra(\"THIRD URL\", YOUR TEXT HERE);\n" + 
+			"    const int REQUEST_CODE= -1631654733;\n" + 
+			"    startActivityForResult(i, REQUEST_CODE);\n" + 
+			"     \n" + 
+			"    @Override\n" + 
+			"    public void onActivityResult(int requestCode, int resultCode, Intent data){\n" + 
+			"            if(resultCode == REULST_OK && requestCode == REQUEST_CODE){\n" + 
+			"                    //TODO: generated code\n" + 
+			"            }\n" + 
+			"    }\n" + 
+			"";
+	
+	public static ITextEditor getEditor() {
 		IWorkbench wb = PlatformUI.getWorkbench();
 		IWorkbenchWindow window = wb.getActiveWorkbenchWindow();
 		IWorkbenchPage page = window.getActivePage();
@@ -21,22 +45,37 @@ public class SIHelper {
 		if (!(part instanceof AbstractTextEditor))
 			return null;
 		ITextEditor editor = (ITextEditor) part;
+		return editor;
+	}
+	
+	public static IDocument getDocument(ITextEditor editor) {
 		IDocumentProvider dp = editor.getDocumentProvider();
 		IDocument doc = dp.getDocument(editor.getEditorInput());
-		
-		int offset = ((ITextSelection) editor.getSelectionProvider().getSelection()).getOffset();
-		
-		try {
-			doc.replace(offset, 0, "supersuper");
-		} catch (BadLocationException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		return doc;
 	}
 	
+	public static int getCaretOffset(ITextEditor editor) {
+		int offset = ((ITextSelection) editor.getSelectionProvider().getSelection()).getOffset();
+		return offset;
+	}
+	
 	public static void insertTestText(String testText) {
-		getCurrentDocument();
+		ITextEditor editor = getEditor();
+		
+		try {
+			getDocument(editor).replace(getCaretOffset(editor), 0, testText);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void insertBogusTest() {
+		ITextEditor editor = getEditor();
+		
+		try {
+			getDocument(editor).replace(getCaretOffset(editor), 0, bogusString);
+		} catch (BadLocationException e) {
+			e.printStackTrace();
+		}
 	}
 }
