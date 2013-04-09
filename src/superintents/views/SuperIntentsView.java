@@ -162,10 +162,10 @@ public class SuperIntentsView extends ViewPart {
 				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 		doubleClickAction = new Action() {
 			public void run() {
-//				ISelection selection = viewer.getSelection();
-//				Object obj = ((IStructuredSelection)selection).getFirstElement();
-//				SIHelper.insertTestText(obj.toString());
-				SIHelper.insertBogusTest();
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection)selection).getFirstElement();
+				SIHelper.insertTestText(obj.toString());
+//				SIHelper.insertBogusTest();
 			}
 		};
 	}

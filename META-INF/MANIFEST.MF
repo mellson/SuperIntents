@@ -6,8 +6,11 @@ Bundle-Version: 0.1
 Bundle-Activator: superintents.Activator
 Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
- org.eclipse.jdt.core;bundle-version="3.8.3"
+ org.eclipse.jdt.core;bundle-version="3.8.3",
+ org.eclipse.jdt;bundle-version="3.8.1",
+ org.eclipse.jdt.ui;bundle-version="3.8.2"
 Bundle-ActivationPolicy: lazy
 Bundle-RequiredExecutionEnvironment: JavaSE-1.6
 Import-Package: org.eclipse.jface.text,
+ org.eclipse.text.edits,
  org.eclipse.ui.texteditor
