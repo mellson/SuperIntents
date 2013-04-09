@@ -11,6 +11,7 @@ import org.eclipse.ui.texteditor.ITextEditor;
 import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.text.IDocument;
 import org.eclipse.jface.text.ITextSelection;
+import org.eclipse.jdt.core.*;
 
 public class SIHelper {
 	private static String bogusString = "    /* INPUT:\n" + 
@@ -40,13 +41,14 @@ public class SIHelper {
 	public static ITextEditor getEditor() {
 		IWorkbench wb = PlatformUI.getWorkbench();
 		IWorkbenchWindow window = wb.getActiveWorkbenchWindow();
-		IWorkbenchPage page = window.getActivePage();
-		IEditorPart part = page.getActiveEditor();
+		IWorkbenchPage editor = window.getActivePage();
+		IEditorPart part = editor.getActiveEditor();
 		if (!(part instanceof AbstractTextEditor))
 			return null;
-		ITextEditor editor = (ITextEditor) part;
-		return editor;
+		return (ITextEditor) part;
 	}
+	
+	public static IJavaElement
 	
 	public static IDocument getDocument(ITextEditor editor) {
 		IDocumentProvider dp = editor.getDocumentProvider();
