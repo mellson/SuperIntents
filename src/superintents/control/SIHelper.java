@@ -48,7 +48,12 @@ public class SIHelper {
 		return (ITextEditor) part;
 	}
 	
-	public static IJavaElement
+	public static IMethod getSurroundingMethod(JavaEditor activeEditor) {
+		IJavaElement elt = activeEditor.getElementAt(((TextSelection) activeEditor.getSelection()).getOffset(), true);
+	    if (elt.getElementType == IJavaElement.METHOD) {
+	        return (IMethod) elt;
+	    }
+	}
 	
 	public static IDocument getDocument(ITextEditor editor) {
 		IDocumentProvider dp = editor.getDocumentProvider();
