@@ -18,6 +18,7 @@ import org.eclipse.text.edits.MalformedTreeException;
 
 import superintents.control.SIHelper;
 import transformers.ASTNodeWrapper;
+import transformers.M2MJava2AST;
 
 
 /**
@@ -171,23 +172,7 @@ public class SuperIntentsView extends ViewPart {
 				ISelection selection = viewer.getSelection();
 				//Object obj = ((IStructuredSelection)selection).getFirstElement();
 				//SIHelper.insertTestText(obj.toString());
-				
-				AST ast = AST.newAST(AST.JLS4);
-				StringLiteral literal = ast.newStringLiteral();
-				literal.setLiteralValue("hej Anders");
-				ASTNodeWrapper node = new ASTNodeWrapper(literal, 0);
-				try {
-					SIHelper.insertNode(node);
-				} catch (MalformedTreeException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (JavaModelException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				} catch (BadLocationException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+				SIHelper.insertIntent(M2MJava2AST.createTestSI());
 			}
 		};
 	}
