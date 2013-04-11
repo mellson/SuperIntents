@@ -1,15 +1,13 @@
 /**
  */
-package superintents.util;
+package intentmodel.util;
 
-import java.util.Map;
+import intentmodel.*;
 
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
 import org.eclipse.emf.ecore.util.Switch;
-
-import superintents.*;
 
 /**
  * <!-- begin-user-doc -->
@@ -21,17 +19,17 @@ import superintents.*;
  * until a non-null result is returned,
  * which is the result of the switch.
  * <!-- end-user-doc -->
- * @see superintents.SuperintentsPackage
+ * @see intentmodel.IntentmodelPackage
  * @generated
  */
-public class SuperintentsSwitch<T> extends Switch<T> {
+public class IntentmodelSwitch<T> extends Switch<T> {
 	/**
 	 * The cached model package
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static SuperintentsPackage modelPackage;
+	protected static IntentmodelPackage modelPackage;
 
 	/**
 	 * Creates an instance of the switch.
@@ -39,9 +37,9 @@ public class SuperintentsSwitch<T> extends Switch<T> {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SuperintentsSwitch() {
+	public IntentmodelSwitch() {
 		if (modelPackage == null) {
-			modelPackage = SuperintentsPackage.eINSTANCE;
+			modelPackage = IntentmodelPackage.eINSTANCE;
 		}
 	}
 
@@ -68,26 +66,26 @@ public class SuperintentsSwitch<T> extends Switch<T> {
 	@Override
 	protected T doSwitch(int classifierID, EObject theEObject) {
 		switch (classifierID) {
-			case SuperintentsPackage.SUPER_INTENT: {
+			case IntentmodelPackage.SUPER_INTENT: {
 				SuperIntent superIntent = (SuperIntent)theEObject;
 				T result = caseSuperIntent(superIntent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case SuperintentsPackage.INTENT: {
+			case IntentmodelPackage.INTENT: {
 				Intent intent = (Intent)theEObject;
 				T result = caseIntent(intent);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case SuperintentsPackage.DATA: {
+			case IntentmodelPackage.DATA: {
 				Data data = (Data)theEObject;
 				T result = caseData(data);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
 			}
-			case SuperintentsPackage.STRING_TO_OBJECT: {
-				@SuppressWarnings("unchecked") Map.Entry<String, Object> stringToObject = (Map.Entry<String, Object>)theEObject;
+			case IntentmodelPackage.STRING_TO_OBJECT: {
+				StringToObject stringToObject = (StringToObject)theEObject;
 				T result = caseStringToObject(stringToObject);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -152,7 +150,7 @@ public class SuperintentsSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStringToObject(Map.Entry<String, Object> object) {
+	public T caseStringToObject(StringToObject object) {
 		return null;
 	}
 
@@ -172,4 +170,4 @@ public class SuperintentsSwitch<T> extends Switch<T> {
 		return null;
 	}
 
-} //SuperintentsSwitch
+} //IntentmodelSwitch

@@ -1,14 +1,10 @@
 package transformers;
 
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.ArrayList;
-
 import org.eclipse.jdt.core.dom.*;
+import intentmodel.impl.*;
 
-import superintents.impl.*;;
-
-public class M2MJava2AST {
+public class Java2AST {
 
 	public static SuperIntentImpl createTestSI() {
 		SuperIntentImpl bigRedButtonIntent = new SuperIntentImpl();
@@ -16,31 +12,27 @@ public class M2MJava2AST {
 
 		DataImpl bigRedButtonOutput = new DataImpl();
 		bigRedButtonOutput.setMIMEType("THIS IS A MIME TYPE");
-		try {
-			bigRedButtonOutput.setValue(new java.net.URI("THISISAVALUE"));
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+		bigRedButtonOutput.setValue("THISISAVALUE");
+		
 		bigRedButtonIntent.setOutput(bigRedButtonOutput);
-
+		
 		IntentImpl newIntent = new IntentImpl();
 		newIntent.setAction("THIS IS AN ACTION");
 		
 		newIntent.getCategories().add("CATEGORY1");
 		newIntent.getCategories().add("CATEGORY2");
 		
-		newIntent.setComponent(String.class);
+		newIntent.setComponent("String");
 		
 		DataImpl data = new DataImpl();
-		data.setValue(URI.create("THISISDATA"));
+		data.setValue("THISISDATA");
 		data.setMIMEType(".mp3");
 		newIntent.setData(data);
 		
 		bigRedButtonIntent.setIntent(newIntent);
 		
-		bigRedButtonIntent.getIntent().getExtras().put("SECOND URL", "YOUR TEXT HERE");
-		bigRedButtonIntent.getIntent().getExtras().put("THIRD URL", "YOUR TEXT HERE");
+		//bigRedButtonIntent.getIntent().getExtras().put("SECOND URL", "YOUR TEXT HERE");
+		//bigRedButtonIntent.getIntent().getExtras().put("THIRD URL", "YOUR TEXT HERE");
 		
 		return bigRedButtonIntent;
 	}
@@ -75,11 +67,11 @@ public class M2MJava2AST {
 		cic.arguments().add(arg1);
 		
 		StringLiteral arg2 = ast.newStringLiteral();
-		arg2.setLiteralValue(si.getIntent().getData().getValue().toString());
+		arg2.setLiteralValue(si.getIntent().getCategories().get(0));
 		cic.arguments().add(arg2);
 		
 		TypeLiteral arg3 = ast.newTypeLiteral();
-		arg3.setType(ast.newSimpleType(ast.newSimpleName(si.getIntent().getComponent().toString().replace("class ", "") + ".class")));
+		arg3.setType(ast.newSimpleType(ast.newSimpleName(si.getIntent().getComponent())));
 		cic.arguments().add(arg3);
 		
 		vdf.setInitializer(cic);

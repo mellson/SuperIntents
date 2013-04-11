@@ -1,8 +1,9 @@
 /**
  */
-package superintents.impl;
+package intentmodel.impl;
 
-import java.net.URI;
+import intentmodel.Data;
+import intentmodel.IntentmodelPackage;
 
 import org.eclipse.emf.common.notify.Notification;
 
@@ -11,9 +12,6 @@ import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
-import superintents.Data;
-import superintents.SuperintentsPackage;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model object '<em><b>Data</b></em>'.
@@ -21,8 +19,8 @@ import superintents.SuperintentsPackage;
  * <p>
  * The following features are implemented:
  * <ul>
- *   <li>{@link superintents.impl.DataImpl#getMIMEType <em>MIME Type</em>}</li>
- *   <li>{@link superintents.impl.DataImpl#getValue <em>Value</em>}</li>
+ *   <li>{@link intentmodel.impl.DataImpl#getMIMEType <em>MIME Type</em>}</li>
+ *   <li>{@link intentmodel.impl.DataImpl#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
@@ -57,7 +55,7 @@ public class DataImpl extends EObjectImpl implements Data {
 	 * @generated
 	 * @ordered
 	 */
-	protected static final URI VALUE_EDEFAULT = null;
+	protected static final String VALUE_EDEFAULT = null;
 
 	/**
 	 * The cached value of the '{@link #getValue() <em>Value</em>}' attribute.
@@ -67,14 +65,14 @@ public class DataImpl extends EObjectImpl implements Data {
 	 * @generated
 	 * @ordered
 	 */
-	protected URI value = VALUE_EDEFAULT;
+	protected String value = VALUE_EDEFAULT;
 
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected DataImpl() {
+	public DataImpl() {
 		super();
 	}
 
@@ -85,7 +83,7 @@ public class DataImpl extends EObjectImpl implements Data {
 	 */
 	@Override
 	protected EClass eStaticClass() {
-		return SuperintentsPackage.Literals.DATA;
+		return IntentmodelPackage.Literals.DATA;
 	}
 
 	/**
@@ -106,7 +104,7 @@ public class DataImpl extends EObjectImpl implements Data {
 		String oldMIMEType = mimeType;
 		mimeType = newMIMEType;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SuperintentsPackage.DATA__MIME_TYPE, oldMIMEType, mimeType));
+			eNotify(new ENotificationImpl(this, Notification.SET, IntentmodelPackage.DATA__MIME_TYPE, oldMIMEType, mimeType));
 	}
 
 	/**
@@ -114,7 +112,7 @@ public class DataImpl extends EObjectImpl implements Data {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public URI getValue() {
+	public String getValue() {
 		return value;
 	}
 
@@ -123,11 +121,11 @@ public class DataImpl extends EObjectImpl implements Data {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public void setValue(URI newValue) {
-		URI oldValue = value;
+	public void setValue(String newValue) {
+		String oldValue = value;
 		value = newValue;
 		if (eNotificationRequired())
-			eNotify(new ENotificationImpl(this, Notification.SET, SuperintentsPackage.DATA__VALUE, oldValue, value));
+			eNotify(new ENotificationImpl(this, Notification.SET, IntentmodelPackage.DATA__VALUE, oldValue, value));
 	}
 
 	/**
@@ -138,9 +136,9 @@ public class DataImpl extends EObjectImpl implements Data {
 	@Override
 	public Object eGet(int featureID, boolean resolve, boolean coreType) {
 		switch (featureID) {
-			case SuperintentsPackage.DATA__MIME_TYPE:
+			case IntentmodelPackage.DATA__MIME_TYPE:
 				return getMIMEType();
-			case SuperintentsPackage.DATA__VALUE:
+			case IntentmodelPackage.DATA__VALUE:
 				return getValue();
 		}
 		return super.eGet(featureID, resolve, coreType);
@@ -154,11 +152,11 @@ public class DataImpl extends EObjectImpl implements Data {
 	@Override
 	public void eSet(int featureID, Object newValue) {
 		switch (featureID) {
-			case SuperintentsPackage.DATA__MIME_TYPE:
+			case IntentmodelPackage.DATA__MIME_TYPE:
 				setMIMEType((String)newValue);
 				return;
-			case SuperintentsPackage.DATA__VALUE:
-				setValue((URI)newValue);
+			case IntentmodelPackage.DATA__VALUE:
+				setValue((String)newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);
@@ -172,10 +170,10 @@ public class DataImpl extends EObjectImpl implements Data {
 	@Override
 	public void eUnset(int featureID) {
 		switch (featureID) {
-			case SuperintentsPackage.DATA__MIME_TYPE:
+			case IntentmodelPackage.DATA__MIME_TYPE:
 				setMIMEType(MIME_TYPE_EDEFAULT);
 				return;
-			case SuperintentsPackage.DATA__VALUE:
+			case IntentmodelPackage.DATA__VALUE:
 				setValue(VALUE_EDEFAULT);
 				return;
 		}
@@ -190,9 +188,9 @@ public class DataImpl extends EObjectImpl implements Data {
 	@Override
 	public boolean eIsSet(int featureID) {
 		switch (featureID) {
-			case SuperintentsPackage.DATA__MIME_TYPE:
+			case IntentmodelPackage.DATA__MIME_TYPE:
 				return MIME_TYPE_EDEFAULT == null ? mimeType != null : !MIME_TYPE_EDEFAULT.equals(mimeType);
-			case SuperintentsPackage.DATA__VALUE:
+			case IntentmodelPackage.DATA__VALUE:
 				return VALUE_EDEFAULT == null ? value != null : !VALUE_EDEFAULT.equals(value);
 		}
 		return super.eIsSet(featureID);

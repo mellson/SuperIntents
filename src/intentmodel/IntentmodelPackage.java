@@ -1,6 +1,6 @@
 /**
  */
-package superintents;
+package intentmodel;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -18,18 +18,18 @@ import org.eclipse.emf.ecore.EReference;
  *   <li>and each data type</li>
  * </ul>
  * <!-- end-user-doc -->
- * @see superintents.SuperintentsFactory
+ * @see intentmodel.IntentmodelFactory
  * @model kind="package"
  * @generated
  */
-public interface SuperintentsPackage extends EPackage {
+public interface IntentmodelPackage extends EPackage {
 	/**
 	 * The package name.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNAME = "superintents";
+	String eNAME = "intentmodel";
 
 	/**
 	 * The package namespace URI.
@@ -37,7 +37,7 @@ public interface SuperintentsPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_URI = "http://superintents/1.0";
+	String eNS_URI = "platform:/resource/IntentModel/model/IntentModel.ecore";
 
 	/**
 	 * The package namespace name.
@@ -45,7 +45,7 @@ public interface SuperintentsPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	String eNS_PREFIX = "superintents";
+	String eNS_PREFIX = "intentmodel";
 
 	/**
 	 * The singleton instance of the package.
@@ -53,26 +53,17 @@ public interface SuperintentsPackage extends EPackage {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	SuperintentsPackage eINSTANCE = superintents.impl.SuperintentsPackageImpl.init();
+	IntentmodelPackage eINSTANCE = intentmodel.impl.IntentmodelPackageImpl.init();
 
 	/**
-	 * The meta object id for the '{@link superintents.impl.SuperIntentImpl <em>Super Intent</em>}' class.
+	 * The meta object id for the '{@link intentmodel.impl.SuperIntentImpl <em>Super Intent</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see superintents.impl.SuperIntentImpl
-	 * @see superintents.impl.SuperintentsPackageImpl#getSuperIntent()
+	 * @see intentmodel.impl.SuperIntentImpl
+	 * @see intentmodel.impl.IntentmodelPackageImpl#getSuperIntent()
 	 * @generated
 	 */
 	int SUPER_INTENT = 0;
-
-	/**
-	 * The feature id for the '<em><b>Intent</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int SUPER_INTENT__INTENT = 0;
 
 	/**
 	 * The feature id for the '<em><b>Description</b></em>' attribute.
@@ -81,7 +72,16 @@ public interface SuperintentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int SUPER_INTENT__DESCRIPTION = 1;
+	int SUPER_INTENT__DESCRIPTION = 0;
+
+	/**
+	 * The feature id for the '<em><b>Intent</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int SUPER_INTENT__INTENT = 1;
 
 	/**
 	 * The feature id for the '<em><b>Output</b></em>' containment reference.
@@ -102,23 +102,14 @@ public interface SuperintentsPackage extends EPackage {
 	int SUPER_INTENT_FEATURE_COUNT = 3;
 
 	/**
-	 * The meta object id for the '{@link superintents.impl.IntentImpl <em>Intent</em>}' class.
+	 * The meta object id for the '{@link intentmodel.impl.IntentImpl <em>Intent</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see superintents.impl.IntentImpl
-	 * @see superintents.impl.SuperintentsPackageImpl#getIntent()
+	 * @see intentmodel.impl.IntentImpl
+	 * @see intentmodel.impl.IntentmodelPackageImpl#getIntent()
 	 * @generated
 	 */
 	int INTENT = 1;
-
-	/**
-	 * The feature id for the '<em><b>Data</b></em>' containment reference.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 * @ordered
-	 */
-	int INTENT__DATA = 0;
 
 	/**
 	 * The feature id for the '<em><b>Categories</b></em>' attribute list.
@@ -127,7 +118,7 @@ public interface SuperintentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTENT__CATEGORIES = 1;
+	int INTENT__CATEGORIES = 0;
 
 	/**
 	 * The feature id for the '<em><b>Action</b></em>' attribute.
@@ -136,7 +127,7 @@ public interface SuperintentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTENT__ACTION = 2;
+	int INTENT__ACTION = 1;
 
 	/**
 	 * The feature id for the '<em><b>Component</b></em>' attribute.
@@ -145,10 +136,19 @@ public interface SuperintentsPackage extends EPackage {
 	 * @generated
 	 * @ordered
 	 */
-	int INTENT__COMPONENT = 3;
+	int INTENT__COMPONENT = 2;
 
 	/**
-	 * The feature id for the '<em><b>Extras</b></em>' map.
+	 * The feature id for the '<em><b>Data</b></em>' containment reference.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 * @ordered
+	 */
+	int INTENT__DATA = 3;
+
+	/**
+	 * The feature id for the '<em><b>Extras</b></em>' containment reference list.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -166,11 +166,11 @@ public interface SuperintentsPackage extends EPackage {
 	int INTENT_FEATURE_COUNT = 5;
 
 	/**
-	 * The meta object id for the '{@link superintents.impl.DataImpl <em>Data</em>}' class.
+	 * The meta object id for the '{@link intentmodel.impl.DataImpl <em>Data</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see superintents.impl.DataImpl
-	 * @see superintents.impl.SuperintentsPackageImpl#getData()
+	 * @see intentmodel.impl.DataImpl
+	 * @see intentmodel.impl.IntentmodelPackageImpl#getData()
 	 * @generated
 	 */
 	int DATA = 2;
@@ -203,11 +203,11 @@ public interface SuperintentsPackage extends EPackage {
 	int DATA_FEATURE_COUNT = 2;
 
 	/**
-	 * The meta object id for the '{@link superintents.impl.StringToObjectImpl <em>String To Object</em>}' class.
+	 * The meta object id for the '{@link intentmodel.impl.StringToObjectImpl <em>String To Object</em>}' class.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @see superintents.impl.StringToObjectImpl
-	 * @see superintents.impl.SuperintentsPackageImpl#getStringToObject()
+	 * @see intentmodel.impl.StringToObjectImpl
+	 * @see intentmodel.impl.IntentmodelPackageImpl#getStringToObject()
 	 * @generated
 	 */
 	int STRING_TO_OBJECT = 3;
@@ -241,174 +241,172 @@ public interface SuperintentsPackage extends EPackage {
 
 
 	/**
-	 * Returns the meta object for class '{@link superintents.SuperIntent <em>Super Intent</em>}'.
+	 * Returns the meta object for class '{@link intentmodel.SuperIntent <em>Super Intent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Super Intent</em>'.
-	 * @see superintents.SuperIntent
+	 * @see intentmodel.SuperIntent
 	 * @generated
 	 */
 	EClass getSuperIntent();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link superintents.SuperIntent#getIntent <em>Intent</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Intent</em>'.
-	 * @see superintents.SuperIntent#getIntent()
-	 * @see #getSuperIntent()
-	 * @generated
-	 */
-	EReference getSuperIntent_Intent();
-
-	/**
-	 * Returns the meta object for the attribute '{@link superintents.SuperIntent#getDescription <em>Description</em>}'.
+	 * Returns the meta object for the attribute '{@link intentmodel.SuperIntent#getDescription <em>Description</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Description</em>'.
-	 * @see superintents.SuperIntent#getDescription()
+	 * @see intentmodel.SuperIntent#getDescription()
 	 * @see #getSuperIntent()
 	 * @generated
 	 */
 	EAttribute getSuperIntent_Description();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link superintents.SuperIntent#getOutput <em>Output</em>}'.
+	 * Returns the meta object for the containment reference '{@link intentmodel.SuperIntent#getIntent <em>Intent</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference '<em>Intent</em>'.
+	 * @see intentmodel.SuperIntent#getIntent()
+	 * @see #getSuperIntent()
+	 * @generated
+	 */
+	EReference getSuperIntent_Intent();
+
+	/**
+	 * Returns the meta object for the containment reference '{@link intentmodel.SuperIntent#getOutput <em>Output</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the containment reference '<em>Output</em>'.
-	 * @see superintents.SuperIntent#getOutput()
+	 * @see intentmodel.SuperIntent#getOutput()
 	 * @see #getSuperIntent()
 	 * @generated
 	 */
 	EReference getSuperIntent_Output();
 
 	/**
-	 * Returns the meta object for class '{@link superintents.Intent <em>Intent</em>}'.
+	 * Returns the meta object for class '{@link intentmodel.Intent <em>Intent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Intent</em>'.
-	 * @see superintents.Intent
+	 * @see intentmodel.Intent
 	 * @generated
 	 */
 	EClass getIntent();
 
 	/**
-	 * Returns the meta object for the containment reference '{@link superintents.Intent#getData <em>Data</em>}'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference '<em>Data</em>'.
-	 * @see superintents.Intent#getData()
-	 * @see #getIntent()
-	 * @generated
-	 */
-	EReference getIntent_Data();
-
-	/**
-	 * Returns the meta object for the attribute list '{@link superintents.Intent#getCategories <em>Categories</em>}'.
+	 * Returns the meta object for the attribute list '{@link intentmodel.Intent#getCategories <em>Categories</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute list '<em>Categories</em>'.
-	 * @see superintents.Intent#getCategories()
+	 * @see intentmodel.Intent#getCategories()
 	 * @see #getIntent()
 	 * @generated
 	 */
 	EAttribute getIntent_Categories();
 
 	/**
-	 * Returns the meta object for the attribute '{@link superintents.Intent#getAction <em>Action</em>}'.
+	 * Returns the meta object for the attribute '{@link intentmodel.Intent#getAction <em>Action</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Action</em>'.
-	 * @see superintents.Intent#getAction()
+	 * @see intentmodel.Intent#getAction()
 	 * @see #getIntent()
 	 * @generated
 	 */
 	EAttribute getIntent_Action();
 
 	/**
-	 * Returns the meta object for the attribute '{@link superintents.Intent#getComponent <em>Component</em>}'.
+	 * Returns the meta object for the attribute '{@link intentmodel.Intent#getComponent <em>Component</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Component</em>'.
-	 * @see superintents.Intent#getComponent()
+	 * @see intentmodel.Intent#getComponent()
 	 * @see #getIntent()
 	 * @generated
 	 */
 	EAttribute getIntent_Component();
 
 	/**
-	 * Returns the meta object for the map '{@link superintents.Intent#getExtras <em>Extras</em>}'.
+	 * Returns the meta object for the containment reference '{@link intentmodel.Intent#getData <em>Data</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the map '<em>Extras</em>'.
-	 * @see superintents.Intent#getExtras()
+	 * @return the meta object for the containment reference '<em>Data</em>'.
+	 * @see intentmodel.Intent#getData()
+	 * @see #getIntent()
+	 * @generated
+	 */
+	EReference getIntent_Data();
+
+	/**
+	 * Returns the meta object for the containment reference list '{@link intentmodel.Intent#getExtras <em>Extras</em>}'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return the meta object for the containment reference list '<em>Extras</em>'.
+	 * @see intentmodel.Intent#getExtras()
 	 * @see #getIntent()
 	 * @generated
 	 */
 	EReference getIntent_Extras();
 
 	/**
-	 * Returns the meta object for class '{@link superintents.Data <em>Data</em>}'.
+	 * Returns the meta object for class '{@link intentmodel.Data <em>Data</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>Data</em>'.
-	 * @see superintents.Data
+	 * @see intentmodel.Data
 	 * @generated
 	 */
 	EClass getData();
 
 	/**
-	 * Returns the meta object for the attribute '{@link superintents.Data#getMIMEType <em>MIME Type</em>}'.
+	 * Returns the meta object for the attribute '{@link intentmodel.Data#getMIMEType <em>MIME Type</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>MIME Type</em>'.
-	 * @see superintents.Data#getMIMEType()
+	 * @see intentmodel.Data#getMIMEType()
 	 * @see #getData()
 	 * @generated
 	 */
 	EAttribute getData_MIMEType();
 
 	/**
-	 * Returns the meta object for the attribute '{@link superintents.Data#getValue <em>Value</em>}'.
+	 * Returns the meta object for the attribute '{@link intentmodel.Data#getValue <em>Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Value</em>'.
-	 * @see superintents.Data#getValue()
+	 * @see intentmodel.Data#getValue()
 	 * @see #getData()
 	 * @generated
 	 */
 	EAttribute getData_Value();
 
 	/**
-	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Object</em>}'.
+	 * Returns the meta object for class '{@link intentmodel.StringToObject <em>String To Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>String To Object</em>'.
-	 * @see java.util.Map.Entry
-	 * @model keyDataType="org.eclipse.emf.ecore.EString"
-	 *        valueDataType="org.eclipse.emf.ecore.EJavaObject"
+	 * @see intentmodel.StringToObject
 	 * @generated
 	 */
 	EClass getStringToObject();
 
 	/**
-	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
+	 * Returns the meta object for the attribute '{@link intentmodel.StringToObject#getKey <em>Key</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Key</em>'.
-	 * @see java.util.Map.Entry
+	 * @see intentmodel.StringToObject#getKey()
 	 * @see #getStringToObject()
 	 * @generated
 	 */
 	EAttribute getStringToObject_Key();
 
 	/**
-	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
+	 * Returns the meta object for the attribute '{@link intentmodel.StringToObject#getValue <em>Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Value</em>'.
-	 * @see java.util.Map.Entry
+	 * @see intentmodel.StringToObject#getValue()
 	 * @see #getStringToObject()
 	 * @generated
 	 */
@@ -421,7 +419,7 @@ public interface SuperintentsPackage extends EPackage {
 	 * @return the factory that creates the instances of the model.
 	 * @generated
 	 */
-	SuperintentsFactory getSuperintentsFactory();
+	IntentmodelFactory getIntentmodelFactory();
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -437,22 +435,14 @@ public interface SuperintentsPackage extends EPackage {
 	 */
 	interface Literals {
 		/**
-		 * The meta object literal for the '{@link superintents.impl.SuperIntentImpl <em>Super Intent</em>}' class.
+		 * The meta object literal for the '{@link intentmodel.impl.SuperIntentImpl <em>Super Intent</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see superintents.impl.SuperIntentImpl
-		 * @see superintents.impl.SuperintentsPackageImpl#getSuperIntent()
+		 * @see intentmodel.impl.SuperIntentImpl
+		 * @see intentmodel.impl.IntentmodelPackageImpl#getSuperIntent()
 		 * @generated
 		 */
 		EClass SUPER_INTENT = eINSTANCE.getSuperIntent();
-
-		/**
-		 * The meta object literal for the '<em><b>Intent</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference SUPER_INTENT__INTENT = eINSTANCE.getSuperIntent_Intent();
 
 		/**
 		 * The meta object literal for the '<em><b>Description</b></em>' attribute feature.
@@ -463,6 +453,14 @@ public interface SuperintentsPackage extends EPackage {
 		EAttribute SUPER_INTENT__DESCRIPTION = eINSTANCE.getSuperIntent_Description();
 
 		/**
+		 * The meta object literal for the '<em><b>Intent</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference SUPER_INTENT__INTENT = eINSTANCE.getSuperIntent_Intent();
+
+		/**
 		 * The meta object literal for the '<em><b>Output</b></em>' containment reference feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
@@ -471,22 +469,14 @@ public interface SuperintentsPackage extends EPackage {
 		EReference SUPER_INTENT__OUTPUT = eINSTANCE.getSuperIntent_Output();
 
 		/**
-		 * The meta object literal for the '{@link superintents.impl.IntentImpl <em>Intent</em>}' class.
+		 * The meta object literal for the '{@link intentmodel.impl.IntentImpl <em>Intent</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see superintents.impl.IntentImpl
-		 * @see superintents.impl.SuperintentsPackageImpl#getIntent()
+		 * @see intentmodel.impl.IntentImpl
+		 * @see intentmodel.impl.IntentmodelPackageImpl#getIntent()
 		 * @generated
 		 */
 		EClass INTENT = eINSTANCE.getIntent();
-
-		/**
-		 * The meta object literal for the '<em><b>Data</b></em>' containment reference feature.
-		 * <!-- begin-user-doc -->
-		 * <!-- end-user-doc -->
-		 * @generated
-		 */
-		EReference INTENT__DATA = eINSTANCE.getIntent_Data();
 
 		/**
 		 * The meta object literal for the '<em><b>Categories</b></em>' attribute list feature.
@@ -513,7 +503,15 @@ public interface SuperintentsPackage extends EPackage {
 		EAttribute INTENT__COMPONENT = eINSTANCE.getIntent_Component();
 
 		/**
-		 * The meta object literal for the '<em><b>Extras</b></em>' map feature.
+		 * The meta object literal for the '<em><b>Data</b></em>' containment reference feature.
+		 * <!-- begin-user-doc -->
+		 * <!-- end-user-doc -->
+		 * @generated
+		 */
+		EReference INTENT__DATA = eINSTANCE.getIntent_Data();
+
+		/**
+		 * The meta object literal for the '<em><b>Extras</b></em>' containment reference list feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated
@@ -521,11 +519,11 @@ public interface SuperintentsPackage extends EPackage {
 		EReference INTENT__EXTRAS = eINSTANCE.getIntent_Extras();
 
 		/**
-		 * The meta object literal for the '{@link superintents.impl.DataImpl <em>Data</em>}' class.
+		 * The meta object literal for the '{@link intentmodel.impl.DataImpl <em>Data</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see superintents.impl.DataImpl
-		 * @see superintents.impl.SuperintentsPackageImpl#getData()
+		 * @see intentmodel.impl.DataImpl
+		 * @see intentmodel.impl.IntentmodelPackageImpl#getData()
 		 * @generated
 		 */
 		EClass DATA = eINSTANCE.getData();
@@ -547,11 +545,11 @@ public interface SuperintentsPackage extends EPackage {
 		EAttribute DATA__VALUE = eINSTANCE.getData_Value();
 
 		/**
-		 * The meta object literal for the '{@link superintents.impl.StringToObjectImpl <em>String To Object</em>}' class.
+		 * The meta object literal for the '{@link intentmodel.impl.StringToObjectImpl <em>String To Object</em>}' class.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
-		 * @see superintents.impl.StringToObjectImpl
-		 * @see superintents.impl.SuperintentsPackageImpl#getStringToObject()
+		 * @see intentmodel.impl.StringToObjectImpl
+		 * @see intentmodel.impl.IntentmodelPackageImpl#getStringToObject()
 		 * @generated
 		 */
 		EClass STRING_TO_OBJECT = eINSTANCE.getStringToObject();
@@ -574,4 +572,4 @@ public interface SuperintentsPackage extends EPackage {
 
 	}
 
-} //SuperintentsPackage
+} //IntentmodelPackage

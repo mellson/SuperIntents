@@ -12,13 +12,13 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
 import org.eclipse.jdt.ui.JavaUI;
-import superintents.impl.SuperIntentImpl;
+import intentmodel.impl.*;
 import transformers.ASTNodeWrapper;
-import transformers.M2MJava2AST;
+import transformers.Java2AST;
 
 public class SIHelper {
 	public static void insertIntent(SuperIntentImpl intentImplementaion) {
-		ArrayList<ASTNodeWrapper> nodes = M2MJava2AST.transformSuperIntent(intentImplementaion);
+		ArrayList<ASTNodeWrapper> nodes = Java2AST.transformSuperIntent(intentImplementaion);
 		for (ASTNodeWrapper node : nodes) {
 			try {
 				insertNode(node);

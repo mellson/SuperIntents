@@ -1,8 +1,13 @@
 /**
  */
-package superintents.impl;
+package intentmodel.impl;
 
-import java.util.Map;
+import intentmodel.Data;
+import intentmodel.Intent;
+import intentmodel.IntentmodelFactory;
+import intentmodel.IntentmodelPackage;
+import intentmodel.StringToObject;
+import intentmodel.SuperIntent;
 
 import org.eclipse.emf.ecore.EAttribute;
 import org.eclipse.emf.ecore.EClass;
@@ -11,19 +16,13 @@ import org.eclipse.emf.ecore.EReference;
 
 import org.eclipse.emf.ecore.impl.EPackageImpl;
 
-import superintents.Data;
-import superintents.Intent;
-import superintents.SuperIntent;
-import superintents.SuperintentsFactory;
-import superintents.SuperintentsPackage;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Package</b>.
  * <!-- end-user-doc -->
  * @generated
  */
-public class SuperintentsPackageImpl extends EPackageImpl implements SuperintentsPackage {
+public class IntentmodelPackageImpl extends EPackageImpl implements IntentmodelPackage {
 	/**
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -63,12 +62,12 @@ public class SuperintentsPackageImpl extends EPackageImpl implements Superintent
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see org.eclipse.emf.ecore.EPackage.Registry
-	 * @see superintents.SuperintentsPackage#eNS_URI
+	 * @see intentmodel.IntentmodelPackage#eNS_URI
 	 * @see #init()
 	 * @generated
 	 */
-	private SuperintentsPackageImpl() {
-		super(eNS_URI, SuperintentsFactory.eINSTANCE);
+	private IntentmodelPackageImpl() {
+		super(eNS_URI, IntentmodelFactory.eINSTANCE);
 	}
 
 	/**
@@ -81,7 +80,7 @@ public class SuperintentsPackageImpl extends EPackageImpl implements Superintent
 	/**
 	 * Creates, registers, and initializes the <b>Package</b> for this model, and for any others upon which it depends.
 	 * 
-	 * <p>This method is used to initialize {@link SuperintentsPackage#eINSTANCE} when that field is accessed.
+	 * <p>This method is used to initialize {@link IntentmodelPackage#eINSTANCE} when that field is accessed.
 	 * Clients should not invoke it directly. Instead, they should simply access that field to obtain the package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
@@ -90,27 +89,27 @@ public class SuperintentsPackageImpl extends EPackageImpl implements Superintent
 	 * @see #initializePackageContents()
 	 * @generated
 	 */
-	public static SuperintentsPackage init() {
-		if (isInited) return (SuperintentsPackage)EPackage.Registry.INSTANCE.getEPackage(SuperintentsPackage.eNS_URI);
+	public static IntentmodelPackage init() {
+		if (isInited) return (IntentmodelPackage)EPackage.Registry.INSTANCE.getEPackage(IntentmodelPackage.eNS_URI);
 
 		// Obtain or create and register package
-		SuperintentsPackageImpl theSuperintentsPackage = (SuperintentsPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof SuperintentsPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new SuperintentsPackageImpl());
+		IntentmodelPackageImpl theIntentmodelPackage = (IntentmodelPackageImpl)(EPackage.Registry.INSTANCE.get(eNS_URI) instanceof IntentmodelPackageImpl ? EPackage.Registry.INSTANCE.get(eNS_URI) : new IntentmodelPackageImpl());
 
 		isInited = true;
 
 		// Create package meta-data objects
-		theSuperintentsPackage.createPackageContents();
+		theIntentmodelPackage.createPackageContents();
 
 		// Initialize created meta-data
-		theSuperintentsPackage.initializePackageContents();
+		theIntentmodelPackage.initializePackageContents();
 
 		// Mark meta-data to indicate it can't be changed
-		theSuperintentsPackage.freeze();
+		theIntentmodelPackage.freeze();
 
   
 		// Update the registry and return the package
-		EPackage.Registry.INSTANCE.put(SuperintentsPackage.eNS_URI, theSuperintentsPackage);
-		return theSuperintentsPackage;
+		EPackage.Registry.INSTANCE.put(IntentmodelPackage.eNS_URI, theIntentmodelPackage);
+		return theIntentmodelPackage;
 	}
 
 	/**
@@ -127,8 +126,8 @@ public class SuperintentsPackageImpl extends EPackageImpl implements Superintent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getSuperIntent_Intent() {
-		return (EReference)superIntentEClass.getEStructuralFeatures().get(0);
+	public EAttribute getSuperIntent_Description() {
+		return (EAttribute)superIntentEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -136,8 +135,8 @@ public class SuperintentsPackageImpl extends EPackageImpl implements Superintent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EAttribute getSuperIntent_Description() {
-		return (EAttribute)superIntentEClass.getEStructuralFeatures().get(1);
+	public EReference getSuperIntent_Intent() {
+		return (EReference)superIntentEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -163,17 +162,8 @@ public class SuperintentsPackageImpl extends EPackageImpl implements Superintent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EReference getIntent_Data() {
-		return (EReference)intentEClass.getEStructuralFeatures().get(0);
-	}
-
-	/**
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @generated
-	 */
 	public EAttribute getIntent_Categories() {
-		return (EAttribute)intentEClass.getEStructuralFeatures().get(1);
+		return (EAttribute)intentEClass.getEStructuralFeatures().get(0);
 	}
 
 	/**
@@ -182,7 +172,7 @@ public class SuperintentsPackageImpl extends EPackageImpl implements Superintent
 	 * @generated
 	 */
 	public EAttribute getIntent_Action() {
-		return (EAttribute)intentEClass.getEStructuralFeatures().get(2);
+		return (EAttribute)intentEClass.getEStructuralFeatures().get(1);
 	}
 
 	/**
@@ -191,7 +181,16 @@ public class SuperintentsPackageImpl extends EPackageImpl implements Superintent
 	 * @generated
 	 */
 	public EAttribute getIntent_Component() {
-		return (EAttribute)intentEClass.getEStructuralFeatures().get(3);
+		return (EAttribute)intentEClass.getEStructuralFeatures().get(2);
+	}
+
+	/**
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @generated
+	 */
+	public EReference getIntent_Data() {
+		return (EReference)intentEClass.getEStructuralFeatures().get(3);
 	}
 
 	/**
@@ -262,8 +261,8 @@ public class SuperintentsPackageImpl extends EPackageImpl implements Superintent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SuperintentsFactory getSuperintentsFactory() {
-		return (SuperintentsFactory)getEFactoryInstance();
+	public IntentmodelFactory getIntentmodelFactory() {
+		return (IntentmodelFactory)getEFactoryInstance();
 	}
 
 	/**
@@ -286,15 +285,15 @@ public class SuperintentsPackageImpl extends EPackageImpl implements Superintent
 
 		// Create classes and their features
 		superIntentEClass = createEClass(SUPER_INTENT);
-		createEReference(superIntentEClass, SUPER_INTENT__INTENT);
 		createEAttribute(superIntentEClass, SUPER_INTENT__DESCRIPTION);
+		createEReference(superIntentEClass, SUPER_INTENT__INTENT);
 		createEReference(superIntentEClass, SUPER_INTENT__OUTPUT);
 
 		intentEClass = createEClass(INTENT);
-		createEReference(intentEClass, INTENT__DATA);
 		createEAttribute(intentEClass, INTENT__CATEGORIES);
 		createEAttribute(intentEClass, INTENT__ACTION);
 		createEAttribute(intentEClass, INTENT__COMPONENT);
+		createEReference(intentEClass, INTENT__DATA);
 		createEReference(intentEClass, INTENT__EXTRAS);
 
 		dataEClass = createEClass(DATA);
@@ -337,27 +336,27 @@ public class SuperintentsPackageImpl extends EPackageImpl implements Superintent
 
 		// Initialize classes and features; add operations and parameters
 		initEClass(superIntentEClass, SuperIntent.class, "SuperIntent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getSuperIntent_Intent(), this.getIntent(), null, "intent", null, 1, 1, SuperIntent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getSuperIntent_Description(), ecorePackage.getEString(), "description", null, 0, 1, SuperIntent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getSuperIntent_Intent(), this.getIntent(), null, "intent", null, 1, 1, SuperIntent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getSuperIntent_Output(), this.getData(), null, "output", null, 0, 1, SuperIntent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(intentEClass, Intent.class, "Intent", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
-		initEReference(getIntent_Data(), this.getData(), null, "data", null, 0, 1, Intent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getIntent_Categories(), ecorePackage.getEString(), "categories", null, 0, -1, Intent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEAttribute(getIntent_Action(), ecorePackage.getEString(), "action", null, 0, 1, Intent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getIntent_Component(), ecorePackage.getEJavaClass(), "component", null, 0, 1, Intent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getIntent_Component(), ecorePackage.getEString(), "component", null, 0, 1, Intent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEReference(getIntent_Data(), this.getData(), null, "data", null, 0, 1, Intent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 		initEReference(getIntent_Extras(), this.getStringToObject(), null, "extras", null, 0, -1, Intent.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, IS_COMPOSITE, !IS_RESOLVE_PROXIES, !IS_UNSETTABLE, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		initEClass(dataEClass, Data.class, "Data", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
 		initEAttribute(getData_MIMEType(), ecorePackage.getEString(), "MIMEType", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getData_Value(), ecorePackage.getEString(), "value", null, 1, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getData_Value(), ecorePackage.getEString(), "value", null, 0, 1, Data.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
-		initEClass(stringToObjectEClass, Map.Entry.class, "StringToObject", !IS_ABSTRACT, !IS_INTERFACE, !IS_GENERATED_INSTANCE_CLASS);
-		initEAttribute(getStringToObject_Key(), ecorePackage.getEString(), "key", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
-		initEAttribute(getStringToObject_Value(), ecorePackage.getEJavaObject(), "value", null, 0, 1, Map.Entry.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEClass(stringToObjectEClass, StringToObject.class, "StringToObject", !IS_ABSTRACT, !IS_INTERFACE, IS_GENERATED_INSTANCE_CLASS);
+		initEAttribute(getStringToObject_Key(), ecorePackage.getEString(), "key", null, 0, 1, StringToObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
+		initEAttribute(getStringToObject_Value(), ecorePackage.getEString(), "value", null, 0, 1, StringToObject.class, !IS_TRANSIENT, !IS_VOLATILE, IS_CHANGEABLE, !IS_UNSETTABLE, !IS_ID, IS_UNIQUE, !IS_DERIVED, IS_ORDERED);
 
 		// Create resource
 		createResource(eNS_URI);
 	}
 
-} //SuperintentsPackageImpl
+} //IntentmodelPackageImpl

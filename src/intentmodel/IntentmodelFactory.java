@@ -1,6 +1,6 @@
 /**
  */
-package superintents;
+package intentmodel;
 
 import org.eclipse.emf.ecore.EFactory;
 
@@ -9,17 +9,17 @@ import org.eclipse.emf.ecore.EFactory;
  * The <b>Factory</b> for the model.
  * It provides a create method for each non-abstract class of the model.
  * <!-- end-user-doc -->
- * @see superintents.SuperintentsPackage
+ * @see intentmodel.IntentmodelPackage
  * @generated
  */
-public interface SuperintentsFactory extends EFactory {
+public interface IntentmodelFactory extends EFactory {
 	/**
 	 * The singleton instance of the factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	SuperintentsFactory eINSTANCE = superintents.impl.SuperintentsFactoryImpl.init();
+	IntentmodelFactory eINSTANCE = intentmodel.impl.IntentmodelFactoryImpl.init();
 
 	/**
 	 * Returns a new object of class '<em>Super Intent</em>'.
@@ -49,12 +49,21 @@ public interface SuperintentsFactory extends EFactory {
 	Data createData();
 
 	/**
+	 * Returns a new object of class '<em>String To Object</em>'.
+	 * <!-- begin-user-doc -->
+	 * <!-- end-user-doc -->
+	 * @return a new object of class '<em>String To Object</em>'.
+	 * @generated
+	 */
+	StringToObject createStringToObject();
+
+	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the package supported by this factory.
 	 * @generated
 	 */
-	SuperintentsPackage getSuperintentsPackage();
+	IntentmodelPackage getIntentmodelPackage();
 
-} //SuperintentsFactory
+} //IntentmodelFactory

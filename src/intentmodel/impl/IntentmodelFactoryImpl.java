@@ -1,8 +1,8 @@
 /**
  */
-package superintents.impl;
+package intentmodel.impl;
 
-import java.util.Map;
+import intentmodel.*;
 
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
@@ -12,32 +12,30 @@ import org.eclipse.emf.ecore.impl.EFactoryImpl;
 
 import org.eclipse.emf.ecore.plugin.EcorePlugin;
 
-import superintents.*;
-
 /**
  * <!-- begin-user-doc -->
  * An implementation of the model <b>Factory</b>.
  * <!-- end-user-doc -->
  * @generated
  */
-public class SuperintentsFactoryImpl extends EFactoryImpl implements SuperintentsFactory {
+public class IntentmodelFactoryImpl extends EFactoryImpl implements IntentmodelFactory {
 	/**
 	 * Creates the default factory implementation.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public static SuperintentsFactory init() {
+	public static IntentmodelFactory init() {
 		try {
-			SuperintentsFactory theSuperintentsFactory = (SuperintentsFactory)EPackage.Registry.INSTANCE.getEFactory("http://superintents/1.0"); 
-			if (theSuperintentsFactory != null) {
-				return theSuperintentsFactory;
+			IntentmodelFactory theIntentmodelFactory = (IntentmodelFactory)EPackage.Registry.INSTANCE.getEFactory("platform:/resource/IntentModel/model/IntentModel.ecore"); 
+			if (theIntentmodelFactory != null) {
+				return theIntentmodelFactory;
 			}
 		}
 		catch (Exception exception) {
 			EcorePlugin.INSTANCE.log(exception);
 		}
-		return new SuperintentsFactoryImpl();
+		return new IntentmodelFactoryImpl();
 	}
 
 	/**
@@ -46,7 +44,7 @@ public class SuperintentsFactoryImpl extends EFactoryImpl implements Superintent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SuperintentsFactoryImpl() {
+	public IntentmodelFactoryImpl() {
 		super();
 	}
 
@@ -58,10 +56,10 @@ public class SuperintentsFactoryImpl extends EFactoryImpl implements Superintent
 	@Override
 	public EObject create(EClass eClass) {
 		switch (eClass.getClassifierID()) {
-			case SuperintentsPackage.SUPER_INTENT: return createSuperIntent();
-			case SuperintentsPackage.INTENT: return createIntent();
-			case SuperintentsPackage.DATA: return createData();
-			case SuperintentsPackage.STRING_TO_OBJECT: return (EObject)createStringToObject();
+			case IntentmodelPackage.SUPER_INTENT: return createSuperIntent();
+			case IntentmodelPackage.INTENT: return createIntent();
+			case IntentmodelPackage.DATA: return createData();
+			case IntentmodelPackage.STRING_TO_OBJECT: return createStringToObject();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -102,7 +100,7 @@ public class SuperintentsFactoryImpl extends EFactoryImpl implements Superintent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public Map.Entry<String, Object> createStringToObject() {
+	public StringToObject createStringToObject() {
 		StringToObjectImpl stringToObject = new StringToObjectImpl();
 		return stringToObject;
 	}
@@ -112,8 +110,8 @@ public class SuperintentsFactoryImpl extends EFactoryImpl implements Superintent
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SuperintentsPackage getSuperintentsPackage() {
-		return (SuperintentsPackage)getEPackage();
+	public IntentmodelPackage getIntentmodelPackage() {
+		return (IntentmodelPackage)getEPackage();
 	}
 
 	/**
@@ -123,8 +121,8 @@ public class SuperintentsFactoryImpl extends EFactoryImpl implements Superintent
 	 * @generated
 	 */
 	@Deprecated
-	public static SuperintentsPackage getPackage() {
-		return SuperintentsPackage.eINSTANCE;
+	public static IntentmodelPackage getPackage() {
+		return IntentmodelPackage.eINSTANCE;
 	}
 
-} //SuperintentsFactoryImpl
+} //IntentmodelFactoryImpl

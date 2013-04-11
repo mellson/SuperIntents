@@ -1,8 +1,8 @@
 /**
  */
-package superintents.util;
+package intentmodel.util;
 
-import java.util.Map;
+import intentmodel.*;
 
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
@@ -11,24 +11,22 @@ import org.eclipse.emf.common.notify.impl.AdapterFactoryImpl;
 
 import org.eclipse.emf.ecore.EObject;
 
-import superintents.*;
-
 /**
  * <!-- begin-user-doc -->
  * The <b>Adapter Factory</b> for the model.
  * It provides an adapter <code>createXXX</code> method for each class of the model.
  * <!-- end-user-doc -->
- * @see superintents.SuperintentsPackage
+ * @see intentmodel.IntentmodelPackage
  * @generated
  */
-public class SuperintentsAdapterFactory extends AdapterFactoryImpl {
+public class IntentmodelAdapterFactory extends AdapterFactoryImpl {
 	/**
 	 * The cached model package.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected static SuperintentsPackage modelPackage;
+	protected static IntentmodelPackage modelPackage;
 
 	/**
 	 * Creates an instance of the adapter factory.
@@ -36,9 +34,9 @@ public class SuperintentsAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public SuperintentsAdapterFactory() {
+	public IntentmodelAdapterFactory() {
 		if (modelPackage == null) {
-			modelPackage = SuperintentsPackage.eINSTANCE;
+			modelPackage = IntentmodelPackage.eINSTANCE;
 		}
 	}
 
@@ -67,8 +65,8 @@ public class SuperintentsAdapterFactory extends AdapterFactoryImpl {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	protected SuperintentsSwitch<Adapter> modelSwitch =
-		new SuperintentsSwitch<Adapter>() {
+	protected IntentmodelSwitch<Adapter> modelSwitch =
+		new IntentmodelSwitch<Adapter>() {
 			@Override
 			public Adapter caseSuperIntent(SuperIntent object) {
 				return createSuperIntentAdapter();
@@ -82,7 +80,7 @@ public class SuperintentsAdapterFactory extends AdapterFactoryImpl {
 				return createDataAdapter();
 			}
 			@Override
-			public Adapter caseStringToObject(Map.Entry<String, Object> object) {
+			public Adapter caseStringToObject(StringToObject object) {
 				return createStringToObjectAdapter();
 			}
 			@Override
@@ -106,13 +104,13 @@ public class SuperintentsAdapterFactory extends AdapterFactoryImpl {
 
 
 	/**
-	 * Creates a new adapter for an object of class '{@link superintents.SuperIntent <em>Super Intent</em>}'.
+	 * Creates a new adapter for an object of class '{@link intentmodel.SuperIntent <em>Super Intent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see superintents.SuperIntent
+	 * @see intentmodel.SuperIntent
 	 * @generated
 	 */
 	public Adapter createSuperIntentAdapter() {
@@ -120,13 +118,13 @@ public class SuperintentsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link superintents.Intent <em>Intent</em>}'.
+	 * Creates a new adapter for an object of class '{@link intentmodel.Intent <em>Intent</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see superintents.Intent
+	 * @see intentmodel.Intent
 	 * @generated
 	 */
 	public Adapter createIntentAdapter() {
@@ -134,13 +132,13 @@ public class SuperintentsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link superintents.Data <em>Data</em>}'.
+	 * Creates a new adapter for an object of class '{@link intentmodel.Data <em>Data</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see superintents.Data
+	 * @see intentmodel.Data
 	 * @generated
 	 */
 	public Adapter createDataAdapter() {
@@ -148,13 +146,13 @@ public class SuperintentsAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Object</em>}'.
+	 * Creates a new adapter for an object of class '{@link intentmodel.StringToObject <em>String To Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see java.util.Map.Entry
+	 * @see intentmodel.StringToObject
 	 * @generated
 	 */
 	public Adapter createStringToObjectAdapter() {
@@ -173,4 +171,4 @@ public class SuperintentsAdapterFactory extends AdapterFactoryImpl {
 		return null;
 	}
 
-} //SuperintentsAdapterFactory
+} //IntentmodelAdapterFactory

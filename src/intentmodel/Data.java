@@ -1,8 +1,6 @@
 /**
  */
-package superintents;
-
-import java.net.URI;
+package intentmodel;
 
 import org.eclipse.emf.ecore.EObject;
 
@@ -14,12 +12,12 @@ import org.eclipse.emf.ecore.EObject;
  * <p>
  * The following features are supported:
  * <ul>
- *   <li>{@link superintents.Data#getMIMEType <em>MIME Type</em>}</li>
- *   <li>{@link superintents.Data#getValue <em>Value</em>}</li>
+ *   <li>{@link intentmodel.Data#getMIMEType <em>MIME Type</em>}</li>
+ *   <li>{@link intentmodel.Data#getValue <em>Value</em>}</li>
  * </ul>
  * </p>
  *
- * @see superintents.SuperintentsPackage#getData()
+ * @see intentmodel.IntentmodelPackage#getData()
  * @model
  * @generated
  */
@@ -34,14 +32,14 @@ public interface Data extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>MIME Type</em>' attribute.
 	 * @see #setMIMEType(String)
-	 * @see superintents.SuperintentsPackage#getData_MIMEType()
+	 * @see intentmodel.IntentmodelPackage#getData_MIMEType()
 	 * @model
 	 * @generated
 	 */
 	String getMIMEType();
 
 	/**
-	 * Sets the value of the '{@link superintents.Data#getMIMEType <em>MIME Type</em>}' attribute.
+	 * Sets the value of the '{@link intentmodel.Data#getMIMEType <em>MIME Type</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>MIME Type</em>' attribute.
@@ -60,20 +58,20 @@ public interface Data extends EObject {
 	 * <!-- end-user-doc -->
 	 * @return the value of the '<em>Value</em>' attribute.
 	 * @see #setValue(String)
-	 * @see superintents.SuperintentsPackage#getData_Value()
-	 * @model required="true"
+	 * @see intentmodel.IntentmodelPackage#getData_Value()
+	 * @model
 	 * @generated
 	 */
-	URI getValue();
+	String getValue();
 
 	/**
-	 * Sets the value of the '{@link superintents.Data#getValue <em>Value</em>}' attribute.
+	 * Sets the value of the '{@link intentmodel.Data#getValue <em>Value</em>}' attribute.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @param value the new value of the '<em>Value</em>' attribute.
 	 * @see #getValue()
 	 * @generated
 	 */
-	void setValue(URI value);
+	void setValue(String value);
 
 } // Data
