@@ -46,16 +46,50 @@ public class M2MJava2AST {
 	}
 	
 	
-	public static ArrayList<ASTNodeWrapper> transformSuperIntent(SuperIntentImpl si, AST ast)
+	public static ArrayList<ASTNodeWrapper> transformSuperIntent(SuperIntentImpl si)
 	{
+		//result list
 		ArrayList<ASTNodeWrapper> resultList = new ArrayList<ASTNodeWrapper>();
+		
+		//AST for generating nodes
+		AST ast = AST.newAST(AST.JLS4);
+		resultList.add(initializeIntent(si, ast));
 		
 		return resultList;
 	}
 	
-	public ASTNode initializeIntent(SuperIntentImpl si, AST ast)
+	@SuppressWarnings("unchecked")
+	public static ASTNodeWrapper initializeIntent(SuperIntentImpl si, AST ast)
 	{
-		return null;
+		//set the name of the variable
+		VariableDeclarationFragment vdf = ast.newVariableDeclarationFragment();
+		vdf.setName(ast.newSimpleName("i"));
+		
+		//set the class of the instance 
+		ClassInstanceCreation cic = ast.newClassInstanceCreation();
+		cic.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
+		
+		//set arguments
+		StringLiteral arg1 = ast.newStringLiteral();
+		arg1.setLiteralValue(si.getIntent().getAction());
+		cic.arguments().add(arg1);
+		
+		StringLiteral arg2 = ast.newStringLiteral();
+		arg2.setLiteralValue(si.getIntent().getData().getValue().toString());
+		cic.arguments().add(arg2);
+		
+		TypeLiteral arg3 = ast.newTypeLiteral();
+		arg3.setType(ast.newSimpleType(ast.newSimpleName(si.getIntent().getComponent().toString().replace("class ", "") + ".class")));
+		cic.arguments().add(arg3);
+		
+		vdf.setInitializer(cic);
+		
+		//set the type of the variable
+		FieldDeclaration f = ast.newFieldDeclaration(vdf);
+		f.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
+		
+		ASTNodeWrapper wrapper = new ASTNodeWrapper(f, 0);
+		return wrapper;
 	}
 	
 }
