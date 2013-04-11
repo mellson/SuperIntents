@@ -6,12 +6,11 @@ import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.*;
 
-import superintents.SuperIntent;
 import superintents.impl.*;;
 
 public class M2MJava2AST {
 
-	public SuperIntent createTestSI() {
+	public static SuperIntentImpl createTestSI() {
 		SuperIntentImpl bigRedButtonIntent = new SuperIntentImpl();
 		bigRedButtonIntent.setDescription("THIS IS AN INTENT DESCRIPTION");
 
@@ -47,12 +46,14 @@ public class M2MJava2AST {
 	}
 	
 	
-	public ArrayList<ASTNodeWrapper> transformSuperIntent(SuperIntent si, AST ast)
+	public static ArrayList<ASTNodeWrapper> transformSuperIntent(SuperIntentImpl si, AST ast)
 	{
-		return null;
+		ArrayList<ASTNodeWrapper> resultList = new ArrayList<ASTNodeWrapper>();
+		
+		return resultList;
 	}
 	
-	public ASTNode initializeIntent(SuperIntent si, AST ast)
+	public ASTNode initializeIntent(SuperIntentImpl si, AST ast)
 	{
 		return null;
 	}
