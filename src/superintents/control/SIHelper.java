@@ -17,7 +17,7 @@ import transformers.ASTNodeWrapper;
 import transformers.M2MJava2AST;
 
 public class SIHelper {
-	public void insertIntent(SuperIntentImpl intentImplementaion) {
+	public static void insertIntent(SuperIntentImpl intentImplementaion) {
 		ArrayList<ASTNodeWrapper> nodes = M2MJava2AST.transformSuperIntent(intentImplementaion);
 		for (ASTNodeWrapper node : nodes) {
 			try {
