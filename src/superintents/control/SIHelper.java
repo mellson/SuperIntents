@@ -18,7 +18,14 @@ import transformers.M2MJava2AST;
 
 public class SIHelper {
 	public void insertIntent(SuperIntentImpl intentImplementaion) {
-		ArrayList<ASTNodeWrapper> node = M2MJava2AST.transformSuperIntent(intentImplementaion);
+		ArrayList<ASTNodeWrapper> nodes = M2MJava2AST.transformSuperIntent(intentImplementaion);
+		for (ASTNodeWrapper node : nodes) {
+			try {
+				insertNode(node);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
 	}
 	
 	public static ITextEditor getEditor() {
