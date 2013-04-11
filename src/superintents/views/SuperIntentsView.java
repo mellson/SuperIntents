@@ -3,6 +3,10 @@ package superintents.views;
 
 import org.eclipse.swt.widgets.Composite;
 import org.eclipse.ui.part.*;
+import org.eclipse.jdt.core.JavaModelException;
+import org.eclipse.jdt.core.dom.AST;
+import org.eclipse.jdt.core.dom.StringLiteral;
+import org.eclipse.jface.text.BadLocationException;
 import org.eclipse.jface.viewers.*;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.jface.action.*;
@@ -10,8 +14,10 @@ import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.ui.*;
 import org.eclipse.swt.widgets.Menu;
 import org.eclipse.swt.SWT;
+import org.eclipse.text.edits.MalformedTreeException;
 
 import superintents.control.SIHelper;
+import transformers.ASTNodeWrapper;
 
 
 /**
@@ -165,7 +171,23 @@ public class SuperIntentsView extends ViewPart {
 				ISelection selection = viewer.getSelection();
 				//Object obj = ((IStructuredSelection)selection).getFirstElement();
 				//SIHelper.insertTestText(obj.toString());
-				SIHelper.InsertSuperIntent();
+				
+				AST ast = AST.newAST(AST.JLS4);
+				StringLiteral literal = ast.newStringLiteral();
+				literal.setLiteralValue("hej Anders");
+				ASTNodeWrapper node = new ASTNodeWrapper(literal, 0);
+				try {
+					SIHelper.insertNode(node);
+				} catch (MalformedTreeException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (JavaModelException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (BadLocationException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
 			}
 		};
 	}
