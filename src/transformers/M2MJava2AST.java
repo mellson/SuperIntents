@@ -2,9 +2,9 @@ package transformers;
 
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 
 import superintents.SuperIntent;
 import superintents.impl.*;;
@@ -46,18 +46,16 @@ public class M2MJava2AST {
 		return bigRedButtonIntent;
 	}
 	
-	public ASTNode transformSuperIntent(SuperIntent si, AST ast, ASTRewrite rewriter)
+	
+	public ArrayList<ASTNodeWrapper> transformSuperIntent(SuperIntent si, AST ast)
 	{
 		return null;
 	}
 	
-	public ASTNode InsertComment(String comment, AST ast, ASTRewrite rewriter)
+	public ASTNode initializeIntent(SuperIntent si, AST ast)
 	{
-		
-		/*Statement placeHolder = (Statement) rewriter.createStringPlaceholder("//mycomment", ASTNode.EMPTY_STATEMENT);
-		rewriter.cre
-		rewriter.insertFirst(placeHolder, null);*/
 		return null;
 	}
+	
 }
 	
