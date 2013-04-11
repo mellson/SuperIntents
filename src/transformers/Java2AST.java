@@ -2,9 +2,13 @@ package transformers;
 
 import java.util.ArrayList;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
+
 import intentmodel.impl.*;
 
 public class Java2AST {
+	
+	private static String intentName;
 
 	public static SuperIntentImpl createTestSI() {
 		SuperIntentImpl bigRedButtonIntent = new SuperIntentImpl();
@@ -40,22 +44,33 @@ public class Java2AST {
 	
 	public static ArrayList<ASTNodeWrapper> transformSuperIntent(SuperIntentImpl si)
 	{
+		intentName = "i";
+		
 		//result list
 		ArrayList<ASTNodeWrapper> resultList = new ArrayList<ASTNodeWrapper>();
 		
 		//AST for generating nodes
 		AST ast = AST.newAST(AST.JLS4);
-		resultList.add(initializeIntent(si, ast));
+		
+		//Insert Input and OutPut Comments
+		//resultList.add(new ASTNodeWrapper(newComment("//OHLOL"),0));
+		
+		//Initialize the Intent
+		//resultList.add(initializeIntent(si, ast));
+		
+		//Set the data type
+		if(si.getIntent().getData() != null & si.getIntent().getData().getMIMEType() != null)
+			resultList.add(setType(si, ast));
 		
 		return resultList;
 	}
 	
 	@SuppressWarnings("unchecked")
-	public static ASTNodeWrapper initializeIntent(SuperIntentImpl si, AST ast)
+	private static ASTNodeWrapper initializeIntent(SuperIntentImpl si, AST ast)
 	{
 		//set the name of the variable
 		VariableDeclarationFragment vdf = ast.newVariableDeclarationFragment();
-		vdf.setName(ast.newSimpleName("i"));
+		vdf.setName(ast.newSimpleName(intentName));
 		
 		//set the class of the instance 
 		ClassInstanceCreation cic = ast.newClassInstanceCreation();
@@ -83,6 +98,30 @@ public class Java2AST {
 		ASTNodeWrapper wrapper = new ASTNodeWrapper(f, 0);
 		return wrapper;
 	}
+
+	@SuppressWarnings("unchecked")
+	private static ASTNodeWrapper setType(SuperIntentImpl si, AST ast)
+	{
+		//set invocation method name
+		MethodInvocation mi = ast.newMethodInvocation();
+		mi.setExpression(ast.newSimpleName(intentName));
+		mi.setName(ast.newSimpleName("setType"));
+		
+		//set argument
+		StringLiteral sl = ast.newStringLiteral();
+		sl.setLiteralValue(si.getIntent().getData().getMIMEType());
+		mi.arguments().add(sl);
+		
+		ExpressionStatement es = ast.newExpressionStatement(mi);
+		
+		ASTNodeWrapper wrapper = new ASTNodeWrapper(es, 0);
+		return wrapper;
+	}
 	
+	private static ASTNode newComment(String comment) {
+		AST ast = AST.newAST(AST.JLS4);
+		ASTRewrite rewriter = ASTRewrite.create(ast);
+		return (Statement) rewriter.createStringPlaceholder(comment, ASTNode.EMPTY_STATEMENT);
+	}
 }
 	
