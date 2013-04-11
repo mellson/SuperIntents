@@ -4,6 +4,7 @@ package intentmodel.util;
 
 import intentmodel.*;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
 
@@ -85,7 +86,7 @@ public class IntentmodelSwitch<T> extends Switch<T> {
 				return result;
 			}
 			case IntentmodelPackage.STRING_TO_OBJECT: {
-				StringToObject stringToObject = (StringToObject)theEObject;
+				@SuppressWarnings("unchecked") Map.Entry<String, String> stringToObject = (Map.Entry<String, String>)theEObject;
 				T result = caseStringToObject(stringToObject);
 				if (result == null) result = defaultCase(theEObject);
 				return result;
@@ -150,7 +151,7 @@ public class IntentmodelSwitch<T> extends Switch<T> {
 	 * @see #doSwitch(org.eclipse.emf.ecore.EObject) doSwitch(EObject)
 	 * @generated
 	 */
-	public T caseStringToObject(StringToObject object) {
+	public T caseStringToObject(Map.Entry<String, String> object) {
 		return null;
 	}
 

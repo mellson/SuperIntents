@@ -49,15 +49,6 @@ public interface IntentmodelFactory extends EFactory {
 	Data createData();
 
 	/**
-	 * Returns a new object of class '<em>String To Object</em>'.
-	 * <!-- begin-user-doc -->
-	 * <!-- end-user-doc -->
-	 * @return a new object of class '<em>String To Object</em>'.
-	 * @generated
-	 */
-	StringToObject createStringToObject();
-
-	/**
 	 * Returns the package supported by this factory.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->

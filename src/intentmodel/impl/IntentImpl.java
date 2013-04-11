@@ -14,13 +14,16 @@ import org.eclipse.emf.common.notify.NotificationChain;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EClass;
+import org.eclipse.emf.ecore.EStructuralFeature;
 import org.eclipse.emf.ecore.InternalEObject;
 
 import org.eclipse.emf.ecore.impl.ENotificationImpl;
 import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
+import org.eclipse.emf.ecore.util.EcoreEMap;
 import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
@@ -103,14 +106,14 @@ public class IntentImpl extends EObjectImpl implements Intent {
 	protected Data data;
 
 	/**
-	 * The cached value of the '{@link #getExtras() <em>Extras</em>}' containment reference list.
+	 * The cached value of the '{@link #getExtras() <em>Extras</em>}' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @see #getExtras()
 	 * @generated
 	 * @ordered
 	 */
-	protected EList<StringToObject> extras;
+	protected EMap<String, String> extras;
 
 	/**
 	 * <!-- begin-user-doc -->
@@ -233,9 +236,9 @@ public class IntentImpl extends EObjectImpl implements Intent {
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public EList<StringToObject> getExtras() {
+	public EMap<String, String> getExtras() {
 		if (extras == null) {
-			extras = new EObjectContainmentEList<StringToObject>(StringToObject.class, this, IntentmodelPackage.INTENT__EXTRAS);
+			extras = new EcoreEMap<String,String>(IntentmodelPackage.Literals.STRING_TO_OBJECT, StringToObjectImpl.class, this, IntentmodelPackage.INTENT__EXTRAS);
 		}
 		return extras;
 	}
@@ -273,7 +276,8 @@ public class IntentImpl extends EObjectImpl implements Intent {
 			case IntentmodelPackage.INTENT__DATA:
 				return getData();
 			case IntentmodelPackage.INTENT__EXTRAS:
-				return getExtras();
+				if (coreType) return getExtras();
+				else return getExtras().map();
 		}
 		return super.eGet(featureID, resolve, coreType);
 	}
@@ -301,8 +305,7 @@ public class IntentImpl extends EObjectImpl implements Intent {
 				setData((Data)newValue);
 				return;
 			case IntentmodelPackage.INTENT__EXTRAS:
-				getExtras().clear();
-				getExtras().addAll((Collection<? extends StringToObject>)newValue);
+				((EStructuralFeature.Setting)getExtras()).set(newValue);
 				return;
 		}
 		super.eSet(featureID, newValue);

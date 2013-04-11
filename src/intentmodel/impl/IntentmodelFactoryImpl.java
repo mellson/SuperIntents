@@ -4,6 +4,7 @@ package intentmodel.impl;
 
 import intentmodel.*;
 
+import java.util.Map;
 import org.eclipse.emf.ecore.EClass;
 import org.eclipse.emf.ecore.EObject;
 import org.eclipse.emf.ecore.EPackage;
@@ -59,7 +60,7 @@ public class IntentmodelFactoryImpl extends EFactoryImpl implements IntentmodelF
 			case IntentmodelPackage.SUPER_INTENT: return createSuperIntent();
 			case IntentmodelPackage.INTENT: return createIntent();
 			case IntentmodelPackage.DATA: return createData();
-			case IntentmodelPackage.STRING_TO_OBJECT: return createStringToObject();
+			case IntentmodelPackage.STRING_TO_OBJECT: return (EObject)createStringToObject();
 			default:
 				throw new IllegalArgumentException("The class '" + eClass.getName() + "' is not a valid classifier");
 		}
@@ -100,7 +101,7 @@ public class IntentmodelFactoryImpl extends EFactoryImpl implements IntentmodelF
 	 * <!-- end-user-doc -->
 	 * @generated
 	 */
-	public StringToObject createStringToObject() {
+	public Map.Entry<String, String> createStringToObject() {
 		StringToObjectImpl stringToObject = new StringToObjectImpl();
 		return stringToObject;
 	}

@@ -148,7 +148,7 @@ public interface IntentmodelPackage extends EPackage {
 	int INTENT__DATA = 3;
 
 	/**
-	 * The feature id for the '<em><b>Extras</b></em>' containment reference list.
+	 * The feature id for the '<em><b>Extras</b></em>' map.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @generated
@@ -338,10 +338,10 @@ public interface IntentmodelPackage extends EPackage {
 	EReference getIntent_Data();
 
 	/**
-	 * Returns the meta object for the containment reference list '{@link intentmodel.Intent#getExtras <em>Extras</em>}'.
+	 * Returns the meta object for the map '{@link intentmodel.Intent#getExtras <em>Extras</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
-	 * @return the meta object for the containment reference list '<em>Extras</em>'.
+	 * @return the meta object for the map '<em>Extras</em>'.
 	 * @see intentmodel.Intent#getExtras()
 	 * @see #getIntent()
 	 * @generated
@@ -381,32 +381,34 @@ public interface IntentmodelPackage extends EPackage {
 	EAttribute getData_Value();
 
 	/**
-	 * Returns the meta object for class '{@link intentmodel.StringToObject <em>String To Object</em>}'.
+	 * Returns the meta object for class '{@link java.util.Map.Entry <em>String To Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for class '<em>String To Object</em>'.
-	 * @see intentmodel.StringToObject
+	 * @see java.util.Map.Entry
+	 * @model keyDataType="org.eclipse.emf.ecore.EString"
+	 *        valueDataType="org.eclipse.emf.ecore.EString"
 	 * @generated
 	 */
 	EClass getStringToObject();
 
 	/**
-	 * Returns the meta object for the attribute '{@link intentmodel.StringToObject#getKey <em>Key</em>}'.
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Key</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Key</em>'.
-	 * @see intentmodel.StringToObject#getKey()
+	 * @see java.util.Map.Entry
 	 * @see #getStringToObject()
 	 * @generated
 	 */
 	EAttribute getStringToObject_Key();
 
 	/**
-	 * Returns the meta object for the attribute '{@link intentmodel.StringToObject#getValue <em>Value</em>}'.
+	 * Returns the meta object for the attribute '{@link java.util.Map.Entry <em>Value</em>}'.
 	 * <!-- begin-user-doc -->
 	 * <!-- end-user-doc -->
 	 * @return the meta object for the attribute '<em>Value</em>'.
-	 * @see intentmodel.StringToObject#getValue()
+	 * @see java.util.Map.Entry
 	 * @see #getStringToObject()
 	 * @generated
 	 */
@@ -511,7 +513,7 @@ public interface IntentmodelPackage extends EPackage {
 		EReference INTENT__DATA = eINSTANCE.getIntent_Data();
 
 		/**
-		 * The meta object literal for the '<em><b>Extras</b></em>' containment reference list feature.
+		 * The meta object literal for the '<em><b>Extras</b></em>' map feature.
 		 * <!-- begin-user-doc -->
 		 * <!-- end-user-doc -->
 		 * @generated

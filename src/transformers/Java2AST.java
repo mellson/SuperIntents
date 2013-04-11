@@ -35,8 +35,8 @@ public class Java2AST {
 		
 		bigRedButtonIntent.setIntent(newIntent);
 		
-		//bigRedButtonIntent.getIntent().getExtras().put("SECOND URL", "YOUR TEXT HERE");
-		//bigRedButtonIntent.getIntent().getExtras().put("THIRD URL", "YOUR TEXT HERE");
+		bigRedButtonIntent.getIntent().getExtras().put("SECOND URL", "YOUR TEXT HERE");
+		bigRedButtonIntent.getIntent().getExtras().put("THIRD URL", "YOUR TEXT HERE");
 		
 		return bigRedButtonIntent;
 	}
@@ -56,17 +56,17 @@ public class Java2AST {
 		//resultList.add(new ASTNodeWrapper(newComment("//OHLOL"),0));
 		
 		//Initialize the Intent
-		//resultList.add(initializeIntent(si, ast));
+		//resultList.add(new ASTNodeWrapper(initializeIntent(si, ast),0));
 		
 		//Set the data type
 		if(si.getIntent().getData() != null & si.getIntent().getData().getMIMEType() != null)
-			resultList.add(setType(si, ast));
+			resultList.add(new ASTNodeWrapper(setType(si, ast),0));
 		
 		return resultList;
 	}
 	
 	@SuppressWarnings("unchecked")
-	private static ASTNodeWrapper initializeIntent(SuperIntentImpl si, AST ast)
+	private static ASTNode initializeIntent(SuperIntentImpl si, AST ast)
 	{
 		//set the name of the variable
 		VariableDeclarationFragment vdf = ast.newVariableDeclarationFragment();
@@ -95,12 +95,11 @@ public class Java2AST {
 		FieldDeclaration f = ast.newFieldDeclaration(vdf);
 		f.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
 		
-		ASTNodeWrapper wrapper = new ASTNodeWrapper(f, 0);
-		return wrapper;
+		return f;
 	}
 
 	@SuppressWarnings("unchecked")
-	private static ASTNodeWrapper setType(SuperIntentImpl si, AST ast)
+	private static ASTNode setType(SuperIntentImpl si, AST ast)
 	{
 		//set invocation method name
 		MethodInvocation mi = ast.newMethodInvocation();
@@ -114,8 +113,7 @@ public class Java2AST {
 		
 		ExpressionStatement es = ast.newExpressionStatement(mi);
 		
-		ASTNodeWrapper wrapper = new ASTNodeWrapper(es, 0);
-		return wrapper;
+		return es;
 	}
 	
 	private static ASTNode newComment(String comment) {

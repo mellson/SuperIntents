@@ -4,6 +4,7 @@ package intentmodel.util;
 
 import intentmodel.*;
 
+import java.util.Map;
 import org.eclipse.emf.common.notify.Adapter;
 import org.eclipse.emf.common.notify.Notifier;
 
@@ -80,7 +81,7 @@ public class IntentmodelAdapterFactory extends AdapterFactoryImpl {
 				return createDataAdapter();
 			}
 			@Override
-			public Adapter caseStringToObject(StringToObject object) {
+			public Adapter caseStringToObject(Map.Entry<String, String> object) {
 				return createStringToObjectAdapter();
 			}
 			@Override
@@ -146,13 +147,13 @@ public class IntentmodelAdapterFactory extends AdapterFactoryImpl {
 	}
 
 	/**
-	 * Creates a new adapter for an object of class '{@link intentmodel.StringToObject <em>String To Object</em>}'.
+	 * Creates a new adapter for an object of class '{@link java.util.Map.Entry <em>String To Object</em>}'.
 	 * <!-- begin-user-doc -->
 	 * This default implementation returns null so that we can easily ignore cases;
 	 * it's useful to ignore a case when inheritance will catch all the cases anyway.
 	 * <!-- end-user-doc -->
 	 * @return the new adapter.
-	 * @see intentmodel.StringToObject
+	 * @see java.util.Map.Entry
 	 * @generated
 	 */
 	public Adapter createStringToObjectAdapter() {

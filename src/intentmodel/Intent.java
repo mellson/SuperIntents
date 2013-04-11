@@ -4,6 +4,7 @@ package intentmodel;
 
 import org.eclipse.emf.common.util.EList;
 
+import org.eclipse.emf.common.util.EMap;
 import org.eclipse.emf.ecore.EObject;
 
 /**
@@ -122,19 +123,20 @@ public interface Intent extends EObject {
 	void setData(Data value);
 
 	/**
-	 * Returns the value of the '<em><b>Extras</b></em>' containment reference list.
-	 * The list contents are of type {@link intentmodel.StringToObject}.
+	 * Returns the value of the '<em><b>Extras</b></em>' map.
+	 * The key is of type {@link java.lang.String},
+	 * and the value is of type {@link java.lang.String},
 	 * <!-- begin-user-doc -->
 	 * <p>
 	 * If the meaning of the '<em>Extras</em>' containment reference isn't clear,
 	 * there really should be more of a description here...
 	 * </p>
 	 * <!-- end-user-doc -->
-	 * @return the value of the '<em>Extras</em>' containment reference list.
+	 * @return the value of the '<em>Extras</em>' map.
 	 * @see intentmodel.IntentmodelPackage#getIntent_Extras()
-	 * @model containment="true"
+	 * @model mapType="intentmodel.StringToObject<org.eclipse.emf.ecore.EString, org.eclipse.emf.ecore.EString>"
 	 * @generated
 	 */
-	EList<StringToObject> getExtras();
+	EMap<String, String> getExtras();
 
 } // Intent
