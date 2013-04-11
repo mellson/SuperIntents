@@ -22,6 +22,7 @@ import org.eclipse.jdt.core.dom.ASTParser;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
 import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.MethodInvocation;
 import org.eclipse.jdt.core.dom.Statement;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
@@ -64,7 +65,7 @@ public class SIHelper {
 		return (ITextEditor) part;
 	}
 	
-	private static void InsertComment()
+	public static void InsertSuperIntent()
 	{
 		ITextEditor editor = (ITextEditor) PlatformUI.getWorkbench()
 				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
@@ -87,9 +88,19 @@ public class SIHelper {
 			Block block = methodDecl.getBody();
 	 
 			ListRewrite listRewrite = rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
+			
+			//---- Insert our superIntent here
+			MethodInvocation m = ast.newMethodInvocation();
+			m.setName(ast.newSimpleName("LOL"));
+			
+			listRewrite.insertAt(ast.newExpressionStatement(m), 0, null);
+			System.out.println(listRewrite.getOriginalList().size() + "\n" + listRewrite.getOriginalList());
+			
 			Statement placeHolder = (Statement) rewriter.createStringPlaceholder("//mycomment", ASTNode.EMPTY_STATEMENT);
+			//--------------------------------
+			
 			listRewrite.insertFirst(placeHolder, null);
-	 
+			
 			TextEdit edits = null;
 			try {
 				edits = rewriter.rewriteAST();
@@ -135,71 +146,12 @@ public class SIHelper {
 	private static int getSelectedMethod(MethodDeclaration[] methods)
 	{
 		int result = 0;
-		
 		int caretOffset = getCaretOffset(getEditor());
-		System.out.println(caretOffset);
-		
 		for (int i = 0; i < methods.length; i++) {
 			if(caretOffset >= methods[i].getStartPosition() && caretOffset <= methods[i].getLength() + methods[i].getStartPosition())
 				result = i;
 		}
-		
 		return result;
-	}
-	
-	private static void printSurroundingMethod() {
-		ITextEditor editor = (ITextEditor) PlatformUI.getWorkbench()
-				.getActiveWorkbenchWindow().getActivePage().getActiveEditor();
-
-		ITextSelection selection = (ITextSelection) editor
-				.getSelectionProvider().getSelection();
-
-		IEditorInput editorInput = editor.getEditorInput();
-		IJavaElement elem = JavaUI.getEditorInputJavaElement(editorInput);
-		if (elem instanceof ICompilationUnit) {
-			ICompilationUnit unit = (ICompilationUnit) elem;
-			IJavaElement selected = null;
-			try {
-				selected = unit.getElementAt(selection.getOffset());
-			} catch (JavaModelException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-
-			System.out
-					.println("-----------------------------------------------------------------");
-			System.out.println("selected=" + selected);
-			System.out.println("selected.class=" + selected.getClass());
-
-			try {
-				printIMethods(unit);
-			} catch (JavaModelException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-			System.out
-					.println("-----------------------------------------------------------------");
-		}
-	}
-
-	private static void printIMethods(ICompilationUnit unit)
-			throws JavaModelException {
-		IType[] allTypes = unit.getAllTypes();
-		for (IType type : allTypes) {
-			printIMethodDetails(type);
-		}
-	}
-
-	private static void printIMethodDetails(IType type)
-			throws JavaModelException {
-		IMethod[] methods = type.getMethods();
-		for (IMethod method : methods) {
-
-			System.out.println("Method name " + method.getElementName());
-			System.out.println("Signature " + method.getSignature());
-			System.out.println("Return Type " + method.getReturnType());
-
-		}
 	}
 
 	protected static CompilationUnit parse(ICompilationUnit unit) {
@@ -223,9 +175,6 @@ public class SIHelper {
 	
 	public static void insertTestText(String testText) {
 		ITextEditor editor = getEditor();
-		
-		//printSurroundingMethod(); //TESTING
-		InsertComment(); //TESTING
 		
 		try {
 			getDocument(editor).replace(getCaretOffset(editor), 0, testText);

@@ -163,9 +163,9 @@ public class SuperIntentsView extends ViewPart {
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
-				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				SIHelper.insertTestText(obj.toString());
-//				SIHelper.insertBogusTest();
+				//Object obj = ((IStructuredSelection)selection).getFirstElement();
+				//SIHelper.insertTestText(obj.toString());
+				SIHelper.InsertSuperIntent();
 			}
 		};
 	}
