@@ -1,5 +1,7 @@
 package superintents.control;
 
+import java.util.ArrayList;
+
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.eclipse.ui.*;
@@ -16,7 +18,7 @@ import transformers.M2MJava2AST;
 
 public class SIHelper {
 	public void insertIntent(SuperIntentImpl intentImplementaion) {
-		ASTNodeWrapper node = M2MJava2AST.transformSuperIntent(intentImplementaion);
+		ArrayList<ASTNodeWrapper> node = M2MJava2AST.transformSuperIntent(intentImplementaion);
 	}
 	
 	public static ITextEditor getEditor() {
