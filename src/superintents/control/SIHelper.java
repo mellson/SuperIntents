@@ -17,6 +17,12 @@ import transformers.ASTNodeWrapper;
 import transformers.Java2AST;
 
 public class SIHelper {
+	private static ASTNode newComment(String comment) {
+		AST ast = AST.newAST(AST.JLS4);
+		ASTRewrite rewriter = ASTRewrite.create(ast);
+		return (Statement) rewriter.createStringPlaceholder(comment, ASTNode.EMPTY_STATEMENT);
+	}
+	
 	public static void insertIntent(SuperIntentImpl intentImplementaion) {
 		ArrayList<ASTNodeWrapper> nodes = Java2AST.transformSuperIntent(intentImplementaion);
 		for (ASTNodeWrapper node : nodes) {
@@ -40,7 +46,8 @@ public class SIHelper {
 	}
 
 	public static void insertNode(ASTNodeWrapper node) throws MalformedTreeException, BadLocationException, JavaModelException {
-		IEditorInput editorInput = getEditor().getEditorInput();
+		ITextEditor editor = getEditor();
+		IEditorInput editorInput = editor.getEditorInput();
 		IJavaElement elem = JavaUI.getEditorInputJavaElement(editorInput);
 		if (elem instanceof ICompilationUnit) {
 			ICompilationUnit unit = (ICompilationUnit) elem;
@@ -59,6 +66,13 @@ public class SIHelper {
 			Document document = new Document(unit.getSource());
 			edits.apply(document);
 			unit.getBuffer().setContents(document.get());
+			
+			// Jump to the position right after the inserted node and focus the editor
+			int magicOffsetNumber = 6; // manual number found by testing insertion - this number moved to the place we wanted
+			int nodeLength = node.node.toString().length();
+			int caretOffset = block.getStartPosition() + nodeLength + magicOffsetNumber;
+			editor.setHighlightRange(caretOffset, 0, true);
+			editor.setFocus();
 		}
 	}
 	
