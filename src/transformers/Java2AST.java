@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 
+import superintents.control.ASTNodeWrapper;
+
 import intentmodel.impl.*;
 
 public class Java2AST {
@@ -59,9 +61,13 @@ public class Java2AST {
 		//resultList.add(new ASTNodeWrapper(initializeIntent(si, ast),0));
 		
 		//Set the data type
-		if(si.getIntent().getData() != null & si.getIntent().getData().getMIMEType() != null)
-			resultList.add(new ASTNodeWrapper(setType(si, ast),0));
-		
+		if(si.getIntent().getData() != null & si.getIntent().getData().getMIMEType() != null) {
+			resultList.add(newCommentInsideMethod("Ellen"));
+			resultList.add(new ASTNodeWrapper(setType(si, ast),true));
+			resultList.add(new ASTNodeWrapper(setType(si, ast),true));
+			
+		}
+			
 		return resultList;
 	}
 	
@@ -116,10 +122,12 @@ public class Java2AST {
 		return es;
 	}
 	
-	private static ASTNode newComment(String comment) {
-		AST ast = AST.newAST(AST.JLS4);
-		ASTRewrite rewriter = ASTRewrite.create(ast);
-		return (Statement) rewriter.createStringPlaceholder(comment, ASTNode.EMPTY_STATEMENT);
+	private static ASTNodeWrapper newCommentInsideMethod(String comment) {
+		return new ASTNodeWrapper(comment, true);
+	}
+	
+	private static ASTNodeWrapper newCommentOutsideMethod(String comment) {
+		return new ASTNodeWrapper(comment, false);
 	}
 }
 	
