@@ -15,6 +15,10 @@ import intentmodel.impl.*;
 import transformers.Java2AST;
 
 public class SIHelper {
+	
+	private Class[] supportedStatements = {Block.class, DoStatement.class, ForStatement.class, IfStatement.class, SwitchStatement.class, 
+			SwitchCase.class, SynchronizedStatement.class, ThrowStatement.class, TryStatement.class, WhileStatement.class};
+	
 	public static void insertIntent(SuperIntentImpl intentImplementaion) {
 		ArrayList<ASTNodeWrapper> nodes = Java2AST.transformSuperIntent(intentImplementaion);
 		try {
