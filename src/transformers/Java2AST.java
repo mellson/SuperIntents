@@ -2,7 +2,6 @@ package transformers;
 
 import java.util.ArrayList;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 
 import superintents.control.ASTNodeWrapper;
 
@@ -23,12 +22,12 @@ public class Java2AST {
 		bigRedButtonIntent.setOutput(bigRedButtonOutput);
 		
 		IntentImpl newIntent = new IntentImpl();
-		newIntent.setAction("THIS IS AN ACTION");
+		//newIntent.setAction("THIS IS AN ACTION");
 		
 		newIntent.getCategories().add("CATEGORY1");
 		newIntent.getCategories().add("CATEGORY2");
 		
-		newIntent.setComponent("String");
+		//newIntent.setComponent("String");
 		
 		DataImpl data = new DataImpl();
 		data.setValue("THISISDATA");
@@ -55,24 +54,54 @@ public class Java2AST {
 		AST ast = AST.newAST(AST.JLS4);
 		
 		//Insert Input and OutPut Comments
-		//resultList.add(new ASTNodeWrapper(newComment("//OHLOL"),0));
+		resultList.add(newCommentInsideMethod("Description: \n// " + si.getDescription()));
+		resultList.add(newCommentInsideMethod("Output: \n// " + si.getOutput()));
 		
 		//Initialize the Intent
-		//resultList.add(new ASTNodeWrapper(initializeIntent(si, ast),0));
+		resultList.add(new ASTNodeWrapper(initializeIntent(si, ast),true));
 		
 		//Set the data type
 		if(si.getIntent().getData() != null & si.getIntent().getData().getMIMEType() != null) {
-			resultList.add(newCommentInsideMethod("Ellen"));
 			resultList.add(new ASTNodeWrapper(setType(si, ast),true));
-			resultList.add(new ASTNodeWrapper(setType(si, ast),true));
-			
+		}
+		
+		//Set Categories
+		for (String category : si.getIntent().getCategories()) {
+			resultList.add(new ASTNodeWrapper(setCategory(category, ast),true));
+		}
+		
+		//Set Extras
+		for (String extra : si.getIntent().getExtras().keySet()) {
+			resultList.add(new ASTNodeWrapper(setExtra(extra, si.getIntent().getExtras().get(extra), ast),true));
 		}
 			
 		return resultList;
 	}
+
+
+	private static ASTNode initializeIntent(SuperIntentImpl si, AST ast)
+	{
+		//Intent(String action, Uri uri, Context packageContext, Class<?> cls)
+		if(si.getIntent().getAction() != null && si.getIntent().getData() != null && si.getIntent().getComponent() != null)
+			return InitializeConstructor1(si, ast);
+		//Intent(Context packageContext, Class<?> cls)
+		else if(si.getIntent().getComponent() != null) 
+			return InitializeConstructor2(si, ast);
+		//Intent(String action, Uri uri)
+		else if(si.getIntent().getAction() != null && si.getIntent().getData() != null)
+			return InitializeConstructor3(si, ast);
+		//Intent(String action)
+		else if(si.getIntent().getAction() != null)
+			return InitializeConstructor4(si, ast);
+		//Intent(Intent o) is not supported
+		//Intent()
+		else 
+			InitializeConstructor5(si, ast);
+		return null;
+	}
 	
 	@SuppressWarnings("unchecked")
-	private static ASTNode initializeIntent(SuperIntentImpl si, AST ast)
+	private static ASTNode InitializeConstructor1(SuperIntentImpl si, AST ast)
 	{
 		//set the name of the variable
 		VariableDeclarationFragment vdf = ast.newVariableDeclarationFragment();
@@ -88,7 +117,7 @@ public class Java2AST {
 		cic.arguments().add(arg1);
 		
 		StringLiteral arg2 = ast.newStringLiteral();
-		arg2.setLiteralValue(si.getIntent().getCategories().get(0));
+		arg2.setLiteralValue(si.getIntent().getData().getValue());
 		cic.arguments().add(arg2);
 		
 		TypeLiteral arg3 = ast.newTypeLiteral();
@@ -105,6 +134,105 @@ public class Java2AST {
 	}
 
 	@SuppressWarnings("unchecked")
+	private static ASTNode InitializeConstructor2(SuperIntentImpl si, AST ast)
+	{
+		//set the name of the variable
+		VariableDeclarationFragment vdf = ast.newVariableDeclarationFragment();
+		vdf.setName(ast.newSimpleName(intentName));
+		
+		//set the class of the instance 
+		ClassInstanceCreation cic = ast.newClassInstanceCreation();
+		cic.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
+		
+		//set arguments
+		TypeLiteral arg1 = ast.newTypeLiteral();
+		arg1.setType(ast.newSimpleType(ast.newSimpleName(si.getIntent().getComponent())));
+		cic.arguments().add(arg1);
+		
+		vdf.setInitializer(cic);
+		
+		//set the type of the variable
+		FieldDeclaration f = ast.newFieldDeclaration(vdf);
+		f.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
+		
+		return f;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static ASTNode InitializeConstructor3(SuperIntentImpl si, AST ast)
+	{
+		//set the name of the variable
+		VariableDeclarationFragment vdf = ast.newVariableDeclarationFragment();
+		vdf.setName(ast.newSimpleName(intentName));
+		
+		//set the class of the instance 
+		ClassInstanceCreation cic = ast.newClassInstanceCreation();
+		cic.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
+		
+		//set arguments
+		StringLiteral arg1 = ast.newStringLiteral();
+		arg1.setLiteralValue(si.getIntent().getAction());
+		cic.arguments().add(arg1);
+
+		StringLiteral arg2 = ast.newStringLiteral();
+		arg2.setLiteralValue(si.getIntent().getData().getValue());
+		cic.arguments().add(arg2);
+
+		vdf.setInitializer(cic);
+		
+		//set the type of the variable
+		FieldDeclaration f = ast.newFieldDeclaration(vdf);
+		f.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
+		
+		return f;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static ASTNode InitializeConstructor4(SuperIntentImpl si, AST ast)
+	{
+		//set the name of the variable
+		VariableDeclarationFragment vdf = ast.newVariableDeclarationFragment();
+		vdf.setName(ast.newSimpleName(intentName));
+		
+		//set the class of the instance 
+		ClassInstanceCreation cic = ast.newClassInstanceCreation();
+		cic.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
+		
+		//set arguments
+		StringLiteral arg1 = ast.newStringLiteral();
+		arg1.setLiteralValue(si.getIntent().getAction());
+		cic.arguments().add(arg1);
+
+		vdf.setInitializer(cic);
+		
+		//set the type of the variable
+		FieldDeclaration f = ast.newFieldDeclaration(vdf);
+		f.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
+		
+		return f;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static ASTNode InitializeConstructor5(SuperIntentImpl si, AST ast)
+	{
+		//set the name of the variable
+		VariableDeclarationFragment vdf = ast.newVariableDeclarationFragment();
+		vdf.setName(ast.newSimpleName(intentName));
+		
+		//set the class of the instance 
+		ClassInstanceCreation cic = ast.newClassInstanceCreation();
+		cic.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
+
+		vdf.setInitializer(cic);
+		
+		//set the type of the variable
+		FieldDeclaration f = ast.newFieldDeclaration(vdf);
+		f.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
+		
+		return f;
+	}
+	
+	@SuppressWarnings("unchecked")
 	private static ASTNode setType(SuperIntentImpl si, AST ast)
 	{
 		//set invocation method name
@@ -119,6 +247,44 @@ public class Java2AST {
 		
 		ExpressionStatement es = ast.newExpressionStatement(mi);
 		
+		return es;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static ASTNode setCategory(String category, AST ast) {
+		// set invocation method name
+		MethodInvocation mi = ast.newMethodInvocation();
+		mi.setExpression(ast.newSimpleName(intentName));
+		mi.setName(ast.newSimpleName("setCategory"));
+
+		// set argument
+		StringLiteral sl = ast.newStringLiteral();
+		sl.setLiteralValue(category);
+		mi.arguments().add(sl);
+
+		ExpressionStatement es = ast.newExpressionStatement(mi);
+
+		return es;
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static ASTNode setExtra(String extra, String value, AST ast) {
+		// set invocation method name
+		MethodInvocation mi = ast.newMethodInvocation();
+		mi.setExpression(ast.newSimpleName(intentName));
+		mi.setName(ast.newSimpleName("putExtra"));
+
+		// set argument
+		StringLiteral sl1 = ast.newStringLiteral();
+		sl1.setLiteralValue(extra);
+		mi.arguments().add(sl1);
+		
+		StringLiteral sl2 = ast.newStringLiteral();
+		sl2.setLiteralValue(value);
+		mi.arguments().add(sl2);
+
+		ExpressionStatement es = ast.newExpressionStatement(mi);
+
 		return es;
 	}
 	
