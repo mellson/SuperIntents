@@ -43,9 +43,48 @@ public class SIHelper {
 			TypeDeclaration typeDecl = (TypeDeclaration) astRoot.types().get(0);
 			int currentMethodOffset = getCurrentMethodOffset(typeDecl.getMethods());
 			currentMethod = typeDecl.getMethods()[currentMethodOffset];
-
 		}
 		return new ASTTupleHelper(rewriter, editor, unit, currentMethod);
+	}
+	
+	/**
+	 * This method will check whether the caret is placed inside the given statement and return the innermost ASTNode to insert new nodes in.
+	 * @param o A statement
+	 * @param caretOffset the offset of the caret
+	 * @return the ASTnode to insert new nodes in
+	 */
+	protected static ASTNode isCaretInStatement(Statement o, int caretOffset) {
+		ASTNode resultNode = null;
+
+		// find where the statements starts and stops
+		int statementStartPos = ((Statement) o).getStartPosition();
+		int statementEndPos = ((Statement) o).getStartPosition() + ((Statement) o).getLength();
+
+		// if the caret is placed in a statement...
+		if (caretOffset > statementStartPos && caretOffset < statementEndPos) {
+			if (o.getClass().equals(Block.class)) {
+				for (Object s : ((Block) o).statements()) {
+					return isCaretInStatement((Statement) s, caretOffset);
+				}
+			}
+
+			ChildPropertyDescriptor cpd = null;
+
+			// ...we check that statements structural properties....
+			for (Object s : o.structuralPropertiesForType()) {
+				if (s.getClass() == ChildPropertyDescriptor.class) {
+					// ...to find out if it has a "BODY" property (ex. ForStatements have these)
+					if (((ChildPropertyDescriptor) s).getId().equals("body"))
+						cpd = (ChildPropertyDescriptor) s;
+				}
+			}
+			
+			if (cpd != null)
+				resultNode = (ASTNode) isCaretInStatement((Statement) o.getStructuralProperty(cpd), caretOffset);
+			else
+				resultNode = o;
+		}
+		return resultNode;
 	}
 
 	private static void insertNodeIntoCurrentMethod(ArrayList<ASTNodeWrapper> nodes) throws MalformedTreeException, BadLocationException, JavaModelException {
@@ -130,45 +169,5 @@ public class SIHelper {
 				result = i;
 		}
 		return result;
-	}
-
-	/**
-	 * This method will check whether the caret is placed inside the given statement and return the innermost ASTNode to insert new nodes in.
-	 * @param o A statement
-	 * @param caretOffset the offset of the caret
-	 * @return the ASTnode to insert new nodes in
-	 */
-	protected static ASTNode isCaretInStatement(Statement o, int caretOffset) {
-		ASTNode resultNode = null;
-
-		// find where the statements starts and stops
-		int statementStartPos = ((Statement) o).getStartPosition();
-		int statementEndPos = ((Statement) o).getStartPosition() + ((Statement) o).getLength();
-
-		// if the caret is placed in a statement...
-		if (caretOffset > statementStartPos && caretOffset < statementEndPos) {
-			if (o.getClass().equals(Block.class)) {
-				for (Object s : ((Block) o).statements()) {
-					return isCaretInStatement((Statement) s, caretOffset);
-				}
-			}
-
-			ChildPropertyDescriptor cpd = null;
-
-			// ...we check that statements structural properties....
-			for (Object s : o.structuralPropertiesForType()) {
-				if (s.getClass() == ChildPropertyDescriptor.class) {
-					// ...to find out if it has a "BODY" property (ex. ForStatements have these)
-					if (((ChildPropertyDescriptor) s).getId().equals("body"))
-						cpd = (ChildPropertyDescriptor) s;
-				}
-			}
-			
-			if (cpd != null)
-				resultNode = (ASTNode) isCaretInStatement((Statement) o.getStructuralProperty(cpd), caretOffset);
-			else
-				resultNode = o;
-		}
-		return resultNode;
 	}
 }
