@@ -2,6 +2,7 @@ package transformers;
 
 import java.util.ArrayList;
 import org.eclipse.jdt.core.dom.*;
+import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 
 import superintents.control.ASTNodeWrapper;
 
@@ -303,6 +304,11 @@ public class Java2AST {
 		MethodDeclaration m = ast.newMethodDeclaration();
 		m.setName(ast.newSimpleName("OnActivityResult"));
 		
+		//add the @Override annotation
+		MarkerAnnotation ma = ast.newMarkerAnnotation();
+		ma.setTypeName(ast.newSimpleName("Override"));
+		m.modifiers().add(ma);
+		
 		//parameters
 		SingleVariableDeclaration svd1 = ast.newSingleVariableDeclaration();
 		svd1.setType(ast.newPrimitiveType(PrimitiveType.INT));
@@ -318,6 +324,25 @@ public class Java2AST {
 		svd3.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
 		svd3.setName(ast.newSimpleName("data"));
 		m.parameters().add(svd3);
+		
+		//Generate the internal if statement
+		IfStatement is = ast.newIfStatement();
+		InfixExpression ie1 = ast.newInfixExpression();
+		
+		InfixExpression leftIe = ast.newInfixExpression();
+		leftIe.setLeftOperand(ast.newSimpleName("resultCode"));
+		leftIe.setOperator(Operator.EQUALS);
+		leftIe.setRightOperand(ast.newSimpleName("RESULT_OK"));
+		ie1.setLeftOperand(leftIe);
+		
+		InfixExpression RightIe = ast.newInfixExpression();
+		RightIe.setLeftOperand(ast.newSimpleName("requestCode"));
+		RightIe.setOperator(Operator.EQUALS);
+		RightIe.setRightOperand(ast.newSimpleName("REQUEST_CODE"));
+		ie1.setLeftOperand(RightIe);
+		
+		is.setExpression(ie1);
+		m.getBody().statements().add(is);
 		
 		return null;
 	}
