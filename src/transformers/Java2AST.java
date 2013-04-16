@@ -22,12 +22,12 @@ public class Java2AST {
 		bigRedButtonIntent.setOutput(bigRedButtonOutput);
 		
 		IntentImpl newIntent = new IntentImpl();
-		//newIntent.setAction("THIS IS AN ACTION");
+		newIntent.setAction("THIS IS AN ACTION");
 		
 		newIntent.getCategories().add("CATEGORY1");
 		newIntent.getCategories().add("CATEGORY2");
 		
-		//newIntent.setComponent("String");
+		newIntent.setComponent("String");
 		
 		DataImpl data = new DataImpl();
 		data.setValue("THISISDATA");
@@ -212,7 +212,6 @@ public class Java2AST {
 		return f;
 	}
 	
-	@SuppressWarnings("unchecked")
 	private static ASTNode InitializeConstructor5(SuperIntentImpl si, AST ast)
 	{
 		//set the name of the variable
