@@ -74,10 +74,12 @@ public class Java2AST {
 		for (String extra : si.getIntent().getExtras().keySet()) {
 			resultList.add(new ASTNodeWrapper(setExtra(extra, si.getIntent().getExtras().get(extra), ast),true));
 		}
+		
+		//Add callback method
+		//resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),true));
 			
 		return resultList;
 	}
-
 
 	private static ASTNode initializeIntent(SuperIntentImpl si, AST ast)
 	{
@@ -293,6 +295,31 @@ public class Java2AST {
 	
 	private static ASTNodeWrapper newCommentOutsideMethod(String comment) {
 		return new ASTNodeWrapper(comment, false);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static ASTNode generateCallbackMethod(AST ast) {
+		//method declaration
+		MethodDeclaration m = ast.newMethodDeclaration();
+		m.setName(ast.newSimpleName("OnActivityResult"));
+		
+		//parameters
+		SingleVariableDeclaration svd1 = ast.newSingleVariableDeclaration();
+		svd1.setType(ast.newPrimitiveType(PrimitiveType.INT));
+		svd1.setName(ast.newSimpleName("requestCode"));
+		m.parameters().add(svd1);
+		
+		SingleVariableDeclaration svd2 = ast.newSingleVariableDeclaration();
+		svd2.setType(ast.newPrimitiveType(PrimitiveType.INT));
+		svd2.setName(ast.newSimpleName("resultCode"));
+		m.parameters().add(svd2);
+		
+		SingleVariableDeclaration svd3 = ast.newSingleVariableDeclaration();
+		svd3.setType(ast.newSimpleType(ast.newSimpleName("Intent")));
+		svd3.setName(ast.newSimpleName("data"));
+		m.parameters().add(svd3);
+		
+		return null;
 	}
 }
 	
