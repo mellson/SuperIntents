@@ -131,11 +131,13 @@ public class SIHelper {
 				listRewrite.insertAt(node.node, helper.currentMethodOffset + 1, null);
 				break;
 			case FIELD:
+				TypeDeclaration fieldDeclaration = (TypeDeclaration) compilationUnit.types().get(0);
+				listRewrite = helper.rewriter.getListRewrite(fieldDeclaration, fieldDeclaration.getBodyDeclarationsProperty());
+				listRewrite.insertFirst(node.node, null);
 				break;
 			case IMPORT:
-				//ImportDeclaration importDeclaration = (ImportDeclaration) compilationUnit.imports().get(0);
-				//listRewrite = helper.rewriter.getListRewrite(importDeclaration, importDeclaration.);
-				//listRewrite.insertAt(node.node, helper.currentMethodOffset + 1, null);
+				listRewrite = helper.rewriter.getListRewrite(compilationUnit, CompilationUnit.IMPORTS_PROPERTY);
+				listRewrite.insertFirst(node.node, null);
 				break;
 			default:
 				break;

@@ -62,7 +62,7 @@ public class Java2AST {
 		AST ast = AST.newAST(AST.JLS4);
 		
 		//Add imports
-		resultList.add(new ASTNodeWrapper(generateImports(si, ast)));
+		resultList.add(new ASTNodeWrapper(generateImports(si, ast),NodeType.IMPORT));
 		
 		//Insert Input and OutPut Comments
 		resultList.add(newCommentInsideMethod("Description: \n// " + si.getDescription()));
@@ -92,7 +92,7 @@ public class Java2AST {
 			Random random = new Random();
 			requestCodeValue = random.nextInt(10000000);
 			requestCodeName = "REQUEST_CODE_" + intentName.toUpperCase();
-			resultList.add(new ASTNodeWrapper(generateRequestCode(ast)));
+			resultList.add(new ASTNodeWrapper(generateRequestCode(ast),NodeType.FIELD));
 			resultList.add(new ASTNodeWrapper(callStartActivity(ast)));
 			resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),NodeType.CALLBACK_METHOD));
 		}
