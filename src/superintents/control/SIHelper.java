@@ -15,7 +15,7 @@ import intentmodel.impl.*;
 import transformers.Java2AST;
 
 public class SIHelper {
-	
+
 	public static void insertIntent(SuperIntentImpl intentImplementaion) {
 		ArrayList<ASTNodeWrapper> nodes = Java2AST.transformSuperIntent(intentImplementaion);
 		try {
@@ -44,43 +44,51 @@ public class SIHelper {
 		}
 		return new ASTTupleHelper(rewriter, editor, unit, currentMethod, currentMethodOffset);
 	}
-	
+
 	/**
 	 * This method will check whether the caret is placed inside the given statement and return the innermost ASTNode to insert new nodes in.
-	 * @param o A statement
-	 * @param caretOffset the offset of the caret
+	 * 
+	 * @param o
+	 *            A statement
+	 * @param caretOffset
+	 *            the offset of the caret
 	 * @return the ASTnode to insert new nodes in
 	 */
-	protected static ASTNode isCaretInStatement(Statement o, int caretOffset) {
-		ASTNode resultNode = null;
+	protected static ASTNode isCaretInStatement(Object o, int caretOffset) {
+		ASTNode resultNode = (ASTNode) o;
 
-		// find where the statements starts and stops
-		int statementStartPos = ((Statement) o).getStartPosition();
-		int statementEndPos = ((Statement) o).getStartPosition() + ((Statement) o).getLength();
+		if (o != null) {
+			// find where the statements starts and stops
+			int statementStartPos = ((ASTNode) o).getStartPosition();
+			int statementEndPos = ((ASTNode) o).getStartPosition() + ((Statement) o).getLength();
 
-		// if the caret is placed in a statement...
-		if (caretOffset > statementStartPos && caretOffset < statementEndPos) {
-			if (o.getClass().equals(Block.class)) {
-				for (Object s : ((Block) o).statements()) {
-					return isCaretInStatement((Statement) s, caretOffset);
+			// if the caret is placed in a statement...
+			if (caretOffset > statementStartPos && caretOffset < statementEndPos) {
+				if (o.getClass().equals(Block.class)) {
+					for (Object s : ((Block) o).statements()) {
+						//System.out.println(s);
+						return isCaretInStatement(s, caretOffset);
+					}
 				}
-			}
 
-			ChildPropertyDescriptor cpd = null;
+				ChildPropertyDescriptor cpd = null;
 
-			// ...we check that statements structural properties....
-			for (Object s : o.structuralPropertiesForType()) {
-				if (s.getClass() == ChildPropertyDescriptor.class) {
-					// ...to find out if it has a "BODY" property (ex. ForStatements have these)
-					if (((ChildPropertyDescriptor) s).getId().equals("body"))
+				// ...we check that statements structural properties....
+				for (Object s : ((ASTNode) o).structuralPropertiesForType()) {
+					if (s.getClass() == ChildPropertyDescriptor.class) {
+						// ...to find out if it has a "BODY" property (ex. ForStatements have these)
+						// if (((ChildPropertyDescriptor) s).getId().equals("body"))
 						cpd = (ChildPropertyDescriptor) s;
+						//System.out.println(s);
+					}
 				}
+
+				if (cpd != null)
+					resultNode = (ASTNode) isCaretInStatement(((ASTNode) o).getStructuralProperty(cpd), caretOffset);
+				else
+					resultNode = (ASTNode) o;
 			}
-			
-			if (cpd != null)
-				resultNode = (ASTNode) isCaretInStatement((Statement) o.getStructuralProperty(cpd), caretOffset);
-			else
-				resultNode = o;
+
 		}
 		return resultNode;
 	}
@@ -100,23 +108,26 @@ public class SIHelper {
 			// Run through all statements and compare their position to the carets position
 			// If the statement is before the caret, increase the nodes insert point by 1 which leads to inserting after that statement
 			int statementOffset = blockOffset;
-			Block nestedStatement = null;
-			
+			ASTNode nestedStatement = null;
+
 			for (Object o : block.statements()) {
 				statementOffset += o.toString().length();
 				nodeStatementOffset += (statementOffset < caretOffset) ? 1 : 0;
-				nestedStatement = (Block) isCaretInStatement((Statement) o, caretOffset);
+				nestedStatement = isCaretInStatement(o, caretOffset);
 			}
-			
+
 			ListRewrite listRewrite = null;
 			CompilationUnit compilationUnit = (CompilationUnit) block.getRoot();
 			switch (node.type) {
 			case NORMAL_CODE:
 				if (nestedStatement != null) {
+					//System.out.println(nestedStatement);
 					nodeStatementOffset = 0; // FIX THIS!!!
+					System.out.println(node.node);
 					listRewrite = helper.rewriter.getListRewrite(nestedStatement, Block.STATEMENTS_PROPERTY);
 				} else
 					listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
+				//listRewrite.insertFirst(node.node, null);
 				listRewrite.insertAt(node.node, nodeStatementOffset, null);
 				nodeStatementOffset += 1;
 				break;
@@ -148,7 +159,7 @@ public class SIHelper {
 		Document document = new Document(helper.unit.getSource());
 		edits.apply(document);
 		helper.unit.getBuffer().setContents(document.get());
-		
+
 		// Jump to the position right after the inserted node and focus the editor
 		helper.editor.selectAndReveal(edits.getExclusiveEnd(), 0);
 		helper.editor.setFocus();
