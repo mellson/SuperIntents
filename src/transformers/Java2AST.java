@@ -90,7 +90,7 @@ public class Java2AST {
 			Random random = new Random();
 			requestCodeValue = random.nextInt(10000000);
 			requestCodeName = "REQUEST_CODE_" + intentName.toUpperCase();
-			//resultList.add(new ASTNodeWrapper(generateReqeustCode(ast)));
+			resultList.add(new ASTNodeWrapper(generateRequestCode(ast)));
 			resultList.add(new ASTNodeWrapper(callStartActivity(ast)));
 			resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),true));
 		}
@@ -342,9 +342,25 @@ public class Java2AST {
 		return es;
 	}
 
+	@SuppressWarnings("unchecked")
 	private static ASTNode generateRequestCode(AST ast) {
-		// TODO Auto-generated method stub
-		return null;
+		VariableDeclarationFragment vdf =  ast.newVariableDeclarationFragment();
+		//set var name
+		vdf.setName(ast.newSimpleName(requestCodeName));
+	
+		//set value
+		vdf.setInitializer(ast.newNumberLiteral(requestCodeValue + ""));
+		
+		FieldDeclaration f = ast.newFieldDeclaration(vdf);
+		
+		//set final modifer
+		Modifier mo = ast.newModifier(ModifierKeyword.FINAL_KEYWORD);
+		f.modifiers().add(mo);
+		
+		//set int type
+		f.setType(ast.newPrimitiveType(PrimitiveType.INT));
+
+		return f;
 	}
 	
 	@SuppressWarnings("unchecked")
