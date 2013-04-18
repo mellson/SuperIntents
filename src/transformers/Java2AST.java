@@ -1,6 +1,8 @@
 package transformers;
 
 import java.util.ArrayList;
+import java.util.Random;
+
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
@@ -12,6 +14,8 @@ import intentmodel.impl.*;
 public class Java2AST {
 	
 	private static String intentName;
+	private static String requestCodeName;
+	private static int requestCodeValue;
 
 	public static SuperIntentImpl createTestSI() {
 		SuperIntentImpl bigRedButtonIntent = new SuperIntentImpl();
@@ -55,6 +59,9 @@ public class Java2AST {
 		//AST for generating nodes
 		AST ast = AST.newAST(AST.JLS4);
 		
+		//Add imports
+		resultList.add(new ASTNodeWrapper(generateImports(si, ast)));
+		
 		//Insert Input and OutPut Comments
 		resultList.add(newCommentInsideMethod("Description: \n// " + si.getDescription()));
 		resultList.add(newCommentInsideMethod("Output: \n// " + si.getOutput()));
@@ -78,9 +85,29 @@ public class Java2AST {
 		}
 		
 		//Add callback method
-		resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),true));
+		if(si.getOutput() != null)
+		{
+			Random random = new Random();
+			requestCodeValue = random.nextInt(10000000);
+			requestCodeName = "REQUEST_CODE_" + intentName.toUpperCase();
+			//resultList.add(new ASTNodeWrapper(generateReqeustCode(ast)));
+			resultList.add(new ASTNodeWrapper(callStartActivity(ast)));
+			resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),true));
+		}
 			
 		return resultList;
+	}
+
+	private static ASTNode generateImports(SuperIntentImpl si, AST ast) {
+		//insert the import android.content.Intent;
+		ImportDeclaration i = ast.newImportDeclaration();
+		
+		QualifiedName q1 = ast.newQualifiedName(ast.newSimpleName("android"), ast.newSimpleName("content"));
+		QualifiedName q2 = ast.newQualifiedName(q1, ast.newSimpleName("Intent"));
+		
+		i.setName(q2);
+		
+		return i;
 	}
 
 	private static ASTNode initializeIntent(SuperIntentImpl si, AST ast)
@@ -293,6 +320,31 @@ public class Java2AST {
 	
 	private static ASTNodeWrapper newCommentInsideMethod(String comment) {
 		return new ASTNodeWrapper(comment);
+	}
+	
+	@SuppressWarnings("unchecked")
+	private static ASTNode callStartActivity(AST ast) {
+		// set invocation method name
+		MethodInvocation mi = ast.newMethodInvocation();
+		mi.setName(ast.newSimpleName("startActivityForResult"));
+
+		// set argument 1
+		StringLiteral sl1 = ast.newStringLiteral();
+		sl1.setLiteralValue(intentName);
+		mi.arguments().add(sl1);
+		
+		// set argument 2
+		SimpleName sl2 = ast.newSimpleName(requestCodeName);
+		mi.arguments().add(sl2);
+
+		ExpressionStatement es = ast.newExpressionStatement(mi);
+
+		return es;
+	}
+
+	private static ASTNode generateRequestCode(AST ast) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 	
 	@SuppressWarnings("unchecked")
