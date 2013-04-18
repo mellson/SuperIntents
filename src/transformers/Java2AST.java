@@ -344,7 +344,7 @@ public class Java2AST {
 		is.setExpression(ie1);
 		m.getBody().statements().add(is);
 		
-		return null;
+		return m;
 	}
 }
 	
