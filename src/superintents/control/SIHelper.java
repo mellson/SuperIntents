@@ -33,18 +33,20 @@ public class SIHelper {
 		ICompilationUnit unit = null;
 		ITextEditor editor = getEditor();
 		MethodDeclaration currentMethod = null;
+		CompilationUnit astRoot = null;
 		IEditorInput editorInput = editor.getEditorInput();
 		IJavaElement elem = JavaUI.getEditorInputJavaElement(editorInput);
 		if (elem instanceof ICompilationUnit) {
 			unit = (ICompilationUnit) elem;
-			CompilationUnit astRoot = parse(unit);
+			astRoot = parse(unit);
 			AST ast = astRoot.getAST();
 			rewriter = ASTRewrite.create(ast);
 			TypeDeclaration typeDecl = (TypeDeclaration) astRoot.types().get(0);
 			int currentMethodOffset = getCurrentMethodOffset(typeDecl.getMethods());
 			currentMethod = typeDecl.getMethods()[currentMethodOffset];
 		}
-		return new ASTTupleHelper(rewriter, editor, unit, currentMethod);
+		ASTNode root = astRoot.getRoot();
+		return new ASTTupleHelper(rewriter, editor, unit, currentMethod, root);
 	}
 	
 	/**
@@ -111,20 +113,25 @@ public class SIHelper {
 			}
 			
 			ListRewrite listRewrite = null;
-			if (nestedStatement != null) {
-				nodeStatementOffset = 0; // FIX THIS!!!
-				listRewrite = helper.rewriter.getListRewrite(nestedStatement, Block.STATEMENTS_PROPERTY);
-			} else
-				listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
-			
-			if (node.isComment) {
-				ASTNode commentNode = helper.rewriter.createStringPlaceholder(node.comment, ASTNode.EMPTY_STATEMENT);
-				listRewrite.insertAt(commentNode, nodeStatementOffset, null);
+			if (node.placeInsideMethod) {
+				if (nestedStatement != null) {
+					nodeStatementOffset = 0; // FIX THIS!!!
+					listRewrite = helper.rewriter.getListRewrite(nestedStatement, Block.STATEMENTS_PROPERTY);
+				} else
+					listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
+				
+				if (node.isComment) {
+					ASTNode commentNode = helper.rewriter.createStringPlaceholder(node.comment, ASTNode.EMPTY_STATEMENT);
+					listRewrite.insertAt(commentNode, nodeStatementOffset, null);
+				} else {
+					listRewrite.insertAt(node.node, nodeStatementOffset, null);
+					nodeStatementOffset += 1;
+				}
 			} else {
-				listRewrite.insertAt(node.node, nodeStatementOffset, null);
-				nodeStatementOffset += 1;
+				// create new statements for insertion
+				listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
+				listRewrite.insertFirst(node.node, null);
 			}
-			
 		}
 
 		TextEdit edits = helper.rewriter.rewriteAST();
