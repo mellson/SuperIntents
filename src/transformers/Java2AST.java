@@ -77,7 +77,7 @@ public class Java2AST {
 		}
 		
 		//Add callback method
-		//resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),true));
+		resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),true));
 			
 		return resultList;
 	}
@@ -326,23 +326,23 @@ public class Java2AST {
 		m.parameters().add(svd3);
 		
 		//Generate the internal if statement
-		IfStatement is = ast.newIfStatement();
-		InfixExpression ie1 = ast.newInfixExpression();
-		
-		InfixExpression leftIe = ast.newInfixExpression();
-		leftIe.setLeftOperand(ast.newSimpleName("resultCode"));
-		leftIe.setOperator(Operator.EQUALS);
-		leftIe.setRightOperand(ast.newSimpleName("RESULT_OK"));
-		ie1.setLeftOperand(leftIe);
-		
-		InfixExpression RightIe = ast.newInfixExpression();
-		RightIe.setLeftOperand(ast.newSimpleName("requestCode"));
-		RightIe.setOperator(Operator.EQUALS);
-		RightIe.setRightOperand(ast.newSimpleName("REQUEST_CODE"));
-		ie1.setLeftOperand(RightIe);
-		
-		is.setExpression(ie1);
-		m.getBody().statements().add(is);
+//		IfStatement is = ast.newIfStatement();
+//		InfixExpression ie1 = ast.newInfixExpression();
+//		
+//		InfixExpression leftIe = ast.newInfixExpression();
+//		leftIe.setLeftOperand(ast.newSimpleName("resultCode"));
+//		leftIe.setOperator(Operator.EQUALS);
+//		leftIe.setRightOperand(ast.newSimpleName("RESULT_OK"));
+//		ie1.setLeftOperand(leftIe);
+//		
+//		InfixExpression RightIe = ast.newInfixExpression();
+//		RightIe.setLeftOperand(ast.newSimpleName("requestCode"));
+//		RightIe.setOperator(Operator.EQUALS);
+//		RightIe.setRightOperand(ast.newSimpleName("REQUEST_CODE"));
+//		ie1.setLeftOperand(RightIe);
+//		
+//		is.setExpression(ie1);
+//		m.getBody().statements().add(is);
 		
 		return m;
 	}
