@@ -59,21 +59,21 @@ public class Java2AST {
 		resultList.add(newCommentInsideMethod("Output: \n// " + si.getOutput()));
 		
 		//Initialize the Intent
-		resultList.add(new ASTNodeWrapper(initializeIntent(si, ast),true));
+		resultList.add(new ASTNodeWrapper(initializeIntent(si, ast)));
 		
 		//Set the data type
 		if(si.getIntent().getData() != null & si.getIntent().getData().getMIMEType() != null) {
-			resultList.add(new ASTNodeWrapper(setType(si, ast),true));
+			resultList.add(new ASTNodeWrapper(setType(si, ast)));
 		}
 		
 		//Set Categories
 		for (String category : si.getIntent().getCategories()) {
-			resultList.add(new ASTNodeWrapper(setCategory(category, ast),true));
+			resultList.add(new ASTNodeWrapper(setCategory(category, ast)));
 		}
 		
 		//Set Extras
 		for (String extra : si.getIntent().getExtras().keySet()) {
-			resultList.add(new ASTNodeWrapper(setExtra(extra, si.getIntent().getExtras().get(extra), ast),true));
+			resultList.add(new ASTNodeWrapper(setExtra(extra, si.getIntent().getExtras().get(extra), ast)));
 		}
 		
 		//Add callback method
@@ -291,11 +291,11 @@ public class Java2AST {
 	}
 	
 	private static ASTNodeWrapper newCommentInsideMethod(String comment) {
-		return new ASTNodeWrapper(comment, true);
+		return new ASTNodeWrapper(comment);
 	}
 	
 	private static ASTNodeWrapper newCommentOutsideMethod(String comment) {
-		return new ASTNodeWrapper(comment, false);
+		return new ASTNodeWrapper(comment);
 	}
 	
 	@SuppressWarnings("unchecked")

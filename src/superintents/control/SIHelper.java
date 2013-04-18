@@ -113,7 +113,7 @@ public class SIHelper {
 			}
 			
 			ListRewrite listRewrite = null;
-			if (node.placeInsideMethod) {
+			if (!node.isCallbackMethod) {
 				if (nestedStatement != null) {
 					nodeStatementOffset = 0; // FIX THIS!!!
 					listRewrite = helper.rewriter.getListRewrite(nestedStatement, Block.STATEMENTS_PROPERTY);
