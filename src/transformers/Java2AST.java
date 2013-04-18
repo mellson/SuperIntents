@@ -404,7 +404,7 @@ public class Java2AST {
 	}
 	
 	private static ASTNode generateCallbackMethodBody(AST ast)
-	{
+	{	
 		IfStatement is = ast.newIfStatement();
 		InfixExpression ie1 = ast.newInfixExpression();
 		

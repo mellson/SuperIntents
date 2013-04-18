@@ -1,6 +1,8 @@
 package superintents.control;
 
 import java.util.ArrayList;
+import java.util.List;
+
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.eclipse.ui.*;
@@ -11,6 +13,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
 import org.eclipse.jdt.ui.JavaUI;
+import org.w3c.dom.NodeList;
+
 import intentmodel.impl.*;
 import transformers.Java2AST;
 
@@ -54,41 +58,66 @@ public class SIHelper {
 	 *            the offset of the caret
 	 * @return the ASTnode to insert new nodes in
 	 */
-	protected static ASTNode isCaretInStatement(Object o, int caretOffset) {
-		ASTNode resultNode = (ASTNode) o;
+	protected static ASTNode isCaretInStatement(ASTNode o, int caretOffset) {
+
+		ASTNode resultNode = null;
 
 		if (o != null) {
 			// find where the statements starts and stops
 			int statementStartPos = ((ASTNode) o).getStartPosition();
-			int statementEndPos = ((ASTNode) o).getStartPosition() + ((Statement) o).getLength();
+			int statementEndPos = ((ASTNode) o).getStartPosition()
+					+ o.getLength();
 
 			// if the caret is placed in a statement...
-			if (caretOffset > statementStartPos && caretOffset < statementEndPos) {
-				if (o.getClass().equals(Block.class)) {
-					for (Object s : ((Block) o).statements()) {
-						//System.out.println(s);
-						return isCaretInStatement(s, caretOffset);
+			if (caretOffset > statementStartPos	&& caretOffset < statementEndPos) {
+
+				// ..We check all of the properties
+				for (Object s : o.structuralPropertiesForType()) {
+
+					Object property = o.getStructuralProperty((StructuralPropertyDescriptor) s);
+
+					if(property != null)
+ {
+						// .. If it is a block...
+						if (property.getClass() == Block.class) {
+							ASTNode BlockNode = null;
+							// .. we check all its statements..
+							for (Object blockNode : ((Block) property).statements()) 
+							{
+								ASTNode node = isCaretInStatement((ASTNode) blockNode, caretOffset);
+
+								if (node != null)
+									BlockNode = node;
+							}
+
+							if (BlockNode == null)
+								resultNode = (ASTNode) property;
+							else
+								resultNode = BlockNode;
+
+						}
+						// ..If it is a list...
+						else if (property.getClass() == NodeList.class) {
+							// ...we check all the elements...
+							// FUNKER IKKE
+							System.out.println("LOOOOL");
+						}
+						// .. if it is a statement...
+						else if (property.getClass() == Statement.class) {
+							// .. we just call this method recursively
+							resultNode = isCaretInStatement(
+									(Statement) property, caretOffset);
+						}
+						// ..If it is neither..
+						else {
+							// System.out.println(o.getStructuralProperty((StructuralPropertyDescriptor)
+							// s).getClass());
+							// ..we just return null
+							resultNode = null;
+						}
 					}
 				}
-
-				ChildPropertyDescriptor cpd = null;
-
-				// ...we check that statements structural properties....
-				for (Object s : ((ASTNode) o).structuralPropertiesForType()) {
-					if (s.getClass() == ChildPropertyDescriptor.class) {
-						// ...to find out if it has a "BODY" property (ex. ForStatements have these)
-						// if (((ChildPropertyDescriptor) s).getId().equals("body"))
-						cpd = (ChildPropertyDescriptor) s;
-						//System.out.println(s);
-					}
-				}
-
-				if (cpd != null)
-					resultNode = (ASTNode) isCaretInStatement(((ASTNode) o).getStructuralProperty(cpd), caretOffset);
-				else
-					resultNode = (ASTNode) o;
 			}
-
 		}
 		return resultNode;
 	}
@@ -113,7 +142,16 @@ public class SIHelper {
 			for (Object o : block.statements()) {
 				statementOffset += o.toString().length();
 				nodeStatementOffset += (statementOffset < caretOffset) ? 1 : 0;
-				nestedStatement = isCaretInStatement(o, caretOffset);
+				nestedStatement = isCaretInStatement((Statement)o, caretOffset);
+				
+				if(nestedStatement != null)
+				{
+					System.out.println("TYPE =" + nestedStatement.getClass());
+					System.out.println("....................................");
+					System.out.println(nestedStatement);
+				}
+				else
+					System.out.println("IT WAS NULL");
 			}
 
 			ListRewrite listRewrite = null;
@@ -123,7 +161,6 @@ public class SIHelper {
 				if (nestedStatement != null) {
 					//System.out.println(nestedStatement);
 					nodeStatementOffset = 0; // FIX THIS!!!
-					System.out.println(node.node);
 					listRewrite = helper.rewriter.getListRewrite(nestedStatement, Block.STATEMENTS_PROPERTY);
 				} else
 					listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
