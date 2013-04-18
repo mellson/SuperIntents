@@ -3,6 +3,7 @@ package transformers;
 import java.util.ArrayList;
 import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
+import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
 import superintents.control.ASTNodeWrapper;
 
@@ -294,10 +295,6 @@ public class Java2AST {
 		return new ASTNodeWrapper(comment);
 	}
 	
-	private static ASTNodeWrapper newCommentOutsideMethod(String comment) {
-		return new ASTNodeWrapper(comment);
-	}
-	
 	@SuppressWarnings("unchecked")
 	private static ASTNode generateCallbackMethod(AST ast) {
 		//method declaration
@@ -308,6 +305,10 @@ public class Java2AST {
 		MarkerAnnotation ma = ast.newMarkerAnnotation();
 		ma.setTypeName(ast.newSimpleName("Override"));
 		m.modifiers().add(ma);
+		
+		//add the "public" keyword
+		Modifier mo = ast.newModifier(ModifierKeyword.PUBLIC_KEYWORD);
+		m.modifiers().add(mo);
 		
 		//parameters
 		SingleVariableDeclaration svd1 = ast.newSingleVariableDeclaration();
@@ -326,25 +327,32 @@ public class Java2AST {
 		m.parameters().add(svd3);
 		
 		//Generate the internal if statement
-//		IfStatement is = ast.newIfStatement();
-//		InfixExpression ie1 = ast.newInfixExpression();
-//		
-//		InfixExpression leftIe = ast.newInfixExpression();
-//		leftIe.setLeftOperand(ast.newSimpleName("resultCode"));
-//		leftIe.setOperator(Operator.EQUALS);
-//		leftIe.setRightOperand(ast.newSimpleName("RESULT_OK"));
-//		ie1.setLeftOperand(leftIe);
-//		
-//		InfixExpression RightIe = ast.newInfixExpression();
-//		RightIe.setLeftOperand(ast.newSimpleName("requestCode"));
-//		RightIe.setOperator(Operator.EQUALS);
-//		RightIe.setRightOperand(ast.newSimpleName("REQUEST_CODE"));
-//		ie1.setLeftOperand(RightIe);
-//		
-//		is.setExpression(ie1);
-//		m.getBody().statements().add(is);
+		m.setBody(ast.newBlock());
+		m.getBody().statements().add(generateCallbackMethodBody(ast));
 		
 		return m;
+	}
+	
+	private static ASTNode generateCallbackMethodBody(AST ast)
+	{
+		IfStatement is = ast.newIfStatement();
+		InfixExpression ie1 = ast.newInfixExpression();
+		
+		InfixExpression leftIe = ast.newInfixExpression();
+		leftIe.setLeftOperand(ast.newSimpleName("resultCode"));
+		leftIe.setOperator(Operator.EQUALS);
+		leftIe.setRightOperand(ast.newSimpleName("RESULT_OK"));
+		ie1.setLeftOperand(leftIe);
+		
+		InfixExpression RightIe = ast.newInfixExpression();
+		RightIe.setLeftOperand(ast.newSimpleName("requestCode"));
+		RightIe.setOperator(Operator.EQUALS);
+		RightIe.setRightOperand(ast.newSimpleName("REQUEST_CODE"));
+		ie1.setRightOperand(RightIe);
+		
+		is.setExpression(ie1);
+		
+		return is;
 	}
 }
 	
