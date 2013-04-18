@@ -8,6 +8,8 @@ import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
 import superintents.control.ASTNodeWrapper;
+import superintents.control.ASTNodeWrapper.NodeType;
+import superintents.control.ASTNodeWrapper.NodeType;
 
 import intentmodel.impl.*;
 
@@ -92,7 +94,7 @@ public class Java2AST {
 			requestCodeName = "REQUEST_CODE_" + intentName.toUpperCase();
 			resultList.add(new ASTNodeWrapper(generateRequestCode(ast)));
 			resultList.add(new ASTNodeWrapper(callStartActivity(ast)));
-			resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),true));
+			resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),NodeType.CALLBACK_METHOD));
 		}
 			
 		return resultList;

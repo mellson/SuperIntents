@@ -16,9 +16,6 @@ import transformers.Java2AST;
 
 public class SIHelper {
 	
-	private Class[] supportedStatements = {Block.class, DoStatement.class, ForStatement.class, IfStatement.class, SwitchStatement.class, 
-			SwitchCase.class, SynchronizedStatement.class, ThrowStatement.class, TryStatement.class, WhileStatement.class};
-	
 	public static void insertIntent(SuperIntentImpl intentImplementaion) {
 		ArrayList<ASTNodeWrapper> nodes = Java2AST.transformSuperIntent(intentImplementaion);
 		try {
@@ -33,20 +30,19 @@ public class SIHelper {
 		ICompilationUnit unit = null;
 		ITextEditor editor = getEditor();
 		MethodDeclaration currentMethod = null;
-		CompilationUnit astRoot = null;
+		int currentMethodOffset = 0;
 		IEditorInput editorInput = editor.getEditorInput();
 		IJavaElement elem = JavaUI.getEditorInputJavaElement(editorInput);
 		if (elem instanceof ICompilationUnit) {
 			unit = (ICompilationUnit) elem;
-			astRoot = parse(unit);
+			CompilationUnit astRoot = parse(unit);
 			AST ast = astRoot.getAST();
 			rewriter = ASTRewrite.create(ast);
 			TypeDeclaration typeDecl = (TypeDeclaration) astRoot.types().get(0);
-			int currentMethodOffset = getCurrentMethodOffset(typeDecl.getMethods());
+			currentMethodOffset = getCurrentMethodOffset(typeDecl.getMethods());
 			currentMethod = typeDecl.getMethods()[currentMethodOffset];
 		}
-		ASTNode root = astRoot.getRoot();
-		return new ASTTupleHelper(rewriter, editor, unit, currentMethod, root);
+		return new ASTTupleHelper(rewriter, editor, unit, currentMethod, currentMethodOffset);
 	}
 	
 	/**
@@ -113,24 +109,36 @@ public class SIHelper {
 			}
 			
 			ListRewrite listRewrite = null;
-			if (!node.isCallbackMethod) {
+			CompilationUnit compilationUnit = (CompilationUnit) block.getRoot();
+			switch (node.type) {
+			case NORMAL_CODE:
 				if (nestedStatement != null) {
 					nodeStatementOffset = 0; // FIX THIS!!!
 					listRewrite = helper.rewriter.getListRewrite(nestedStatement, Block.STATEMENTS_PROPERTY);
 				} else
 					listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
-				
-				if (node.isComment) {
-					ASTNode commentNode = helper.rewriter.createStringPlaceholder(node.comment, ASTNode.EMPTY_STATEMENT);
-					listRewrite.insertAt(commentNode, nodeStatementOffset, null);
-				} else {
-					listRewrite.insertAt(node.node, nodeStatementOffset, null);
-					nodeStatementOffset += 1;
-				}
-			} else {
-				// create new statements for insertion
+				listRewrite.insertAt(node.node, nodeStatementOffset, null);
+				nodeStatementOffset += 1;
+				break;
+			case COMMENT:
+				ASTNode commentNode = helper.rewriter.createStringPlaceholder(node.comment, ASTNode.EMPTY_STATEMENT);
 				listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
-				listRewrite.insertFirst(node.node, null);
+				listRewrite.insertAt(commentNode, nodeStatementOffset, null);
+				break;
+			case CALLBACK_METHOD:
+				TypeDeclaration typeDeclaration = (TypeDeclaration) compilationUnit.types().get(0);
+				listRewrite = helper.rewriter.getListRewrite(typeDeclaration, typeDeclaration.getBodyDeclarationsProperty());
+				listRewrite.insertAt(node.node, helper.currentMethodOffset + 1, null);
+				break;
+			case FIELD:
+				break;
+			case IMPORT:
+				//ImportDeclaration importDeclaration = (ImportDeclaration) compilationUnit.imports().get(0);
+				//listRewrite = helper.rewriter.getListRewrite(importDeclaration, importDeclaration.);
+				//listRewrite.insertAt(node.node, helper.currentMethodOffset + 1, null);
+				break;
+			default:
+				break;
 			}
 		}
 

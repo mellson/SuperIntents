@@ -3,28 +3,26 @@ package superintents.control;
 import org.eclipse.jdt.core.dom.ASTNode;
 
 public class ASTNodeWrapper {
-
+	public enum NodeType {
+		NORMAL_CODE, CALLBACK_METHOD, COMMENT, FIELD, IMPORT
+	}
+	public NodeType type;
 	public ASTNode node;
-	public boolean isCallbackMethod;
-	public boolean isComment;
 	public String comment;
 	
 	public ASTNodeWrapper(ASTNode node) {
 		this.node = node;
-		this.isCallbackMethod = false;
-		this.isComment = false;
+		type = NodeType.NORMAL_CODE; 
 	}
 	
-	public ASTNodeWrapper(ASTNode node, boolean isCallbackMethod) {
+	public ASTNodeWrapper(ASTNode node, NodeType nodetype) {
 		this.node = node;
-		this.isCallbackMethod = isCallbackMethod;
-		this.isComment = false;
+		type = nodetype;
 	}
 	
 	public ASTNodeWrapper(String comment) {
-		this.isCallbackMethod = false;
-		this.isComment = true;
 		this.comment = "// " + comment;
+		type = NodeType.COMMENT;
 	}
 
 }
