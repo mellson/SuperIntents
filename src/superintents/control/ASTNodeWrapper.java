@@ -7,16 +7,16 @@ public class ASTNodeWrapper {
 		NORMAL_CODE, CALLBACK_METHOD, COMMENT, FIELD, IMPORT
 	}
 	public NodeType type;
-	public ASTNode node;
+	public ASTNode astNode;
 	public String comment;
 	
 	public ASTNodeWrapper(ASTNode node) {
-		this.node = node;
+		this.astNode = node;
 		type = NodeType.NORMAL_CODE; 
 	}
 	
 	public ASTNodeWrapper(ASTNode node, NodeType nodetype) {
-		this.node = node;
+		this.astNode = node;
 		type = nodetype;
 	}
 	

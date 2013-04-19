@@ -1,8 +1,6 @@
 package superintents.control;
 
 import java.util.ArrayList;
-import java.util.List;
-
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.eclipse.ui.*;
@@ -13,17 +11,14 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
 import org.eclipse.jdt.ui.JavaUI;
-import org.w3c.dom.NodeList;
-
 import intentmodel.impl.*;
 import transformers.Java2AST;
 
 public class SIHelper {
-
 	public static void insertIntent(SuperIntentImpl intentImplementaion) {
-		ArrayList<ASTNodeWrapper> nodes = Java2AST.transformSuperIntent(intentImplementaion);
+		ArrayList<ASTNodeWrapper> nodeWrappers = Java2AST.transformSuperIntent(intentImplementaion);
 		try {
-			insertNodeIntoCurrentMethod(nodes);
+			insertNodes(nodeWrappers);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -49,72 +44,35 @@ public class SIHelper {
 		return new ASTTupleHelper(rewriter, editor, unit, currentMethod, currentMethodOffset);
 	}
 
-	/**
-	 * This method will check whether the caret is placed inside the given statement and return the innermost ASTNode to insert new nodes in.
-	 * 
-	 * @param o
-	 *            A statement
-	 * @param caretOffset
-	 *            the offset of the caret
-	 * @return the ASTnode to insert new nodes in
-	 */
-	protected static ASTNode isCaretInStatement(ASTNode o, int caretOffset) {
-
+	// This method will check whether the caret is placed inside the given statement and return the innermost ASTNode to insert new nodes in.
+	protected static ASTNode getDeepestNode(ASTNode astNode, int caretOffset) {
 		ASTNode resultNode = null;
-
-		if (o != null) {
+		if (astNode != null) {
 			// find where the statements starts and stops
-			int statementStartPos = ((ASTNode) o).getStartPosition();
-			int statementEndPos = ((ASTNode) o).getStartPosition()
-					+ o.getLength();
-
+			int statementStartPos = ((ASTNode) astNode).getStartPosition();
+			int statementEndPos = ((ASTNode) astNode).getStartPosition() + astNode.getLength();
 			// if the caret is placed in a statement...
-			if (caretOffset > statementStartPos	&& caretOffset < statementEndPos) {
-
+			if (caretOffset > statementStartPos && caretOffset < statementEndPos) {
 				// ..We check all of the properties
-				for (Object s : o.structuralPropertiesForType()) {
-
-					Object property = o.getStructuralProperty((StructuralPropertyDescriptor) s);
-
-					if(property != null)
- {
-						// .. If it is a block...
-						if (property.getClass() == Block.class) {
-							ASTNode BlockNode = null;
-							// .. we check all its statements..
-							for (Object blockNode : ((Block) property).statements()) 
-							{
-								ASTNode node = isCaretInStatement((ASTNode) blockNode, caretOffset);
-
-								if (node != null)
-									BlockNode = node;
+				for (Object structuralPropertyDescriptor : astNode.structuralPropertiesForType()) {
+					Object currentNode = astNode.getStructuralProperty((StructuralPropertyDescriptor) structuralPropertyDescriptor);
+					if (currentNode != null) {
+						// If it is a block, we look further into the node
+						if (currentNode.getClass() == Block.class) {
+							int nodeStart = ((ASTNode) currentNode).getStartPosition();
+							int nodeEnd = ((ASTNode) currentNode).getStartPosition() + ((ASTNode) currentNode).getLength();
+							// Is the caret inside this node, we recursively apply this method
+							if (caretOffset > nodeStart && caretOffset < nodeEnd) {
+								ASTNode node = getDeepestNode((ASTNode) currentNode, caretOffset);
+								// If there was no block nested inside the current node, set the result to the current one
+								if (node == null)
+									resultNode = (ASTNode) currentNode;
+								else
+									resultNode = node;
 							}
-
-							if (BlockNode == null)
-								resultNode = (ASTNode) property;
-							else
-								resultNode = BlockNode;
-
-						}
-						// ..If it is a list...
-						else if (property.getClass() == NodeList.class) {
-							// ...we check all the elements...
-							// FUNKER IKKE
-							System.out.println("LOOOOL");
-						}
-						// .. if it is a statement...
-						else if (property.getClass() == Statement.class) {
-							// .. we just call this method recursively
-							resultNode = isCaretInStatement(
-									(Statement) property, caretOffset);
-						}
-						// ..If it is neither..
-						else {
-							// System.out.println(o.getStructuralProperty((StructuralPropertyDescriptor)
-							// s).getClass());
-							// ..we just return null
+						} else
+							// If it is not a block return null
 							resultNode = null;
-						}
 					}
 				}
 			}
@@ -122,70 +80,57 @@ public class SIHelper {
 		return resultNode;
 	}
 
-	private static void insertNodeIntoCurrentMethod(ArrayList<ASTNodeWrapper> nodes) throws MalformedTreeException, BadLocationException, JavaModelException {
+	private static void insertNodes(ArrayList<ASTNodeWrapper> nodeWrappers) throws MalformedTreeException, BadLocationException, JavaModelException {
+		// Initialize values
 		ASTTupleHelper helper = getASTTupleHelper();
 		Block block = helper.currentMethod.getBody();
-
-		// Where in the statement list of the method should the node be added?
 		int blockOffset = block.getStartPosition();
 		int caretOffset = getCaretOffset(helper.editor);
+		int nodeStatementOffset = 0;
+		int statementOffset = blockOffset;
+		ASTNode nestedNode = null;
+		ListRewrite listRewrite = null;
 
-		// Running through the nodes in reversed order
-		for (int i = nodes.size() - 1; i >= 0; i--) {
-			ASTNodeWrapper node = nodes.get(i);
-			int nodeStatementOffset = 0;
-			// Run through all statements and compare their position to the carets position
-			// If the statement is before the caret, increase the nodes insert point by 1 which leads to inserting after that statement
-			int statementOffset = blockOffset;
-			ASTNode nestedStatement = null;
+		// Check if the caret is placed in a nested block inside the current method
+		for (Object o : block.statements())
+			nestedNode = getDeepestNode((ASTNode) o, caretOffset);
 
+		// If we are inside a nested block set that as the main block to insert into
+		if (nestedNode != null)
+			block = (Block) nestedNode;
+
+		for (ASTNodeWrapper nodeWrapper : nodeWrappers) {
+			// Get the offset where to insert the current node
 			for (Object o : block.statements()) {
 				statementOffset += o.toString().length();
 				nodeStatementOffset += (statementOffset < caretOffset) ? 1 : 0;
-				nestedStatement = isCaretInStatement((Statement)o, caretOffset);
-				
-				if(nestedStatement != null)
-				{
-					System.out.println("TYPE =" + nestedStatement.getClass());
-					System.out.println("....................................");
-					System.out.println(nestedStatement);
-				}
-				else
-					System.out.println("IT WAS NULL");
 			}
-
-			ListRewrite listRewrite = null;
 			CompilationUnit compilationUnit = (CompilationUnit) block.getRoot();
-			switch (node.type) {
+			switch (nodeWrapper.type) {
 			case NORMAL_CODE:
-				if (nestedStatement != null) {
-					//System.out.println(nestedStatement);
-					nodeStatementOffset = 0; // FIX THIS!!!
-					listRewrite = helper.rewriter.getListRewrite(nestedStatement, Block.STATEMENTS_PROPERTY);
-				} else
-					listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
-				//listRewrite.insertFirst(node.node, null);
-				listRewrite.insertAt(node.node, nodeStatementOffset, null);
+				listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
+				listRewrite.insertAt(nodeWrapper.astNode, nodeStatementOffset, null);
 				nodeStatementOffset += 1;
 				break;
 			case COMMENT:
-				ASTNode commentNode = helper.rewriter.createStringPlaceholder(node.comment, ASTNode.EMPTY_STATEMENT);
+				ASTNode commentNode = helper.rewriter.createStringPlaceholder(nodeWrapper.comment, ASTNode.EMPTY_STATEMENT);
 				listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
 				listRewrite.insertAt(commentNode, nodeStatementOffset, null);
+				nodeStatementOffset += 1;
 				break;
 			case CALLBACK_METHOD:
 				TypeDeclaration typeDeclaration = (TypeDeclaration) compilationUnit.types().get(0);
 				listRewrite = helper.rewriter.getListRewrite(typeDeclaration, typeDeclaration.getBodyDeclarationsProperty());
-				listRewrite.insertAt(node.node, helper.currentMethodOffset + 1, null);
+				listRewrite.insertAfter(nodeWrapper.astNode, helper.currentMethod, null);
 				break;
 			case FIELD:
 				TypeDeclaration fieldDeclaration = (TypeDeclaration) compilationUnit.types().get(0);
 				listRewrite = helper.rewriter.getListRewrite(fieldDeclaration, fieldDeclaration.getBodyDeclarationsProperty());
-				listRewrite.insertFirst(node.node, null);
+				listRewrite.insertFirst(nodeWrapper.astNode, null);
 				break;
 			case IMPORT:
 				listRewrite = helper.rewriter.getListRewrite(compilationUnit, CompilationUnit.IMPORTS_PROPERTY);
-				listRewrite.insertFirst(node.node, null);
+				listRewrite.insertFirst(nodeWrapper.astNode, null);
 				break;
 			default:
 				break;
