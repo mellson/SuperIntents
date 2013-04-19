@@ -25,24 +25,25 @@ public class JDTInserter {
 		ASTNode resultNode = null;
 		if (astNode != null) {
 			// find where the statements starts and stops
-			int statementStartPos = ((ASTNode) astNode).getStartPosition();
-			int statementEndPos = ((ASTNode) astNode).getStartPosition() + astNode.getLength();
+			int statementStart = astNode.getStartPosition();
+			int statementEnd = statementStart + astNode.getLength();
 			// if the caret is placed in a statement...
-			if (caretOffset > statementStartPos && caretOffset < statementEndPos) {
+			if (caretOffset > statementStart && caretOffset < statementEnd) {
 				// ..We check all of the properties
 				for (Object structuralPropertyDescriptor : astNode.structuralPropertiesForType()) {
-					Object currentNode = astNode.getStructuralProperty((StructuralPropertyDescriptor) structuralPropertyDescriptor);
-					if (currentNode != null) {
+					Object structuralProperty = astNode.getStructuralProperty((StructuralPropertyDescriptor) structuralPropertyDescriptor);
+					if (structuralProperty != null) {
 						// If it is a block, we look further into the node
-						if (currentNode.getClass() == Block.class) {
-							int nodeStart = ((ASTNode) currentNode).getStartPosition();
-							int nodeEnd = ((ASTNode) currentNode).getStartPosition() + ((ASTNode) currentNode).getLength();
+						if (structuralProperty.getClass() == Block.class) {
+							ASTNode currentNode = (ASTNode) structuralProperty;
+							int nodeStart = currentNode.getStartPosition();
+							int nodeEnd = nodeStart + currentNode.getLength();
 							// Is the caret inside this node, we recursively apply this method
 							if (caretOffset > nodeStart && caretOffset < nodeEnd) {
-								ASTNode node = getDeepestNode((ASTNode) currentNode, caretOffset);
+								ASTNode node = getDeepestNode(currentNode, caretOffset);
 								// If there was no block nested inside the current node, set the result to the current one
 								if (node == null)
-									resultNode = (ASTNode) currentNode;
+									resultNode = currentNode;
 								else
 									resultNode = node;
 							}

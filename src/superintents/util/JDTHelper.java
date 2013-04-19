@@ -37,9 +37,9 @@ public class JDTHelper {
 			currentMethodOffset = getCurrentMethodOffset(typeDecl.getMethods());
 			currentMethod = typeDecl.getMethods()[currentMethodOffset];
 		}
-		return new ASTTupleHelper(rewriter, editor, unit, currentMethod, currentMethodOffset);
+		return new ASTTupleHelper(rewriter, editor, unit, currentMethod);
 	}
-	
+
 	protected static CompilationUnit parse(ICompilationUnit unit) {
 		ASTParser parser = ASTParser.newParser(AST.JLS4);
 		parser.setKind(ASTParser.K_COMPILATION_UNIT);

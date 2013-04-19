@@ -10,14 +10,12 @@ public class ASTTupleHelper {
 	public ITextEditor editor;
 	public ICompilationUnit unit;
 	public MethodDeclaration currentMethod;
-	int currentMethodOffset;
-	
-	public ASTTupleHelper(ASTRewrite rewriter, ITextEditor editor, ICompilationUnit unit, MethodDeclaration currentMethod, int currentMethodOffset) {
+
+	public ASTTupleHelper(ASTRewrite rewriter, ITextEditor editor, ICompilationUnit unit, MethodDeclaration currentMethod) {
 		super();
 		this.rewriter = rewriter;
 		this.editor = editor;
 		this.unit = unit;
 		this.currentMethod = currentMethod;
-		this.currentMethodOffset = currentMethodOffset;
 	}
 }
