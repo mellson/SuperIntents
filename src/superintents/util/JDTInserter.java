@@ -20,43 +20,6 @@ public class JDTInserter {
 		}
 	}
 
-	// This method will check whether the caret is placed inside the given statement and return the innermost ASTNode to insert new nodes in.
-	private static ASTNode getDeepestNode(ASTNode astNode, int caretOffset) {
-		ASTNode resultNode = null;
-		if (astNode != null) {
-			// find where the statements starts and stops
-			int statementStart = astNode.getStartPosition();
-			int statementEnd = statementStart + astNode.getLength();
-			// if the caret is placed in a statement...
-			if (caretOffset > statementStart && caretOffset < statementEnd) {
-				// ..We check all of the properties
-				for (Object structuralPropertyDescriptor : astNode.structuralPropertiesForType()) {
-					Object structuralProperty = astNode.getStructuralProperty((StructuralPropertyDescriptor) structuralPropertyDescriptor);
-					if (structuralProperty != null) {
-						// If it is a block, we look further into the node
-						if (structuralProperty.getClass() == Block.class) {
-							ASTNode currentNode = (ASTNode) structuralProperty;
-							int nodeStart = currentNode.getStartPosition();
-							int nodeEnd = nodeStart + currentNode.getLength();
-							// Is the caret inside this node, we recursively apply this method
-							if (caretOffset > nodeStart && caretOffset < nodeEnd) {
-								ASTNode node = getDeepestNode(currentNode, caretOffset);
-								// If there was no block nested inside the current node, set the result to the current one
-								if (node == null)
-									resultNode = currentNode;
-								else
-									resultNode = node;
-							}
-						} else
-							// If it is not a block return null
-							resultNode = null;
-					}
-				}
-			}
-		}
-		return resultNode;
-	}
-
 	private static void insertNodes(ArrayList<ASTNodeWrapper> nodeWrappers) throws MalformedTreeException, BadLocationException, JavaModelException {
 		// Initialize values
 		ASTTupleHelper helper = JDTHelper.getASTTupleHelper();
@@ -123,4 +86,41 @@ public class JDTInserter {
 		helper.editor.selectAndReveal(edits.getExclusiveEnd(), 0);
 		helper.editor.setFocus();
 	}
+	
+	// This method will check whether the caret is placed inside the given statement and return the innermost ASTNode to insert new nodes in.
+		private static ASTNode getDeepestNode(ASTNode astNode, int caretOffset) {
+			ASTNode resultNode = null;
+			if (astNode != null) {
+				// find where the statements starts and stops
+				int statementStart = astNode.getStartPosition();
+				int statementEnd = statementStart + astNode.getLength();
+				// if the caret is placed in a statement...
+				if (caretOffset > statementStart && caretOffset < statementEnd) {
+					// ..We check all of the properties
+					for (Object structuralPropertyDescriptor : astNode.structuralPropertiesForType()) {
+						Object structuralProperty = astNode.getStructuralProperty((StructuralPropertyDescriptor) structuralPropertyDescriptor);
+						if (structuralProperty != null) {
+							// If it is a block, we look further into the node
+							if (structuralProperty.getClass() == Block.class) {
+								ASTNode currentNode = (ASTNode) structuralProperty;
+								int nodeStart = currentNode.getStartPosition();
+								int nodeEnd = nodeStart + currentNode.getLength();
+								// Is the caret inside this node, we recursively apply this method
+								if (caretOffset > nodeStart && caretOffset < nodeEnd) {
+									ASTNode node = getDeepestNode(currentNode, caretOffset);
+									// If there was no block nested inside the current node, set the result to the current one
+									if (node == null)
+										resultNode = currentNode;
+									else
+										resultNode = node;
+								}
+							} else
+								// If it is not a block return null
+								resultNode = null;
+						}
+					}
+				}
+			}
+			return resultNode;
+		}
 }
