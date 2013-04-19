@@ -1,20 +1,16 @@
-package superintents.control;
+package superintents.util;
 
 import java.util.ArrayList;
 import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
-import org.eclipse.ui.*;
-import org.eclipse.ui.texteditor.*;
 import org.eclipse.jface.text.*;
 import org.eclipse.jdt.core.*;
 import org.eclipse.jdt.core.dom.*;
-import org.eclipse.jdt.core.dom.rewrite.ASTRewrite;
 import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
-import org.eclipse.jdt.ui.JavaUI;
 import intentmodel.impl.*;
 import transformers.Java2AST;
 
-public class SIHelper {
+public class JDTInserter {
 	public static void insertIntent(SuperIntentImpl intentImplementaion) {
 		ArrayList<ASTNodeWrapper> nodeWrappers = Java2AST.transformSuperIntent(intentImplementaion);
 		try {
@@ -24,28 +20,8 @@ public class SIHelper {
 		}
 	}
 
-	private static ASTTupleHelper getASTTupleHelper() {
-		ASTRewrite rewriter = null;
-		ICompilationUnit unit = null;
-		ITextEditor editor = getEditor();
-		MethodDeclaration currentMethod = null;
-		int currentMethodOffset = 0;
-		IEditorInput editorInput = editor.getEditorInput();
-		IJavaElement elem = JavaUI.getEditorInputJavaElement(editorInput);
-		if (elem instanceof ICompilationUnit) {
-			unit = (ICompilationUnit) elem;
-			CompilationUnit astRoot = parse(unit);
-			AST ast = astRoot.getAST();
-			rewriter = ASTRewrite.create(ast);
-			TypeDeclaration typeDecl = (TypeDeclaration) astRoot.types().get(0);
-			currentMethodOffset = getCurrentMethodOffset(typeDecl.getMethods());
-			currentMethod = typeDecl.getMethods()[currentMethodOffset];
-		}
-		return new ASTTupleHelper(rewriter, editor, unit, currentMethod, currentMethodOffset);
-	}
-
 	// This method will check whether the caret is placed inside the given statement and return the innermost ASTNode to insert new nodes in.
-	protected static ASTNode getDeepestNode(ASTNode astNode, int caretOffset) {
+	private static ASTNode getDeepestNode(ASTNode astNode, int caretOffset) {
 		ASTNode resultNode = null;
 		if (astNode != null) {
 			// find where the statements starts and stops
@@ -82,10 +58,10 @@ public class SIHelper {
 
 	private static void insertNodes(ArrayList<ASTNodeWrapper> nodeWrappers) throws MalformedTreeException, BadLocationException, JavaModelException {
 		// Initialize values
-		ASTTupleHelper helper = getASTTupleHelper();
+		ASTTupleHelper helper = JDTHelper.getASTTupleHelper();
 		Block block = helper.currentMethod.getBody();
 		int blockOffset = block.getStartPosition();
-		int caretOffset = getCaretOffset(helper.editor);
+		int caretOffset = JDTHelper.getCaretOffset(helper.editor);
 		int nodeStatementOffset = 0;
 		int statementOffset = blockOffset;
 		ASTNode nestedNode = null;
@@ -145,39 +121,5 @@ public class SIHelper {
 		// Jump to the position right after the inserted node and focus the editor
 		helper.editor.selectAndReveal(edits.getExclusiveEnd(), 0);
 		helper.editor.setFocus();
-	}
-
-	protected static CompilationUnit parse(ICompilationUnit unit) {
-		ASTParser parser = ASTParser.newParser(AST.JLS4);
-		parser.setKind(ASTParser.K_COMPILATION_UNIT);
-		parser.setSource(unit);
-		parser.setResolveBindings(true);
-		return (CompilationUnit) parser.createAST(null);
-	}
-
-	private static ITextEditor getEditor() {
-		IWorkbench wb = PlatformUI.getWorkbench();
-		IWorkbenchWindow window = wb.getActiveWorkbenchWindow();
-		IWorkbenchPage editor = window.getActivePage();
-		IEditorPart part = editor.getActiveEditor();
-
-		if (!(part instanceof AbstractTextEditor))
-			return null;
-		return (ITextEditor) part;
-	}
-
-	private static int getCaretOffset(ITextEditor editor) {
-		int offset = ((ITextSelection) editor.getSelectionProvider().getSelection()).getOffset();
-		return offset;
-	}
-
-	private static int getCurrentMethodOffset(MethodDeclaration[] methods) {
-		int result = 0;
-		int caretOffset = getCaretOffset(getEditor());
-		for (int i = 0; i < methods.length; i++) {
-			if (caretOffset >= methods[i].getStartPosition() && caretOffset <= methods[i].getLength() + methods[i].getStartPosition())
-				result = i;
-		}
-		return result;
 	}
 }

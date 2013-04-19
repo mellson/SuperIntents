@@ -25,7 +25,8 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-import superintents.control.SIHelper;
+
+import superintents.util.JDTInserter;
 import transformers.Java2AST;
 
 
@@ -180,7 +181,7 @@ public class SuperIntentsView extends ViewPart {
 				//ISelection selection = viewer.getSelection();
 				//Object obj = ((IStructuredSelection)selection).getFirstElement();
 				//SIHelper.insertTestText(obj.toString());
-				SIHelper.insertIntent(Java2AST.createTestSI());
+				JDTInserter.insertIntent(Java2AST.createTestSI());
 			}
 		};
 	}

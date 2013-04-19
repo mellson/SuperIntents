@@ -1,4 +1,4 @@
-package superintents.control;
+package superintents.util;
 
 import org.eclipse.jdt.core.dom.ASTNode;
 

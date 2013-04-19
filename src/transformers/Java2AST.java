@@ -7,9 +7,8 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
-import superintents.control.ASTNodeWrapper;
-import superintents.control.ASTNodeWrapper.NodeType;
-import superintents.control.ASTNodeWrapper.NodeType;
+import superintents.util.ASTNodeWrapper;
+import superintents.util.ASTNodeWrapper.NodeType;
 
 import intentmodel.impl.*;
 
