@@ -100,6 +100,13 @@ public class Java2AST {
 				Random random = new Random();
 				requestCodeValue = random.nextInt(10000000);
 				requestCodeName = "REQUEST_CODE_" + intentName.toUpperCase();
+				//check for existing duplicate variables
+				int requestNameCounter = 1;
+				while (doesVariableNameExist(cu, requestCodeName)) {
+					requestCodeName = requestCodeName + requestNameCounter;
+					requestNameCounter++;
+				}		
+				
 				resultList.add(new ASTNodeWrapper(generateRequestCode(ast),NodeType.FIELD));
 				resultList.add(new ASTNodeWrapper(callStartActivity(ast)));
 				resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),NodeType.CALLBACK_METHOD));
@@ -430,8 +437,10 @@ public class Java2AST {
 		InfixExpression RightIe = ast.newInfixExpression();
 		RightIe.setLeftOperand(ast.newSimpleName("requestCode"));
 		RightIe.setOperator(Operator.EQUALS);
-		RightIe.setRightOperand(ast.newSimpleName("REQUEST_CODE"));
+		RightIe.setRightOperand(ast.newSimpleName(requestCodeName));
 		ie1.setRightOperand(RightIe);
+		
+		ie1.setOperator(Operator.CONDITIONAL_AND);
 		
 		is.setExpression(ie1);
 		
@@ -454,7 +463,7 @@ public class Java2AST {
 		
 		cu.accept(astv);
 		
-		return astv.getExists();
+		return astv.getMethod();
 	}
 	
 	//returns null if no method is found

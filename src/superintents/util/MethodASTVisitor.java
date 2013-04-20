@@ -18,7 +18,7 @@ public class MethodASTVisitor extends ASTVisitor {
 		return true;
 	}
 
-	public MethodDeclaration getExists() {
+	public MethodDeclaration getMethod() {
 		return method;
 	}
 }
