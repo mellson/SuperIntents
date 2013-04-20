@@ -95,25 +95,24 @@ public class Java2AST {
 		//Add callback method
 		if((si.getOutput() != null) )
 		{
+			Random random = new Random();
+			requestCodeValue = random.nextInt(10000000);
+			requestCodeName = "REQUEST_CODE_" + intentName.toUpperCase();
+			//check for existing duplicate variables
+			int requestNameCounter = 1;
+			while (doesVariableNameExist(cu, requestCodeName)) {
+				requestCodeName = requestCodeName + requestNameCounter;
+				requestNameCounter++;
+			}		
+			
+			resultList.add(new ASTNodeWrapper(generateRequestCode(ast),NodeType.FIELD));
+			resultList.add(new ASTNodeWrapper(callStartActivity(ast)));
+			
 			MethodDeclaration md = doesMethodExist(cu, "OnActivityResult");
-			if (md == null){
-				Random random = new Random();
-				requestCodeValue = random.nextInt(10000000);
-				requestCodeName = "REQUEST_CODE_" + intentName.toUpperCase();
-				//check for existing duplicate variables
-				int requestNameCounter = 1;
-				while (doesVariableNameExist(cu, requestCodeName)) {
-					requestCodeName = requestCodeName + requestNameCounter;
-					requestNameCounter++;
-				}		
-				
-				resultList.add(new ASTNodeWrapper(generateRequestCode(ast),NodeType.FIELD));
-				resultList.add(new ASTNodeWrapper(callStartActivity(ast)));
+			if (md == null)
 				resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),NodeType.CALLBACK_METHOD));
-			}
-			else {
+			else 
 				resultList.add(new ASTNodeWrapper(generateCallbackMethodBody(ast), NodeType.CALLBACK_METHOD, md));
-			}
 		}
 			
 		return resultList;
