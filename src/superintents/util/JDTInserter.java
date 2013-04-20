@@ -1,12 +1,19 @@
 package superintents.util;
 
 import java.util.ArrayList;
+
+import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.eclipse.jface.text.*;
+import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
+import org.eclipse.jdt.core.dom.AST;
 import org.eclipse.jdt.core.dom.ASTNode;
 import org.eclipse.jdt.core.dom.Block;
 import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.MethodDeclaration;
+import org.eclipse.jdt.core.dom.Modifier;
+import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import intentmodel.impl.*;
@@ -31,14 +38,39 @@ public class JDTInserter {
 		return nodeStatementOffset;
 	}
 
-	private static void insertNodes(ArrayList<ASTNodeWrapper> nodeWrappers) throws Exception {
+	@SuppressWarnings("unchecked")
+	private static void addMethodAroundIntent(ASTTupleHelper helper, ArrayList<ASTNodeWrapper> nodeWrappers) throws JavaModelException, IllegalArgumentException, MalformedTreeException, BadLocationException {
+		AST ast = helper.ast;
+		MethodDeclaration methodDeclaration = ast.newMethodDeclaration();
+		methodDeclaration.setName(ast.newSimpleName("superIntentMethodPlaceholderCaller"));
+		Modifier modifier = ast.newModifier(ModifierKeyword.PUBLIC_KEYWORD);
+		methodDeclaration.modifiers().add(modifier);
+		methodDeclaration.setBody(ast.newBlock());
+		
+		TypeDeclaration typeDeclaration = (TypeDeclaration) helper.compilationUnit.types().get(0);
+		ListRewrite listRewrite = helper.rewriter.getListRewrite(typeDeclaration, typeDeclaration.getBodyDeclarationsProperty());
+		listRewrite.insertFirst(methodDeclaration, null);
+		TextEdit edits = helper.rewriter.rewriteAST();
+		Document document = new Document(helper.unit.getSource());
+		edits.apply(document);
+		helper.unit.getBuffer().setContents(document.get());
+
+		// Jump to the position right after the inserted node and focus the editor
+		helper.editor.selectAndReveal(edits.getExclusiveEnd()-5, 0);
+		helper.editor.setFocus();
+		
+		insertNodes(nodeWrappers);
+	}
+	
+	private static void insertNodes(ArrayList<ASTNodeWrapper> nodeWrappers) throws JavaModelException, IllegalArgumentException, MalformedTreeException, BadLocationException {
 		// Initialize values
 		ASTTupleHelper helper = JDTHelper.getASTTupleHelper();
 		int caretOffset = JDTHelper.getCaretOffset(helper.editor);
 		Block block = getDeepestBlock(helper.compilationUnit, caretOffset);
-		// TODO Convert exception to popup window
-		if (block == null)
-			throw new Exception("Exception, you need to be inside the curly braces of a method to insert an intent.");
+		if (block == null) {
+			addMethodAroundIntent(helper, nodeWrappers);
+			return;
+		}
 		int nodeStatementOffset = 0;
 		ListRewrite listRewrite = null;
 		for (ASTNodeWrapper nodeWrapper : nodeWrappers) {

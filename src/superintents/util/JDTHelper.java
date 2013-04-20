@@ -26,6 +26,7 @@ public class JDTHelper {
 		ICompilationUnit unit = null;
 		ITextEditor editor = getEditor();
 		MethodDeclaration currentMethod = null;
+		AST ast = null;
 		CompilationUnit astRoot = null;
 		int currentMethodOffset = 0;
 		IEditorInput editorInput = editor.getEditorInput();
@@ -33,13 +34,13 @@ public class JDTHelper {
 		if (elem instanceof ICompilationUnit) {
 			unit = (ICompilationUnit) elem;
 			astRoot = parse(unit);
-			AST ast = astRoot.getAST();
+			ast = astRoot.getAST();
 			rewriter = ASTRewrite.create(ast);
 			TypeDeclaration typeDecl = (TypeDeclaration) astRoot.types().get(0);
 			currentMethodOffset = getCurrentMethodOffset(typeDecl.getMethods());
 			currentMethod = typeDecl.getMethods()[currentMethodOffset];
 		}
-		return new ASTTupleHelper(rewriter, editor, unit, currentMethod, astRoot);
+		return new ASTTupleHelper(ast, rewriter, editor, unit, currentMethod, astRoot);
 	}
 
 	protected static CompilationUnit parse(ICompilationUnit unit) {
