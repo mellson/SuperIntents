@@ -154,8 +154,7 @@ public class Java2AST {
 		//Intent(Intent o) is not supported
 		//Intent()
 		else 
-			InitializeConstructor5(si, ast);
-		return null;
+			return InitializeConstructor5(si, ast);
 	}
 	
 	@SuppressWarnings("unchecked")
