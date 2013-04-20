@@ -34,8 +34,6 @@ import org.eclipse.ui.part.ViewPart;
 import superintents.util.JDTInserter;
 import superintents.util.Java2AST;
 import emfloader.EMFLoadModel;
-import superintents.control.SIHelper;
-import transformers.Java2AST;
 
 
 /**
@@ -87,33 +85,8 @@ public class SuperIntentsView extends ViewPart {
 		}
 		
 		public Object[] getElements(Object parent) {
-			//System.out.println("THIS IS OUR WORKSPACE KKTHXBYE");
-			
-			String path = System.getProperty("user.home");
-			//If Niklas
-			if(path.endsWith("Niklas")){
-				userpath = path + "/Documents/workspace/EMT/SuperIntents/instances/";
-			}
-			//If Aaes
-			else if(path.endsWith("Aaes")){
-				userpath = path + "/Documents/workspace/SuperIntents/instances/";
-			}
-			//If Anders
-			else if(path.endsWith("Anders")){
-				userpath = path + "/Documents/workspace/SuperIntents/instances/";
-			}
-			//If Emil
-			else{
-				userpath = path + "/Documents/workspace/SuperIntents/instances/";
-			}
-			
-			//System.out.println(userpath);
-			
-			//System.out.println("TJALD OUT");
-			userpath="/Users/Niklas/Documents/workspace/EMT/SuperIntents/instances/";
-			ArrayList<String> lst = (new EMFLoadModel()).loadListOfIntentFiles(EMFLoadModel.class.getResource("/resources/Call.intentmodel").toString().replace("/Call.intentmodel", "").replace("file:", ""));
+			ArrayList<String> lst = (new EMFLoadModel()).loadListOfIntentFiles();
 			return lst.toArray();
-			//return new String[] { "Super smart string", "Nummer 2" };
 		}
 	}
 	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
@@ -217,7 +190,7 @@ public class SuperIntentsView extends ViewPart {
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				SIHelper.insertIntent((new EMFLoadModel()).loadIntentInstance(obj.toString()));
+				JDTInserter.insertIntent((new EMFLoadModel()).loadIntentInstance(obj.toString()));
 			}
 		};
 	}

@@ -29,12 +29,13 @@ import intentmodel.impl.SuperIntentImpl;
 public class EMFLoadModel {
 
 	
-		public ArrayList<String> loadListOfIntentFiles(String path){
+		public ArrayList<String> loadListOfIntentFiles(){
 			CodeSource src = EMFLoadModel.class.getProtectionDomain().getCodeSource();
 			URL jar = src.getLocation();
-			path = jar.toString();
+			String path = jar.toString();
 			path = path.replace("file:", "");
 			path = path + "src/resources";
+			System.out.println(path);
 			File f = new File(path);
 			ArrayList<String> names = new ArrayList<String>(Arrays.asList(f.list()));
 			ArrayList<String> output = new ArrayList<String>();
