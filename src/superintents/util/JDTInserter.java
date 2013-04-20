@@ -123,4 +123,13 @@ public class JDTInserter {
 			}
 			return resultNode;
 		}
+		
+		private static boolean doesImportExist(CompilationUnit cu, String name)
+		{
+			ImportASTVisitor astv = new ImportASTVisitor(name);
+			
+			cu.accept(astv);
+			
+			return astv.getExists();
+		}
 }
