@@ -95,7 +95,7 @@ public class Java2AST {
 		//Add callback method
 		if((si.getOutput() != null) )
 		{
-			MethodDeclaration md = doesMethodExist(cu, "onActivityResult");
+			MethodDeclaration md = doesMethodExist(cu, "OnActivityResult");
 			if (md == null){
 				Random random = new Random();
 				requestCodeValue = random.nextInt(10000000);
@@ -448,7 +448,7 @@ public class Java2AST {
 	}
 	
 	//returns null if no method is found
-	private static MethodDeclaration doesMethodExist(CompilationUnit cu, String name)
+	public static MethodDeclaration doesMethodExist(CompilationUnit cu, String name)
 	{
 		MethodASTVisitor astv = new MethodASTVisitor(name);
 		

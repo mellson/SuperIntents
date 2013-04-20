@@ -15,7 +15,7 @@ public class MethodASTVisitor extends ASTVisitor {
 	public boolean visit(MethodDeclaration node) {
 		if (node.getName().toString().equals(name))
 			method = node;
-		return false;
+		return true;
 	}
 
 	public MethodDeclaration getExists() {

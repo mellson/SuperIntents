@@ -57,9 +57,9 @@ public class JDTInserter {
 				break;
 			case CALLBACK_METHOD:
 				if (nodeWrapper.existingCallbackMethod != null) {
-					listRewrite = helper.rewriter.getListRewrite(nodeWrapper.existingCallbackMethod, Block.STATEMENTS_PROPERTY);
-					listRewrite.insertAt(nodeWrapper.astNode, nodeStatementOffset, null);
-					nodeStatementOffset++;
+					block = Java2AST.doesMethodExist(helper.compilationUnit, "OnActivityResult").getBody();
+					listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
+					listRewrite.insertFirst(nodeWrapper.astNode, null);
 					break;
 				} else {
 					TypeDeclaration typeDeclaration = (TypeDeclaration) helper.compilationUnit.types().get(0);
