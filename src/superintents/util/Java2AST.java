@@ -71,8 +71,10 @@ public class Java2AST {
 			resultList.add(new ASTNodeWrapper(generateImports(si, ast),NodeType.IMPORT));
 		
 		//Insert Input and OutPut Comments
-		resultList.add(newCommentInsideMethod("Description: \n// " + si.getDescription()));
-		resultList.add(newCommentInsideMethod("Output: \n// " + si.getOutput()));
+		if(si.getDescription() != null)
+			resultList.add(newCommentInsideMethod("Description: \n// " + si.getDescription()));
+		if(si.getOutput() != null)
+			resultList.add(newCommentInsideMethod("Output: \n// " + si.getOutput()));
 		
 		//Initialize the Intent
 		resultList.add(new ASTNodeWrapper(initializeIntent(si, ast)));
