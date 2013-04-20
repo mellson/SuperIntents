@@ -142,4 +142,14 @@ public class JDTInserter {
 			
 			return astv.getExists();
 		}
+		
+		//returns null if no method is found
+		private static boolean doesVariableNameExist(CompilationUnit cu, String name)
+		{
+			VariableNameASTVisitor astv = new VariableNameASTVisitor(name);
+			
+			cu.accept(astv);
+			
+			return astv.getExists();
+		}
 }
