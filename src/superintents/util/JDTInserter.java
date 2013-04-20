@@ -47,19 +47,26 @@ public class JDTInserter {
 				nodeStatementOffset = insertionOffset(block, nodeStatementOffset, caretOffset);
 				listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
 				listRewrite.insertAt(nodeWrapper.astNode, nodeStatementOffset, null);
-				nodeStatementOffset += 1;
+				nodeStatementOffset++;
 				break;
 			case COMMENT:
 				ASTNode commentNode = helper.rewriter.createStringPlaceholder(nodeWrapper.comment, ASTNode.EMPTY_STATEMENT);
 				listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
 				listRewrite.insertAt(commentNode, nodeStatementOffset, null);
-				nodeStatementOffset += 1;
+				nodeStatementOffset++;
 				break;
 			case CALLBACK_METHOD:
-				TypeDeclaration typeDeclaration = (TypeDeclaration) helper.compilationUnit.types().get(0);
-				listRewrite = helper.rewriter.getListRewrite(typeDeclaration, typeDeclaration.getBodyDeclarationsProperty());
-				listRewrite.insertAfter(nodeWrapper.astNode, helper.currentMethod, null);
-				break;
+				if (nodeWrapper.existingCallbackMethod != null) {
+					listRewrite = helper.rewriter.getListRewrite(nodeWrapper.existingCallbackMethod, Block.STATEMENTS_PROPERTY);
+					listRewrite.insertAt(nodeWrapper.astNode, nodeStatementOffset, null);
+					nodeStatementOffset++;
+					break;
+				} else {
+					TypeDeclaration typeDeclaration = (TypeDeclaration) helper.compilationUnit.types().get(0);
+					listRewrite = helper.rewriter.getListRewrite(typeDeclaration, typeDeclaration.getBodyDeclarationsProperty());
+					listRewrite.insertAfter(nodeWrapper.astNode, helper.currentMethod, null);
+					break;
+				}
 			case FIELD:
 				TypeDeclaration fieldDeclaration = (TypeDeclaration) helper.compilationUnit.types().get(0);
 				listRewrite = helper.rewriter.getListRewrite(fieldDeclaration, fieldDeclaration.getBodyDeclarationsProperty());
