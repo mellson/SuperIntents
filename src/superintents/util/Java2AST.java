@@ -52,7 +52,13 @@ public class Java2AST {
 	{
 		CompilationUnit cu = JDTHelper.getASTTupleHelper().compilationUnit;
 		
+		//Get at valid intent name
 		intentName = "i";
+		int nameCounter = 1;
+		while (doesVariableNameExist(cu, intentName)) {
+			intentName = intentName + nameCounter;
+			nameCounter++;
+		}	
 		
 		//result list
 		ArrayList<ASTNodeWrapper> resultList = new ArrayList<ASTNodeWrapper>();
