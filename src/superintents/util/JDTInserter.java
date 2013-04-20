@@ -132,4 +132,14 @@ public class JDTInserter {
 			
 			return astv.getExists();
 		}
+		
+		//returns null if no method is found
+		private static MethodDeclaration doesMethodExist(CompilationUnit cu, String name)
+		{
+			MethodASTVisitor astv = new MethodASTVisitor(name);
+			
+			cu.accept(astv);
+			
+			return astv.getExists();
+		}
 }
