@@ -135,6 +135,10 @@ public class Java2AST {
 
 	private static ASTNode initializeIntent(SuperIntentImpl si, AST ast)
 	{
+		//If the componenet isn't a valid Java identifier we change it
+		if(si.getIntent().getComponent() != null && !isValidJavaIdentifier(si.getIntent().getComponent()))
+			si.getIntent().setComponent("NOT_A_VALID_IDENTIFIER_" + si.getIntent().getComponent());
+		
 		//Intent(String action, Uri uri, Context packageContext, Class<?> cls)
 		if(si.getIntent().getAction() != null && si.getIntent().getData() != null && si.getIntent().getComponent() != null)
 			return InitializeConstructor1(si, ast);
