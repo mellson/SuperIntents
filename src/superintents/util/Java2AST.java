@@ -1,4 +1,4 @@
-package transformers;
+package superintents.util;
 
 import java.util.ArrayList;
 import java.util.Random;
@@ -7,9 +7,7 @@ import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.InfixExpression.Operator;
 import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 
-import superintents.util.ASTNodeWrapper;
 import superintents.util.ASTNodeWrapper.NodeType;
-
 import intentmodel.impl.*;
 
 public class Java2AST {
@@ -52,6 +50,8 @@ public class Java2AST {
 	
 	public static ArrayList<ASTNodeWrapper> transformSuperIntent(SuperIntentImpl si)
 	{
+		CompilationUnit cu = JDTHelper.getASTTupleHelper().compilationUnit;
+		
 		intentName = "i";
 		
 		//result list
@@ -61,7 +61,8 @@ public class Java2AST {
 		AST ast = AST.newAST(AST.JLS4);
 		
 		//Add imports
-		resultList.add(new ASTNodeWrapper(generateImports(si, ast),NodeType.IMPORT));
+		if(!doesImportExist(cu,"android.content.Intent"))
+			resultList.add(new ASTNodeWrapper(generateImports(si, ast),NodeType.IMPORT));
 		
 		//Insert Input and OutPut Comments
 		resultList.add(newCommentInsideMethod("Description: \n// " + si.getDescription()));
@@ -86,7 +87,7 @@ public class Java2AST {
 		}
 		
 		//Add callback method
-		if(si.getOutput() != null)
+		if((si.getOutput() != null) && (doesMethodExist(cu, "onActivityResult") == null))
 		{
 			Random random = new Random();
 			requestCodeValue = random.nextInt(10000000);
@@ -100,6 +101,7 @@ public class Java2AST {
 	}
 
 	private static ASTNode generateImports(SuperIntentImpl si, AST ast) {
+		
 		//insert the import android.content.Intent;
 		ImportDeclaration i = ast.newImportDeclaration();
 		
@@ -422,6 +424,35 @@ public class Java2AST {
 		is.setExpression(ie1);
 		
 		return is;
+	}
+	
+	private static boolean doesImportExist(CompilationUnit cu, String name)
+	{
+		ImportASTVisitor astv = new ImportASTVisitor(name);
+		
+		cu.accept(astv);
+		
+		return astv.getExists();
+	}
+	
+	//returns null if no method is found
+	private static MethodDeclaration doesMethodExist(CompilationUnit cu, String name)
+	{
+		MethodASTVisitor astv = new MethodASTVisitor(name);
+		
+		cu.accept(astv);
+		
+		return astv.getExists();
+	}
+	
+	//returns null if no method is found
+	private static boolean doesVariableNameExist(CompilationUnit cu, String name)
+	{
+		VariableNameASTVisitor astv = new VariableNameASTVisitor(name);
+		
+		cu.accept(astv);
+		
+		return astv.getExists();
 	}
 }
 	

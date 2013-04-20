@@ -27,7 +27,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 
 import superintents.util.JDTInserter;
-import transformers.Java2AST;
+import superintents.util.Java2AST;
 
 
 /**

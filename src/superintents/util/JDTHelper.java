@@ -26,19 +26,20 @@ public class JDTHelper {
 		ICompilationUnit unit = null;
 		ITextEditor editor = getEditor();
 		MethodDeclaration currentMethod = null;
+		CompilationUnit astRoot = null;
 		int currentMethodOffset = 0;
 		IEditorInput editorInput = editor.getEditorInput();
 		IJavaElement elem = JavaUI.getEditorInputJavaElement(editorInput);
 		if (elem instanceof ICompilationUnit) {
 			unit = (ICompilationUnit) elem;
-			CompilationUnit astRoot = parse(unit);
+			astRoot = parse(unit);
 			AST ast = astRoot.getAST();
 			rewriter = ASTRewrite.create(ast);
 			TypeDeclaration typeDecl = (TypeDeclaration) astRoot.types().get(0);
 			currentMethodOffset = getCurrentMethodOffset(typeDecl.getMethods());
 			currentMethod = typeDecl.getMethods()[currentMethodOffset];
 		}
-		return new ASTTupleHelper(rewriter, editor, unit, currentMethod);
+		return new ASTTupleHelper(rewriter, editor, unit, currentMethod, astRoot);
 	}
 
 	protected static CompilationUnit parse(ICompilationUnit unit) {

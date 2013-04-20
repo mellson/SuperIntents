@@ -13,7 +13,6 @@ import org.eclipse.jdt.core.dom.StructuralPropertyDescriptor;
 import org.eclipse.jdt.core.dom.TypeDeclaration;
 
 import intentmodel.impl.*;
-import transformers.Java2AST;
 
 public class JDTInserter {
 	public static void insertIntent(SuperIntentImpl intentImplementaion) {
@@ -53,6 +52,7 @@ public class JDTInserter {
 
 		for (ASTNodeWrapper nodeWrapper : nodeWrappers) {
 			CompilationUnit compilationUnit = (CompilationUnit) block.getRoot();
+			System.out.println(getDeepestBlock(compilationUnit, caretOffset));
 			switch (nodeWrapper.type) {
 			case NORMAL_CODE:
 				nodeStatementOffset = insertionOffset(block, nodeStatementOffset, caretOffset);
@@ -96,14 +96,17 @@ public class JDTInserter {
 	}
 
 	// This method will check whether the caret is placed inside the given statement and return the innermost ASTNode to insert new nodes in.
-	private static ASTNode getDeepestNode(ASTNode astNode, int caretOffset) {
+	private static ASTNode getDeepestNode(ASTNode astNode, int caretOffset) 
+	{
 		ASTNode resultNode = null;
-		if (astNode != null) {
+		if (astNode != null) 
+		{
 			// find where the statements starts and stops
 			int statementStart = astNode.getStartPosition();
 			int statementEnd = statementStart + astNode.getLength();
 			// if the caret is placed in a statement...
-			if (caretOffset > statementStart && caretOffset < statementEnd) {
+			if (caretOffset > statementStart && caretOffset < statementEnd) 
+			{
 				// ..We check all of the properties
 				for (Object structuralPropertyDescriptor : astNode.structuralPropertiesForType()) {
 					Object structuralProperty = astNode.getStructuralProperty((StructuralPropertyDescriptor) structuralPropertyDescriptor);
@@ -131,8 +134,21 @@ public class JDTInserter {
 							resultNode = null;
 					}
 				}
+				
 			}
 		}
-		return resultNode;
+			
+
+			return resultNode;
+		}
+
+		
+		public static Block getDeepestBlock(CompilationUnit cu, int caretOffset)
+		{
+			BlockASTVisitor astv = new BlockASTVisitor(caretOffset);
+			
+			cu.accept(astv);
+			
+			return astv.getBlock();
 	}
 }
