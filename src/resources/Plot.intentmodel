@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<intentmodel:SuperIntent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:intentmodel="platform:/resource/IntentModel/model/IntentModel.ecore" description="Plot Pie Chart">
+  <intent action="com.googlecode.chartdroid.intent.action.PLOT">
+    <categories>CATEGORY_DEFAULT</categories>
+    <categories>CATEGORY.VIEW</categories>
+    <data MIMEType="text\plain" value="* int[] com.googlecode.chartdroid.intent.extra.DATA&lt;br/> * String[] com.googlecode.chartdroid.intent.extra.LABELS&lt;br/> * int[] com.googlecode.chartdroid.intent.extra.COLORS (optional)&lt;br/> * String com.googlecode.chartdroid.intent.extra.TITLE"/>
+  </intent>
+  <output/>
+</intentmodel:SuperIntent>

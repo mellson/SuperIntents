@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<intentmodel:SuperIntent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:intentmodel="platform:/resource/IntentModel/model/IntentModel.ecore" description="Android Print">
+  <intent action="com.rcreations.send2printer.print" component="">
+    <categories>CATEGORY_DEFAULT</categories>
+    <data MIMEType="text/plain" value="Print this string"/>
+    <extras key="extra1" value="Print this 1 text too"/>
+    <extras key="extra2" value="Print this 2 too"/>
+  </intent>
+</intentmodel:SuperIntent>

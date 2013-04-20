@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<intentmodel:SuperIntent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:intentmodel="platform:/resource/IntentModel/model/IntentModel.ecore" description="Bluetooth Device Picker">
+  <intent action="Bluetooth Device Picker">
+    <categories>CATEGORY.VIEW</categories>
+  </intent>
+  <output MIMEType="text\plain" value=""/>
+</intentmodel:SuperIntent>

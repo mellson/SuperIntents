@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<intentmodel:SuperIntent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:intentmodel="platform:/resource/IntentModel/model/IntentModel.ecore" description="Send Twitter Message">
+  <intent action="com.twidroid.SendTweet">
+    <extras key="com.twidroid.extra.MESSAGE" value="Test Message from Twidroid public intent"/>
+  </intent>
+</intentmodel:SuperIntent>

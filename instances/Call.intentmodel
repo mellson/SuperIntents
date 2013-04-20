@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<intentmodel:SuperIntent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:intentmodel="platform:/resource/IntentModel/model/IntentModel.ecore" description="Call">
+  <intent action="ACTION_DIAL">
+    <categories>CATEGORY_VIEW</categories>
+    <data MIMEType="text\URI" value="tel:xx xx xx xx"/>
+  </intent>
+</intentmodel:SuperIntent>

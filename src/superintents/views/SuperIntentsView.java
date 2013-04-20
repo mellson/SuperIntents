@@ -1,6 +1,10 @@
 package superintents.views;
 
 
+import java.io.File;
+import java.util.ArrayList;
+
+import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -10,7 +14,9 @@ import org.eclipse.jface.action.Separator;
 import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
+import org.eclipse.jface.viewers.ISelection;
 import org.eclipse.jface.viewers.IStructuredContentProvider;
+import org.eclipse.jface.viewers.IStructuredSelection;
 import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
@@ -25,9 +31,11 @@ import org.eclipse.ui.ISharedImages;
 import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
-
 import superintents.util.JDTInserter;
 import superintents.util.Java2AST;
+import emfloader.EMFLoadModel;
+import superintents.control.SIHelper;
+import transformers.Java2AST;
 
 
 /**
@@ -54,6 +62,7 @@ public class SuperIntentsView extends ViewPart {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "superintents.views.SuperIntentsView";
+	private String userpath = "";
 
 	private TableViewer viewer;
 	private Action action1;
@@ -73,10 +82,38 @@ public class SuperIntentsView extends ViewPart {
 	class ViewContentProvider implements IStructuredContentProvider {
 		public void inputChanged(Viewer v, Object oldInput, Object newInput) {
 		}
+		
 		public void dispose() {
 		}
+		
 		public Object[] getElements(Object parent) {
-			return new String[] { "Super smart string", "Nummer 2" };
+			//System.out.println("THIS IS OUR WORKSPACE KKTHXBYE");
+			
+			String path = System.getProperty("user.home");
+			//If Niklas
+			if(path.endsWith("Niklas")){
+				userpath = path + "/Documents/workspace/EMT/SuperIntents/instances/";
+			}
+			//If Aaes
+			else if(path.endsWith("Aaes")){
+				userpath = path + "/Documents/workspace/SuperIntents/instances/";
+			}
+			//If Anders
+			else if(path.endsWith("Anders")){
+				userpath = path + "/Documents/workspace/SuperIntents/instances/";
+			}
+			//If Emil
+			else{
+				userpath = path + "/Documents/workspace/SuperIntents/instances/";
+			}
+			
+			//System.out.println(userpath);
+			
+			//System.out.println("TJALD OUT");
+			userpath="/Users/Niklas/Documents/workspace/EMT/SuperIntents/instances/";
+			ArrayList<String> lst = (new EMFLoadModel()).loadListOfIntentFiles(EMFLoadModel.class.getResource("/resources/Call.intentmodel").toString().replace("/Call.intentmodel", "").replace("file:", ""));
+			return lst.toArray();
+			//return new String[] { "Super smart string", "Nummer 2" };
 		}
 	}
 	class ViewLabelProvider extends LabelProvider implements ITableLabelProvider {
@@ -178,10 +215,9 @@ public class SuperIntentsView extends ViewPart {
 				getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 		doubleClickAction = new Action() {
 			public void run() {
-				//ISelection selection = viewer.getSelection();
-				//Object obj = ((IStructuredSelection)selection).getFirstElement();
-				//SIHelper.insertTestText(obj.toString());
-				JDTInserter.insertIntent(Java2AST.createTestSI());
+				ISelection selection = viewer.getSelection();
+				Object obj = ((IStructuredSelection)selection).getFirstElement();
+				SIHelper.insertIntent((new EMFLoadModel()).loadIntentInstance(obj.toString()));
 			}
 		};
 	}
