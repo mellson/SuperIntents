@@ -1,6 +1,8 @@
 package superintents.views;
 
 
+import intentloader.IntentLoader;
+
 import java.io.File;
 import java.util.ArrayList;
 
@@ -33,7 +35,6 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import superintents.util.JDTInserter;
 import superintents.util.Java2AST;
-import emfloader.EMFLoadModel;
 
 
 /**
@@ -83,7 +84,7 @@ public class SuperIntentsView extends ViewPart {
 		}
 		
 		public Object[] getElements(Object parent) {
-			ArrayList<String> lst = (new EMFLoadModel()).loadListOfIntentFiles();
+			ArrayList<String> lst = (new IntentLoader()).loadListOfIntentFiles();
 			return lst.toArray();
 		}
 	}
@@ -188,7 +189,7 @@ public class SuperIntentsView extends ViewPart {
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection)selection).getFirstElement();
-				JDTInserter.insertIntent((new EMFLoadModel()).loadIntentInstance(obj.toString()));
+				JDTInserter.insertIntent((new IntentLoader()).loadIntentInstance(obj.toString()));
 			}
 		};
 	}

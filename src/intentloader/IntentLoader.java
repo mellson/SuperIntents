@@ -1,4 +1,4 @@
-package emfloader;
+package intentloader;
 
 import java.net.URL;
 import java.security.CodeSource;
@@ -26,16 +26,15 @@ import intentmodel.Intent;
 import intentmodel.StringToObject;
 import intentmodel.impl.SuperIntentImpl;
 
-public class EMFLoadModel {
+public class IntentLoader {
 
 	
 		public ArrayList<String> loadListOfIntentFiles(){
-			CodeSource src = EMFLoadModel.class.getProtectionDomain().getCodeSource();
+			CodeSource src = IntentLoader.class.getProtectionDomain().getCodeSource();
 			URL jar = src.getLocation();
 			String path = jar.toString();
 			path = path.replace("file:", "");
 			path = path + "src/resources";
-			System.out.println(path);
 			File f = new File(path);
 			ArrayList<String> names = new ArrayList<String>(Arrays.asList(f.list()));
 			ArrayList<String> output = new ArrayList<String>();
@@ -49,7 +48,6 @@ public class EMFLoadModel {
 		
 		public SuperIntentImpl loadIntentInstance(String filename) {
 			 // Initialize the model
-		    System.out.println("Trying to load file: " + filename);
 		    IntentmodelPackage.eINSTANCE.eClass();
 		    
 		    // Register the XMI resource factory for the .intentmodel extension
@@ -61,12 +59,10 @@ public class EMFLoadModel {
 		    ResourceSet resSet = new ResourceSetImpl();
 		    
 		    // Get the resource
-		    Resource resource = resSet.getResource(URI.createURI((EMFLoadModel.class.getResource("/resources/"+filename+".intentmodel")).toString()), true);
+		    Resource resource = resSet.getResource(URI.createURI((IntentLoader.class.getResource("/resources/"+filename+".intentmodel")).toString()), true);
 		    
 		    //Cast resource to SuperIntent
 		    SuperIntentImpl superintent = (SuperIntentImpl) resource.getContents().get(0);
-		    
-		    System.out.println("Loaded intent: "+ superintent.getDescription());
 		    
 		    return superintent;
 		}
