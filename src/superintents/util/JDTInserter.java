@@ -5,8 +5,13 @@ import org.eclipse.text.edits.MalformedTreeException;
 import org.eclipse.text.edits.TextEdit;
 import org.eclipse.jface.text.*;
 import org.eclipse.jdt.core.*;
-import org.eclipse.jdt.core.dom.*;
 import org.eclipse.jdt.core.dom.rewrite.ListRewrite;
+import org.eclipse.jdt.core.dom.ASTNode;
+import org.eclipse.jdt.core.dom.Block;
+import org.eclipse.jdt.core.dom.CompilationUnit;
+import org.eclipse.jdt.core.dom.StructuralPropertyDescriptor;
+import org.eclipse.jdt.core.dom.TypeDeclaration;
+
 import intentmodel.impl.*;
 import transformers.Java2AST;
 
@@ -20,17 +25,24 @@ public class JDTInserter {
 		}
 	}
 
+	private static int insertionOffset(Block block, int nodeStatementOffset, int caretOffset) {
+		int statementOffset = block.getStartPosition();
+		// Get the offset where to insert the current node
+		for (Object o : block.statements()) {
+			statementOffset += o.toString().length();
+			nodeStatementOffset += (statementOffset < caretOffset) ? 1 : 0;
+		}
+		return nodeStatementOffset;
+	}
+
 	private static void insertNodes(ArrayList<ASTNodeWrapper> nodeWrappers) throws MalformedTreeException, BadLocationException, JavaModelException {
 		// Initialize values
 		ASTTupleHelper helper = JDTHelper.getASTTupleHelper();
 		Block block = helper.currentMethod.getBody();
-		int blockOffset = block.getStartPosition();
 		int caretOffset = JDTHelper.getCaretOffset(helper.editor);
 		int nodeStatementOffset = 0;
-		int statementOffset = blockOffset;
 		ASTNode nestedNode = null;
 		ListRewrite listRewrite = null;
-
 		// Check if the caret is placed in a nested block inside the current method
 		for (Object o : block.statements())
 			nestedNode = getDeepestNode((ASTNode) o, caretOffset);
@@ -40,14 +52,10 @@ public class JDTInserter {
 			block = (Block) nestedNode;
 
 		for (ASTNodeWrapper nodeWrapper : nodeWrappers) {
-			// Get the offset where to insert the current node
-			for (Object o : block.statements()) {
-				statementOffset += o.toString().length();
-				nodeStatementOffset += (statementOffset < caretOffset) ? 1 : 0;
-			}
 			CompilationUnit compilationUnit = (CompilationUnit) block.getRoot();
 			switch (nodeWrapper.type) {
 			case NORMAL_CODE:
+				nodeStatementOffset = insertionOffset(block, nodeStatementOffset, caretOffset);
 				listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
 				listRewrite.insertAt(nodeWrapper.astNode, nodeStatementOffset, null);
 				nodeStatementOffset += 1;
@@ -86,70 +94,45 @@ public class JDTInserter {
 		helper.editor.selectAndReveal(edits.getExclusiveEnd(), 0);
 		helper.editor.setFocus();
 	}
-	
+
 	// This method will check whether the caret is placed inside the given statement and return the innermost ASTNode to insert new nodes in.
-		private static ASTNode getDeepestNode(ASTNode astNode, int caretOffset) {
-			ASTNode resultNode = null;
-			if (astNode != null) {
-				// find where the statements starts and stops
-				int statementStart = astNode.getStartPosition();
-				int statementEnd = statementStart + astNode.getLength();
-				// if the caret is placed in a statement...
-				if (caretOffset > statementStart && caretOffset < statementEnd) {
-					// ..We check all of the properties
-					for (Object structuralPropertyDescriptor : astNode.structuralPropertiesForType()) {
-						Object structuralProperty = astNode.getStructuralProperty((StructuralPropertyDescriptor) structuralPropertyDescriptor);
-						if (structuralProperty != null) {
-							// If it is a block, we look further into the node
-							if (structuralProperty.getClass() == Block.class) {
-								ASTNode currentNode = (ASTNode) structuralProperty;
-								int nodeStart = currentNode.getStartPosition();
-								int nodeEnd = nodeStart + currentNode.getLength();
-								// Is the caret inside this node, we recursively apply this method
-								if (caretOffset > nodeStart && caretOffset < nodeEnd) {
-									ASTNode node = getDeepestNode(currentNode, caretOffset);
-									// If there was no block nested inside the current node, set the result to the current one
-									if (node == null)
-										resultNode = currentNode;
-									else
-										resultNode = node;
-								}
-							} else
-								// If it is not a block return null
-								resultNode = null;
+	private static ASTNode getDeepestNode(ASTNode astNode, int caretOffset) {
+		ASTNode resultNode = null;
+		if (astNode != null) {
+			// find where the statements starts and stops
+			int statementStart = astNode.getStartPosition();
+			int statementEnd = statementStart + astNode.getLength();
+			// if the caret is placed in a statement...
+			if (caretOffset > statementStart && caretOffset < statementEnd) {
+				// ..We check all of the properties
+				for (Object structuralPropertyDescriptor : astNode.structuralPropertiesForType()) {
+					Object structuralProperty = astNode.getStructuralProperty((StructuralPropertyDescriptor) structuralPropertyDescriptor);
+					if (structuralProperty != null) {
+						// If it is a block, we look further into the node
+						if (structuralProperty.getClass() == Block.class) {
+							ASTNode currentNode = (ASTNode) structuralProperty;
+							int nodeStart = currentNode.getStartPosition();
+							int nodeEnd = nodeStart + currentNode.getLength();
+							// Is the caret inside this node, we recursively apply this method
+							if (caretOffset > nodeStart && caretOffset < nodeEnd) {
+								ASTNode node = getDeepestNode(currentNode, caretOffset);
+								// If there was no block nested inside the current node, set the result to the current one
+								if (node == null)
+									resultNode = currentNode;
+								else
+									resultNode = node;
+							}
+						} else if (structuralProperty.getClass().toString().equals("class org.eclipse.jdt.core.dom.ASTNode$NodeList")) {
+							ASTNode node = (ASTNode) structuralProperty;	
+							System.out.println(node.getProperty("body"));
 						}
+						else
+							// If it is not a block return null
+							resultNode = null;
 					}
 				}
 			}
-			return resultNode;
 		}
-		
-		private static boolean doesImportExist(CompilationUnit cu, String name)
-		{
-			ImportASTVisitor astv = new ImportASTVisitor(name);
-			
-			cu.accept(astv);
-			
-			return astv.getExists();
-		}
-		
-		//returns null if no method is found
-		private static MethodDeclaration doesMethodExist(CompilationUnit cu, String name)
-		{
-			MethodASTVisitor astv = new MethodASTVisitor(name);
-			
-			cu.accept(astv);
-			
-			return astv.getExists();
-		}
-		
-		//returns null if no method is found
-		private static boolean doesVariableNameExist(CompilationUnit cu, String name)
-		{
-			VariableNameASTVisitor astv = new VariableNameASTVisitor(name);
-			
-			cu.accept(astv);
-			
-			return astv.getExists();
-		}
+		return resultNode;
+	}
 }

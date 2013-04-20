@@ -19,6 +19,7 @@ import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.texteditor.AbstractTextEditor;
 import org.eclipse.ui.texteditor.ITextEditor;
 
+
 public class JDTHelper {
 	protected static ASTTupleHelper getASTTupleHelper() {
 		ASTRewrite rewriter = null;
