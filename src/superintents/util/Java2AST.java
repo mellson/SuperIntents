@@ -80,7 +80,7 @@ public class Java2AST {
 		resultList.add(new ASTNodeWrapper(initializeIntent(si, ast)));
 		
 		//Set the data type
-		if(si.getIntent().getData() != null & si.getIntent().getData().getMIMEType() != null) {
+		if(si.getIntent().getData() != null && si.getIntent().getData().getMIMEType() != null) {
 			resultList.add(new ASTNodeWrapper(setType(si, ast)));
 		}
 		
