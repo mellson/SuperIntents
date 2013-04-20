@@ -60,8 +60,6 @@ public class SuperIntentsView extends ViewPart {
 	 * The ID of the view as specified by the extension.
 	 */
 	public static final String ID = "superintents.views.SuperIntentsView";
-	private String userpath = "";
-
 	private TableViewer viewer;
 	private Action action1;
 	private Action action2;
