@@ -93,14 +93,20 @@ public class Java2AST {
 		}
 		
 		//Add callback method
-		if((si.getOutput() != null) && (doesMethodExist(cu, "onActivityResult") == null))
+		if((si.getOutput() != null) )
 		{
-			Random random = new Random();
-			requestCodeValue = random.nextInt(10000000);
-			requestCodeName = "REQUEST_CODE_" + intentName.toUpperCase();
-			resultList.add(new ASTNodeWrapper(generateRequestCode(ast),NodeType.FIELD));
-			resultList.add(new ASTNodeWrapper(callStartActivity(ast)));
-			resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),NodeType.CALLBACK_METHOD));
+			MethodDeclaration md = doesMethodExist(cu, "onActivityResult");
+			if (md == null){
+				Random random = new Random();
+				requestCodeValue = random.nextInt(10000000);
+				requestCodeName = "REQUEST_CODE_" + intentName.toUpperCase();
+				resultList.add(new ASTNodeWrapper(generateRequestCode(ast),NodeType.FIELD));
+				resultList.add(new ASTNodeWrapper(callStartActivity(ast)));
+				resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),NodeType.CALLBACK_METHOD));
+			}
+			else {
+				resultList.add(new ASTNodeWrapper(generateCallbackMethodBody(ast), NodeType.CALLBACK_METHOD, md));
+			}
 		}
 			
 		return resultList;
