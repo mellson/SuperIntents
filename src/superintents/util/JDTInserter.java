@@ -28,8 +28,9 @@ public class JDTInserter {
 		}
 	}
 
-	private static int insertionOffset(Block block, int nodeStatementOffset, int caretOffset) {
+	private static int insertionOffset(Block block, int caretOffset) {
 		int statementOffset = block.getStartPosition();
+		int nodeStatementOffset = 0;
 		// Get the offset where to insert the current node
 		for (Object o : block.statements()) {
 			statementOffset += o.toString().length();
@@ -71,12 +72,11 @@ public class JDTInserter {
 			addMethodAroundIntent(helper, nodeWrappers);
 			return;
 		}
-		int nodeStatementOffset = 0;
+		int nodeStatementOffset = insertionOffset(block, caretOffset);
 		ListRewrite listRewrite = null;
 		for (ASTNodeWrapper nodeWrapper : nodeWrappers) {
 			switch (nodeWrapper.type) {
 			case NORMAL_CODE:
-				nodeStatementOffset = insertionOffset(block, nodeStatementOffset, caretOffset);
 				listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
 				listRewrite.insertAt(nodeWrapper.astNode, nodeStatementOffset, null);
 				nodeStatementOffset++;
