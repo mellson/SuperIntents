@@ -5,12 +5,8 @@ import java.security.CodeSource;
 import java.util.ArrayList;
 import java.util.Map;
 import java.io.File;
-import java.io.IOException;
 import java.util.*;
-import java.util.zip.ZipEntry;
-import java.util.zip.ZipInputStream;
 
-import org.eclipse.emf.common.util.EList;
 import org.eclipse.emf.common.util.URI;
 import org.eclipse.emf.ecore.resource.Resource;
 import org.eclipse.emf.ecore.resource.ResourceSet;
@@ -20,10 +16,6 @@ import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 import com.sun.org.apache.bcel.internal.generic.LoadInstruction;
 
 import intentmodel.IntentmodelPackage;
-import intentmodel.SuperIntent;
-import intentmodel.Data;
-import intentmodel.Intent;
-import intentmodel.StringToObject;
 import intentmodel.impl.SuperIntentImpl;
 
 public class IntentLoader {
