@@ -5,7 +5,6 @@ package intentmodel.impl;
 import intentmodel.Data;
 import intentmodel.Intent;
 import intentmodel.IntentmodelPackage;
-import intentmodel.StringToObject;
 
 import java.util.Collection;
 
@@ -24,7 +23,6 @@ import org.eclipse.emf.ecore.impl.EObjectImpl;
 
 import org.eclipse.emf.ecore.util.EDataTypeUniqueEList;
 import org.eclipse.emf.ecore.util.EcoreEMap;
-import org.eclipse.emf.ecore.util.EObjectContainmentEList;
 import org.eclipse.emf.ecore.util.InternalEList;
 
 /**

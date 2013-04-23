@@ -13,8 +13,6 @@ import org.eclipse.emf.ecore.resource.ResourceSet;
 import org.eclipse.emf.ecore.resource.impl.ResourceSetImpl;
 import org.eclipse.emf.ecore.xmi.impl.XMIResourceFactoryImpl;
 
-import com.sun.org.apache.bcel.internal.generic.LoadInstruction;
-
 import intentmodel.IntentmodelPackage;
 import intentmodel.impl.SuperIntentImpl;
 

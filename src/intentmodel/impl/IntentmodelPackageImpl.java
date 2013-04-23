@@ -6,7 +6,6 @@ import intentmodel.Data;
 import intentmodel.Intent;
 import intentmodel.IntentmodelFactory;
 import intentmodel.IntentmodelPackage;
-import intentmodel.StringToObject;
 import intentmodel.SuperIntent;
 
 import java.util.Map;

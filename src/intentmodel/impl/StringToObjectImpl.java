@@ -3,7 +3,6 @@
 package intentmodel.impl;
 
 import intentmodel.IntentmodelPackage;
-import intentmodel.StringToObject;
 
 import org.eclipse.emf.common.notify.Notification;
 
