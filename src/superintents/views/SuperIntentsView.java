@@ -3,10 +3,8 @@ package superintents.views;
 
 import intentloader.IntentLoader;
 
-import java.io.File;
 import java.util.ArrayList;
 
-import org.eclipse.core.runtime.Platform;
 import org.eclipse.jface.action.Action;
 import org.eclipse.jface.action.IMenuListener;
 import org.eclipse.jface.action.IMenuManager;
@@ -34,7 +32,6 @@ import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import superintents.util.JDTInserter;
-import superintents.util.Java2AST;
 
 
 /**
