@@ -311,7 +311,7 @@ public class Java2AST {
 		// set invocation method name
 		MethodInvocation mi = ast.newMethodInvocation();
 		mi.setExpression(ast.newSimpleName(intentName));
-		mi.setName(ast.newSimpleName("setCategory"));
+		mi.setName(ast.newSimpleName("addCategory"));
 
 		// set argument
 		StringLiteral sl = ast.newStringLiteral();
