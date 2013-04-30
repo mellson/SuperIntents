@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <intentmodel:SuperIntent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:intentmodel="platform:/resource/IntentModel/model/IntentModel.ecore" description="Droid QR Code Scan">
-  <intent>
+  <intent action="la.droid.qr.scan">
     <extras key="“la.droid.qr.complete”" value="true"/>
   </intent>
   <output MIMEType="text/plain"/>
