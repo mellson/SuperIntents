@@ -3,5 +3,5 @@
   <intent>
     <extras key="“la.droid.qr.complete”" value="true"/>
   </intent>
-  <output MIMEType="text\plain"/>
+  <output MIMEType="text/plain"/>
 </intentmodel:SuperIntent>

@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<intentmodel:SuperIntent xmi:version="2.0" xmlns:xmi="http://www.omg.org/XMI" xmlns:intentmodel="platform:/resource/IntentModel/model/IntentModel.ecore" description="Intent extras: &quot;X&quot; optional initial double value &quot;Y&quot; optional initial secondary double value &quot;Z&quot; optional initial tertiary double value">
+  <intent action="org.openintents.action.CALCULATOR"/>
+  <output MIMEType=""/>
+</intentmodel:SuperIntent>
