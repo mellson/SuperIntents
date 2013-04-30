@@ -85,7 +85,7 @@ public class jIntent2AST {
 		}
 		
 		//Set the data type
-		if(si.getIntent().getData() != null && si.getIntent().getData().getMIMEType() != null) {
+		if(si.getIntent().getData() != null && si.getIntent().getData().getMIMEType() != null && !(si.getIntent().getData().getMIMEType().equals(""))) {
 			resultList.add(new ASTNodeWrapper(setType(si, ast)));
 		}
 		
