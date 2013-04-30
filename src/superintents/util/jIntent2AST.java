@@ -78,7 +78,7 @@ public class jIntent2AST {
 		
 		//Initialize the Intent
 		for (ASTNode astNode : initializeIntent(si, ast)) {
-			if(astNode.getClass().equals(ImportDeclaration.class))
+			if(astNode.getClass().equals(ImportDeclaration.class) && !doesImportExist(cu,"android.net.Uri"))
 				resultList.add(new ASTNodeWrapper(astNode, NodeType.IMPORT));
 			else
 				resultList.add(new ASTNodeWrapper(astNode));
