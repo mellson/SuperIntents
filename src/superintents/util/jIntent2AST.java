@@ -115,7 +115,7 @@ public class jIntent2AST {
 			resultList.add(new ASTNodeWrapper(generateRequestCode(ast),NodeType.FIELD));
 			resultList.add(new ASTNodeWrapper(callStartActivity(ast)));
 			
-			MethodDeclaration md = doesMethodExist(cu, "OnActivityResult");
+			MethodDeclaration md = doesMethodExist(cu, "onActivityResult");
 			if (md == null)
 				resultList.add(new ASTNodeWrapper(generateCallbackMethod(ast),NodeType.CALLBACK_METHOD));
 			else 
