@@ -68,7 +68,7 @@ public class SuperIntentsView extends ViewPart {
 			// Load intents from Jar or Eclipse
 			
 			// TODO - Switch the two methods below in order for it to work when running inside Eclipse
-			ArrayList<String> lst = IntentLoader.loadListOfIntentFilesFromJar();
+			   ArrayList<String> lst = IntentLoader.loadListOfIntentFilesFromJar();
 			// ArrayList<String> lst = IntentLoader.loadListOfIntentFilesFromEclipse();
 			return lst.toArray();
 		}
@@ -98,7 +98,7 @@ public class SuperIntentsView extends ViewPart {
 				Object obj = ((IStructuredSelection) selection).getFirstElement();
 				
 				// TODO - Switch the two methods below in order for it to work when running inside Eclipse
-				JDTInserter.insertIntent(IntentLoader.loadIntentInstanceFromJar(obj.toString()));
+				   JDTInserter.insertIntent(IntentLoader.loadIntentInstanceFromJar(obj.toString()));
 				// JDTInserter.insertIntent(IntentLoader.loadIntentInstanceFromEclipse(obj.toString()));
 			}
 		};

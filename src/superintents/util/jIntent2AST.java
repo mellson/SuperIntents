@@ -68,7 +68,7 @@ public class jIntent2AST {
 		
 		//Add imports
 		if(!doesImportExist(cu,"android.content.Intent"))
-			resultList.add(new ASTNodeWrapper(generateImports(si, ast),NodeType.IMPORT));
+			resultList.add(new ASTNodeWrapper(generateIntentImport(ast),NodeType.IMPORT));
 		
 		//Insert Input and OutPut Comments
 		if(si.getDescription() != null)
@@ -77,7 +77,12 @@ public class jIntent2AST {
 			resultList.add(newCommentInsideMethod("Output: \n// " + si.getOutput()));
 		
 		//Initialize the Intent
-		resultList.add(new ASTNodeWrapper(initializeIntent(si, ast)));
+		for (ASTNode astNode : initializeIntent(si, ast)) {
+			if(astNode.getClass().equals(ImportDeclaration.class))
+				resultList.add(new ASTNodeWrapper(astNode, NodeType.IMPORT));
+			else
+				resultList.add(new ASTNodeWrapper(astNode));
+		}
 		
 		//Set the data type
 		if(si.getIntent().getData() != null && si.getIntent().getData().getMIMEType() != null) {
@@ -137,8 +142,7 @@ public class jIntent2AST {
 		return es;
 	}
 
-
-	private static ASTNode generateImports(SuperIntentImpl si, AST ast) {
+	private static ASTNode generateIntentImport(AST ast) {
 		
 		//insert the import android.content.Intent;
 		ImportDeclaration i = ast.newImportDeclaration();
@@ -150,29 +154,52 @@ public class jIntent2AST {
 		
 		return i;
 	}
+	
+	private static ASTNode generateURIImport(AST ast) {
+		
+		//insert the import android.net.Uri;
+		ImportDeclaration i = ast.newImportDeclaration();
+		
+		QualifiedName q1 = ast.newQualifiedName(ast.newSimpleName("android"), ast.newSimpleName("net"));
+		QualifiedName q2 = ast.newQualifiedName(q1, ast.newSimpleName("Uri"));
+		
+		i.setName(q2);
+		
+		return i;
+	}
 
-	private static ASTNode initializeIntent(SuperIntentImpl si, AST ast)
+	private static ArrayList<ASTNode> initializeIntent(SuperIntentImpl si, AST ast)
 	{
+		ArrayList<ASTNode> result = new ArrayList<ASTNode>();
+		
 		//If the componenet isn't a valid Java identifier we change it
 		if(si.getIntent().getComponent() != null && !isValidJavaIdentifier(si.getIntent().getComponent()))
 			si.getIntent().setComponent("NOT_A_VALID_IDENTIFIER_" + si.getIntent().getComponent());
 		
 		//Intent(String action, Uri uri, Context packageContext, Class<?> cls)
 		if(si.getIntent().getAction() != null && si.getIntent().getData() != null && si.getIntent().getComponent() != null)
-			return InitializeConstructor1(si, ast);
+		{
+			result.add(generateURIImport(ast));
+			result.add(InitializeConstructor1(si, ast));
+		}
 		//Intent(Context packageContext, Class<?> cls)
 		else if(si.getIntent().getComponent() != null) 
-			return InitializeConstructor2(si, ast);
+			result.add(InitializeConstructor2(si, ast));
 		//Intent(String action, Uri uri)
 		else if(si.getIntent().getAction() != null && si.getIntent().getData() != null)
-			return InitializeConstructor3(si, ast);
+		{
+			result.add(generateURIImport(ast));
+			result.add(InitializeConstructor3(si, ast));
+		}
 		//Intent(String action)
 		else if(si.getIntent().getAction() != null)
-			return InitializeConstructor4(si, ast);
+			result.add(InitializeConstructor4(si, ast));
 		//Intent(Intent o) is not supported
 		//Intent()
 		else 
-			return InitializeConstructor5(si, ast);
+			result.add(InitializeConstructor5(si, ast));
+		
+		return result;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -191,9 +218,13 @@ public class jIntent2AST {
 		arg1.setLiteralValue(si.getIntent().getAction());
 		cic.arguments().add(arg1);
 		
-		StringLiteral arg2 = ast.newStringLiteral();
-		arg2.setLiteralValue(si.getIntent().getData().getValue());
-		cic.arguments().add(arg2);
+		MethodInvocation mi = ast.newMethodInvocation();
+		mi.setExpression(ast.newSimpleName("Uri"));
+		mi.setName(ast.newSimpleName("parse"));
+		StringLiteral sl = ast.newStringLiteral();
+		sl.setLiteralValue(si.getIntent().getData().getValue());
+		mi.arguments().add(sl);
+		cic.arguments().add(mi);
 		
 		TypeLiteral arg3 = ast.newTypeLiteral();
 		arg3.setType(ast.newSimpleType(ast.newSimpleName(si.getIntent().getComponent())));
@@ -249,9 +280,13 @@ public class jIntent2AST {
 		arg1.setLiteralValue(si.getIntent().getAction());
 		cic.arguments().add(arg1);
 
-		StringLiteral arg2 = ast.newStringLiteral();
-		arg2.setLiteralValue(si.getIntent().getData().getValue());
-		cic.arguments().add(arg2);
+		MethodInvocation mi = ast.newMethodInvocation();
+		mi.setExpression(ast.newSimpleName("Uri"));
+		mi.setName(ast.newSimpleName("parse"));
+		StringLiteral sl = ast.newStringLiteral();
+		sl.setLiteralValue(si.getIntent().getData().getValue());
+		mi.arguments().add(sl);
+		cic.arguments().add(mi);
 
 		vdf.setInitializer(cic);
 		
