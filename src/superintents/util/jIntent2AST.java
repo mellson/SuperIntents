@@ -10,7 +10,7 @@ import org.eclipse.jdt.core.dom.Modifier.ModifierKeyword;
 import superintents.util.ASTNodeWrapper.NodeType;
 import intentmodel.impl.*;
 
-public class Java2AST {
+public class jIntent2AST {
 	
 	private static String intentName;
 	private static String requestCodeName;
@@ -355,8 +355,7 @@ public class Java2AST {
 		mi.setName(ast.newSimpleName("startActivityForResult"));
 
 		// set argument 1
-		StringLiteral sl1 = ast.newStringLiteral();
-		sl1.setLiteralValue(intentName);
+		SimpleName sl1 = ast.newSimpleName(intentName);
 		mi.arguments().add(sl1);
 		
 		// set argument 2
@@ -393,7 +392,7 @@ public class Java2AST {
 	private static ASTNode generateCallbackMethod(AST ast) {
 		//method declaration
 		MethodDeclaration m = ast.newMethodDeclaration();
-		m.setName(ast.newSimpleName("OnActivityResult"));
+		m.setName(ast.newSimpleName("onActivityResult"));
 		
 		//add the @Override annotation
 		MarkerAnnotation ma = ast.newMarkerAnnotation();
@@ -401,7 +400,7 @@ public class Java2AST {
 		m.modifiers().add(ma);
 		
 		//add the "public" keyword
-		Modifier mo = ast.newModifier(ModifierKeyword.PUBLIC_KEYWORD);
+		Modifier mo = ast.newModifier(ModifierKeyword.PROTECTED_KEYWORD);
 		m.modifiers().add(mo);
 		
 		//parameters

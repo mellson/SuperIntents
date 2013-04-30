@@ -20,7 +20,7 @@ import intentmodel.impl.*;
 
 public class JDTInserter {
 	public static void insertIntent(SuperIntentImpl intentImplementaion) {
-		ArrayList<ASTNodeWrapper> nodeWrappers = Java2AST.transformSuperIntent(intentImplementaion);
+		ArrayList<ASTNodeWrapper> nodeWrappers = jIntent2AST.transformSuperIntent(intentImplementaion);
 		try {
 			insertNodes(nodeWrappers);
 		} catch (Exception e) {
@@ -89,7 +89,7 @@ public class JDTInserter {
 				break;
 			case CALLBACK_METHOD:
 				if (nodeWrapper.existingCallbackMethod != null) {
-					block = Java2AST.doesMethodExist(helper.compilationUnit, "OnActivityResult").getBody();
+					block = jIntent2AST.doesMethodExist(helper.compilationUnit, "OnActivityResult").getBody();
 					listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
 					listRewrite.insertFirst(nodeWrapper.astNode, null);
 					break;
