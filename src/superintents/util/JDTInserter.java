@@ -89,7 +89,7 @@ public class JDTInserter {
 				break;
 			case CALLBACK_METHOD:
 				if (nodeWrapper.existingCallbackMethod != null) {
-					block = jIntent2AST.doesMethodExist(helper.compilationUnit, "OnActivityResult").getBody();
+					block = jIntent2AST.doesMethodExist(helper.compilationUnit, "onActivityResult").getBody();
 					listRewrite = helper.rewriter.getListRewrite(block, Block.STATEMENTS_PROPERTY);
 					listRewrite.insertFirst(nodeWrapper.astNode, null);
 					break;
