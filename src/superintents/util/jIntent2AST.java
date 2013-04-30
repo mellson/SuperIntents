@@ -116,9 +116,27 @@ public class jIntent2AST {
 			else 
 				resultList.add(new ASTNodeWrapper(generateCallbackMethodBody(ast), NodeType.CALLBACK_METHOD, md));
 		}
+		else
+			resultList.add(new ASTNodeWrapper(startActivity(ast)));
 			
 		return resultList;
 	}
+
+	@SuppressWarnings("unchecked")
+	private static ASTNode startActivity(AST ast) {
+		// set invocation method name
+		MethodInvocation mi = ast.newMethodInvocation();
+		mi.setName(ast.newSimpleName("startActivity"));
+
+		// set argument
+		SimpleName sn = ast.newSimpleName(intentName);
+		mi.arguments().add(sn);
+
+		ExpressionStatement es = ast.newExpressionStatement(mi);
+
+		return es;
+	}
+
 
 	private static ASTNode generateImports(SuperIntentImpl si, AST ast) {
 		
