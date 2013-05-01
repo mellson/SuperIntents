@@ -56,7 +56,6 @@ public class IntentLoader {
 				ZipInputStream zip = new ZipInputStream(jar.openStream());
 				ZipEntry ze = null;
 				while ((ze = zip.getNextEntry()) != null) {
-//					if (ze.getName().equals("resources/"+filename+".intentmodel")) {
 						if (ze.getName().contains(filename) && ze.getName().endsWith(".intentmodel")) {
 						// Copy the input stream
 						byte[] buffer = new byte[(int)ze.getSize()];
