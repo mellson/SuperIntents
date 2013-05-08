@@ -1,16 +1,8 @@
 package superintents.views;
 
 import intentloader.IntentLoader;
-
 import java.util.ArrayList;
-
 import org.eclipse.jface.action.Action;
-import org.eclipse.jface.action.IMenuListener;
-import org.eclipse.jface.action.IMenuManager;
-import org.eclipse.jface.action.IToolBarManager;
-import org.eclipse.jface.action.MenuManager;
-import org.eclipse.jface.action.Separator;
-import org.eclipse.jface.dialogs.MessageDialog;
 import org.eclipse.jface.viewers.DoubleClickEvent;
 import org.eclipse.jface.viewers.IDoubleClickListener;
 import org.eclipse.jface.viewers.ISelection;
@@ -20,14 +12,10 @@ import org.eclipse.jface.viewers.ITableLabelProvider;
 import org.eclipse.jface.viewers.LabelProvider;
 import org.eclipse.jface.viewers.TableViewer;
 import org.eclipse.jface.viewers.Viewer;
-import org.eclipse.jface.viewers.ViewerSorter;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.graphics.Image;
 import org.eclipse.swt.widgets.Composite;
-import org.eclipse.swt.widgets.Menu;
-import org.eclipse.ui.IActionBars;
 import org.eclipse.ui.ISharedImages;
-import org.eclipse.ui.IWorkbenchActionConstants;
 import org.eclipse.ui.PlatformUI;
 import org.eclipse.ui.part.ViewPart;
 import superintents.util.JDTInserter;
@@ -48,8 +36,6 @@ public class SuperIntentsView extends ViewPart {
 	 */
 	public static final String ID = "superintents.views.SuperIntentsView";
 	private TableViewer viewer;
-	private Action action1;
-	private Action action2;
 	private Action doubleClickAction;
 
 	/*
@@ -66,39 +52,22 @@ public class SuperIntentsView extends ViewPart {
 
 		public Object[] getElements(Object parent) {
 			// Load intents from Jar or Eclipse
-			
+
 			// TODO - Switch the two methods below in order for it to work when running inside Eclipse
-			   ArrayList<String> lst = IntentLoader.loadListOfIntentFilesFromJar();
+			ArrayList<String> lst = IntentLoader.loadListOfIntentFilesFromJar();
 			// ArrayList<String> lst = IntentLoader.loadListOfIntentFilesFromEclipse();
 			return lst.toArray();
 		}
 	}
 
 	private void makeActions() {
-		action1 = new Action() {
-			public void run() {
-				showMessage("Action 1 executed");
-			}
-		};
-		action1.setText("Action 1");
-		action1.setToolTipText("Action 1 tooltip");
-		action1.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
-
-		action2 = new Action() {
-			public void run() {
-				showMessage("Action 2 executed");
-			}
-		};
-		action2.setText("Action 2");
-		action2.setToolTipText("Action 2 tooltip");
-		action2.setImageDescriptor(PlatformUI.getWorkbench().getSharedImages().getImageDescriptor(ISharedImages.IMG_OBJS_INFO_TSK));
 		doubleClickAction = new Action() {
 			public void run() {
 				ISelection selection = viewer.getSelection();
 				Object obj = ((IStructuredSelection) selection).getFirstElement();
-				
+
 				// TODO - Switch the two methods below in order for it to work when running inside Eclipse
-				   JDTInserter.insertIntent(IntentLoader.loadIntentInstanceFromJar(obj.toString()));
+				JDTInserter.insertIntent(IntentLoader.loadIntentInstanceFromJar(obj.toString()));
 				// JDTInserter.insertIntent(IntentLoader.loadIntentInstanceFromEclipse(obj.toString()));
 			}
 		};
@@ -118,15 +87,6 @@ public class SuperIntentsView extends ViewPart {
 		}
 	}
 
-	class NameSorter extends ViewerSorter {
-	}
-
-	/**
-	 * The constructor.
-	 */
-	public SuperIntentsView() {
-	}
-
 	/**
 	 * This is a callback that will allow us to create the viewer and initialize it.
 	 */
@@ -134,52 +94,14 @@ public class SuperIntentsView extends ViewPart {
 		viewer = new TableViewer(parent, SWT.MULTI | SWT.H_SCROLL | SWT.V_SCROLL);
 		viewer.setContentProvider(new ViewContentProvider());
 		viewer.setLabelProvider(new ViewLabelProvider());
-		viewer.setSorter(new NameSorter());
+		// viewer.setSorter(new NameSorter());
 		viewer.setInput(getViewSite());
 
 		// Create the help context id for the viewer's control
 		PlatformUI.getWorkbench().getHelpSystem().setHelp(viewer.getControl(), "SuperIntents.viewer");
 		makeActions();
-		hookContextMenu();
+		// hookContextMenu();
 		hookDoubleClickAction();
-		contributeToActionBars();
-	}
-
-	private void hookContextMenu() {
-		MenuManager menuMgr = new MenuManager("#PopupMenu");
-		menuMgr.setRemoveAllWhenShown(true);
-		menuMgr.addMenuListener(new IMenuListener() {
-			public void menuAboutToShow(IMenuManager manager) {
-				SuperIntentsView.this.fillContextMenu(manager);
-			}
-		});
-		Menu menu = menuMgr.createContextMenu(viewer.getControl());
-		viewer.getControl().setMenu(menu);
-		getSite().registerContextMenu(menuMgr, viewer);
-	}
-
-	private void contributeToActionBars() {
-		IActionBars bars = getViewSite().getActionBars();
-		fillLocalPullDown(bars.getMenuManager());
-		fillLocalToolBar(bars.getToolBarManager());
-	}
-
-	private void fillLocalPullDown(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(new Separator());
-		manager.add(action2);
-	}
-
-	private void fillContextMenu(IMenuManager manager) {
-		manager.add(action1);
-		manager.add(action2);
-		// Other plug-ins can contribute there actions here
-		manager.add(new Separator(IWorkbenchActionConstants.MB_ADDITIONS));
-	}
-
-	private void fillLocalToolBar(IToolBarManager manager) {
-		manager.add(action1);
-		manager.add(action2);
 	}
 
 	private void hookDoubleClickAction() {
@@ -188,10 +110,6 @@ public class SuperIntentsView extends ViewPart {
 				doubleClickAction.run();
 			}
 		});
-	}
-
-	private void showMessage(String message) {
-		MessageDialog.openInformation(viewer.getControl().getShell(), "SuperIntents View", message);
 	}
 
 	/**
