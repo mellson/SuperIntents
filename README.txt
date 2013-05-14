@@ -8,7 +8,7 @@ Eclipse Modelling Tools, install a vanilla modelling  http://www.eclipse.org/dow
 Install "Android Development Tools for Eclipse" and "Android ADT extentions" from Eclipse Marketplace.
 
 3.
-Put the SuperIntents_0.44.0.jar file from "plugin export" in your dropins folder.
+Put the SuperIntents_0.44.0.jar file in your dropins folder.
 The dropins folder is located inside your Eclipse installation folder.
 
 4.
