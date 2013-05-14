@@ -1,0 +1,990 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0062)http://www.ibm.com/developerworks/rational/library/dec04/bell/ -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Cache-control" content="no-cache">
+<title>UML basics: The component diagram</title>
+<meta http-equiv="PICS-Label" content="(PICS-1.1 &quot;http://www.icra.org/ratingsv02.html&quot; l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) &quot;http://www.rsac.org/ratingsv01.html&quot; l gen true r (n 0 s 0 v 0 l 0) &quot;http://www.classify.org/safesurf/&quot; l gen true r (SS~~000 1))">
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/">
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico">
+<meta name="Owner" content="developerWorks Content/Raleigh/IBM">
+<meta name="DC.Language" scheme="rfc1766" content="en">
+<meta name="IBM.Country" content="ZZ">
+<meta name="Security" content="Public">
+<meta name="IBM.SpecialPurpose" content="SP001">
+<meta name="IBM.PageAttributes" content="sid=1003,1004">
+<meta name="Source" content="v16 Template Generator">
+<meta name="Robots" content="index,follow">
+<meta name="Abstract" content="from The Rational Edge: This article introduces the component diagram, a structure diagram within the new Unified Modeling Language 2.0 specification.">
+<meta name="Description" content="from The Rational Edge: This article introduces the component diagram, a structure diagram within the new Unified Modeling Language 2.0 specification.">
+<meta name="Keywords" content="Unified Modeling Language, UML, UML 2, structure diagram, component diagram, class diagram, component interface, component modeling, dddrca">
+<meta name="DC.Date" scheme="iso8601" content="2004-12-15">
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316">
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="BA.007D">
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCRATZZ">
+<meta name="DC.Rights" content="© Copyright IBM Corporation 2004">
+<meta name="IBM.Effective" scheme="W3CDTF" content="2004-12-15">
+<meta name="title" content="UML basics: The component diagram">
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="./UML basics- An introduction to the Unified Modeling Language_files/all.css" media="all" rel="stylesheet" title="www" type="text/css">
+<link href="./UML basics- An introduction to the Unified Modeling Language_files/screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./UML basics- An introduction to the Unified Modeling Language_files/screen-uas.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./UML basics- An introduction to the Unified Modeling Language_files/screen-fonts.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./UML basics- An introduction to the Unified Modeling Language_files/handheld.css" media="handheld" rel="stylesheet" title="www" type="text/css">
+<link href="./UML basics- An introduction to the Unified Modeling Language_files/print.css" media="print" rel="stylesheet" title="www" type="text/css">
+<link href="./UML basics- An introduction to the Unified Modeling Language_files/overlay.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<!-- dW-specific CSS -->
+<link href="./UML basics- An introduction to the Unified Modeling Language_files/dw-screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./UML basics- An introduction to the Unified Modeling Language_files/dw-screen-comments-ratings-signin.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./UML basics- An introduction to the Unified Modeling Language_files/jquery.cluetip.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<!-- xM Masthead/Footer -->
+<link href="./UML basics- An introduction to the Unified Modeling Language_files/dw-mf2013-03R.css" rel="stylesheet" title="www" type="text/css">
+<script src="./UML basics- An introduction to the Unified Modeling Language_files/ibmcommon.js" type="text/javascript">//</script><style type="text/css"></style><link rel="search" type="application/opensearchdescription+xml" href="http://www.ibm.com/search/opensearch/description.xml" title="IBM Search">
+<script src="./UML basics- An introduction to the Unified Modeling Language_files/dynamicnav.js" type="text/javascript">//</script>
+<!-- dW functional JS -->
+<script language="JavaScript" src="./UML basics- An introduction to the Unified Modeling Language_files/urltactic.js" type="text/javascript"></script>
+<!-- Rating_START -->
+<script language="JavaScript" src="./UML basics- An introduction to the Unified Modeling Language_files/showrating.js" type="text/javascript"></script>
+<style type="text/css">
+.metavalue {
+  display: none;
+}
+</style>
+<!-- Rating_END --><!-- RESERVED_HEADER_INCLUDE -->
+<script language="javascript" src="./UML basics- An introduction to the Unified Modeling Language_files/ajax1.js" type="text/javascript"></script>
+<script language="javascript" src="./UML basics- An introduction to the Unified Modeling Language_files/search_counter-maverick.js" type="text/javascript"></script>
+<script language="javascript" src="./UML basics- An introduction to the Unified Modeling Language_files/request_referer_capture-maverick.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ setDefaultQuery('rationalart');
+ //-->
+</script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ function openNewWindow(url,tar,arg){window.open(url,tar,arg);}
+ //-->
+</script>
+<!-- Include file support -->
+<script language="JavaScript" type="text/javascript">
+(function($) {
+	jQuery.extend({
+		getInc: function(u,d){
+			if(u==null)return;
+			jQuery.ajax({
+	    		type: "GET",
+			url: u,
+			dataType: "text",
+	        	success: function(t) {
+				jQuery(d).html(t);
+				ibmCommon.initShowHide(jQuery(d).children()[0]);			
+			},
+			async: true
+			});
+		}
+	});
+})(jQuery);
+</script>
+<script id="flashdetect" type="text/javascript" src="./UML basics- An introduction to the Unified Modeling Language_files/flash-detect.js" charset="UTF-8"></script><script id="mhMenu" type="text/javascript" src="./UML basics- An introduction to the Unified Modeling Language_files/usen-utf8.js" charset="UTF-8"></script><script id="wiBundle" type="text/javascript" src="./UML basics- An introduction to the Unified Modeling Language_files/Controller" charset="UTF-8"></script></head>
+
+<body id="ibm-com">
+<div id="ibm-top" class="ibm-landing-page">
+
+<!-- MASTHEAD_BEGIN -->
+<!-- MASTHEAD_BEGIN -->
+<div class="ibm-access"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#ibm-content">Skip to main content</a></div>
+<div id="ibm-masthead-dw">
+  
+    <!-- TOP ROW -->    
+    <div id="dw-masthead-top-row">
+        <ul id="ibm-mast-options-dw">
+		    <li id="dw-mast-top-0">
+				<a class="" href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&lang=en&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2Fdec04%2Fbell%2F" title="">Sign in (or register)</a>
+			</li>
+		    <li id="dw-mast-top-1">
+				<a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#SELECTLANG">English</a><img class="dw-preload" src="./UML basics- An introduction to the Unified Modeling Language_files/arrow-down-active.gif" width="8" height="7" alt="">
+			</li>
+		    <li id="dw-mast-top-2" class="dw-mf-hide">
+				<a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/photo.do" alt="PHOTO" class="dw-mast-profimg" width="20" height="20"> [userid]</a>
+			</li>
+			<li id="dw-mast-top-3">
+				<a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/ibm-smlogo.gif" width="44" height="16" alt="IBM®"></a>
+			</li>
+		</ul>
+	</div>
+    
+    <!-- TOP ROW SLIDER -->
+    <div id="ibm-my-menu-dw">    
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+                <!-- Sign-in -->
+				<div class="dw-mast-columns">                
+					<div class="dw-mast-col-1-1">
+						<div id="dw-mast-sso">
+							<div id="signin_error_mf" class="no-display"></div>
+							<div id="dw-mast-sso-form">
+								<form id="sForm_mf" action="" method="post" name="sForm_name_mf" onsubmit="return false;">
+									<div id="dw-mast-sso-id" class="dw-mast-sso-id-en">
+										<label for="ibmid_mf">IBM ID:</label>
+										<input id="ibmid_mf" type="text" value="" name="ibmid_name_mf" maxlength="100" onkeypress="handleEP(event,this.form,&#39;mf&#39;);" class="">
+									</div>
+									<div id="dw-mast-sso-pw" class="dw-mast-sso-pw-en">
+										<label for="pw_mf">Password:</label>
+										<input id="pw_mf" type="password" value="" name="pw_name_mf" maxlength="100" onkeypress="handleEP(event,this.form,&#39;mf&#39;);" class="">
+									</div>
+									<div id="dw-mast-sso-target" class="dw-mast-sso-target-en">
+										<p class="dw-mf-perm-box">
+											<input id="perm_mf" type="checkbox" name="perm_name_mf"><label for="perm_mf"> Keep me signed in.</label>
+										</p>
+									</div>					
+									<div id="dw-mast-sso-terms">
+										<p class="dw-mast-sso-terms-en">By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+									</div>
+									<div>
+										<input class="dw-mf-submit-btn" name="ibm_submit_name_mf" value="Submit" onclick="signin(&#39;mf&#39;);return false;" type="submit">
+									</div>
+								</form>
+							</div>
+							<div id="dw-mast-sso-update">
+								<div id="dw-mast-sso-update-id">
+									<ul>
+										<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#" onclick="(function () {window.location=&#39;/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=en&amp;d=&#39;+encodeURIComponent(location.href);})();">Need an IBM ID?</a></li>
+										<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=en_US">Forgot your IBM ID?</a></li>
+									</ul>
+								</div>
+								<div id="dw-mast-sso-update-pw">
+									<ul class="dw-mf-pwupdate">
+										<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=forgot&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(getAuthUrl())+&#39;%3Fm%3Dloginpage%26lang%3Den_US%26d%3D&#39;+encodeURIComponent(location.href);})();">Forgot your password?</a></li>
+										<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=chpw&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(location.href);})();">Change your password</a></li>
+									</ul>
+								</div>
+							</div>
+							<div id="dw-mast-sso-text">
+						<p>The first time you sign into developerWorks, a profile is created for you.  <strong>Select information in your profile (name, country/region, and company) is displayed to the public and will accompany any content you post</strong>.  You may update your IBM account at any time.</p>
+								<p class="dw-mf-secure">All information submitted is secure.</p>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>							
+						</div>                    
+						<div id="dw-mast-dname" class="dw-mf-hide">
+							<p>The first time you sign in to developerWorks, a profile is created for you, so you need to choose a display name.  Your display name accompanies the content you post on developerworks.</p><p><strong>Please choose a display name between 3-31 characters</strong>.  Your display name must be unique in the developerWorks community and should not be your email address for privacy reasons.</p>
+							<div id="signin_dname_error_mf" class="no-display"></div>
+							<div id="dw-mast-dname-form">
+								<form id="dForm_mf" action="" method="post" name="dForm_name_mf" onsubmit="return false;">
+									<div id="dw-mast-dname-mf">
+										<label for="dname_mf">Display name:</label>
+										<input id="dname_mf" name="dname_name_mf" maxlength="31" size="25" value="" type="text" onkeypress="handleEP(event,this.form,&#39;mf&#39;);">
+									</div>
+									<div id="dw-mast-dname-terms">
+										<p>By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+									</div>
+									<div>
+										<input class="dw-mf-submit-btn" name="dname_submit_name_mf" value="Submit" onclick="signin(&#39;mf&#39;);return false;" type="submit">
+									</div>
+								</form>								
+							</div>
+							<div id="dw-mast-dname-secure">
+								<p class="dw-mf-secure">All information submitted is secure.</p>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>							
+						</div>
+						<div id="dw-mast-auth" class="dw-mf-hide">
+							<div>
+								<h2>My developerWorks:</h2>
+								<ul>
+									<li><a id="dw-mast-top-0-0" href="http://www.ibm.com/developerworks/community/homepage/web/updates/?lang=en">My home</a></li>
+									<li><a href="http://www.ibm.com/developerworks/community/profiles/html/myProfileView.do?lang=en">My profile</a></li>
+									<li><a href="http://www.ibm.com/developerworks/community/groups/service/html/mycommunities?lang=en">My communities</a></li>
+									<li><a href="http://www.ibm.com/developerworks/community/news">Settings</a></li>
+								</ul>     
+							</div>
+							<div id="dw-mast-notify" class="dw-mf-hide">
+								<h2>My notifications:</h2>
+								<ul>
+									<li><a id="new_notify" href="http://www.ibm.com/developerworks/community/homepage?lang=en">{[num_notify] new notifications}([num_notify] new notification)</a></li>
+									<li><a id="new_invite" href="http://www.ibm.com/developerworks/community/profiles/html/wc.do?action=in&requireAuth=true&widgetId=friends&lang=[lang]">{[num_invite] network requests}([num_invite] network request)</a></li>  
+								</ul>
+							</div>
+							<div class="dw-mast-more">
+								<ul class="ibm-link-list">
+									<li><a class="dw-more-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#" onclick="signOut(); return false;"><strong>Sign out</strong></a></li>
+								</ul>
+							</div>		
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>							
+						</div>						
+					</div>                   
+                </div>
+                <!-- Language selector --> 
+				<div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<h2>Select a language:</h2>
+						<ul>
+							<li><a id="dw-mast-top-1-0" href="http://www.ibm.com/developerworks/">English</a></li>
+							<li><a href="http://www.ibm.com/developerworks/cn/">中文</a></li>
+							<li><a href="http://www.ibm.com/developerworks/jp/">日本語</a></li>
+							<li><a href="http://www.ibm.com/developerworks/ru/">Русский</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-col-2-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/br/">Português (Brasil)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/ssa/">Español</a></li>
+							<li><a href="http://www.ibm.com/developerworks/vn/">Việt</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-lang"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+                </div>                
+                <div class="dw-mast-columns"><!-- Authenticated --></div>
+                <!-- IBM -->
+				<div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<ul>
+							<li><a id="dw-mast-top-3-0" href="http://www.ibm.com/">IBM home</a></li>
+							<li><a href="http://www.ibm.com/solutions/">Industries &amp; solutions</a></li>
+							<li><a href="http://www.ibm.com/technologyservices/">Services</a></li>
+							<li><a href="http://www.ibm.com/products/">Products</a></li>
+							<li><a href="http://www.ibm.com/support/">Support &amp; downloads</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-col-2-2 dw-mast-ibm">
+						<ul>
+							<li><a href="http://www.ibm.com/support/publications/us/library/index.shtml">Product information</a></li>
+							<li><a href="http://www.ibm.com/redbooks/">Redbooks</a></li>
+							<li><a href="http://www.ibm.com/software/">Software</a></li>
+							<li><a href="http://www.ibm.com/software/sw-services/">Software services</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-ibm"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div id="ibm-universal-nav-dw">
+        <ul id="ibm-unav-links-dw">
+            <li id="ibm-unav-home-dwlogo">
+				<a href="http://www.ibm.com/developerworks/"><img src="./UML basics- An introduction to the Unified Modeling Language_files/dw-wordmark.gif" width="218" height="32" alt="developerWorks®"></a>
+            </li>
+        </ul>
+        <ul id="ibm-menu-links-dw">
+            <li id="dw-mast-nav-0"><a href="http://www.ibm.com/developerworks/topics/">Technical topics</a></li>
+            <li id="dw-mast-nav-1"><a href="http://www.ibm.com/developerworks/downloads/">Evaluation software</a></li>
+            <li id="dw-mast-nav-2"><a href="http://www.ibm.com/developerworks/community/">Community</a></li>
+            <li id="dw-mast-nav-3"><a href="http://www.ibm.com/developerworks/events/">Events</a></li>
+        </ul>
+			<form id="ibm-search-form" action="http://www.ibm.com/search/csass/search/" method="get" name="form1">
+				<input type="hidden" name="sn" value="dw">
+				<input type="hidden" name="lang" value="en">
+				<input type="hidden" name="cc" value="US">
+				<input type="hidden" name="en" value="utf">
+				<input type="hidden" name="hpp" value="20">
+				<input type="hidden" name="dws" value="dw">
+				<p>
+				<label for="q"><img alt="Search developerWorks" height="1" width="1" src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif"></label>
+				<input type="text" value="Search developerWorks" name="q" maxlength="100" id="q">
+				<input type="submit" id="ibm-search" class="ibm-btn-search" name="Search" value="Search">
+				</p>
+			</form>
+    </div>
+    
+    <!-- BOTTOM ROW SLIDER -->
+    <div id="ibm-common-menu-dw">
+        <div class="ibm-ribbon-pane-dw dw-ribbon-pane-en">
+            <div class="ibm-ribbon-section-dw">
+				<!-- Technical topics category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-5-1">
+						<h2><a id="dw-mast-nav-0-0" href="http://www.ibm.com/developerworks/topics/">Technical topics</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/agile/">Agile transformation</a></li>
+							<li><a href="http://www.ibm.com/developerworks/aix/">AIX and UNIX</a></li>
+							<li><a href="http://www.ibm.com/developerworks/bigdata/">Big data</a></li>
+							<li><a href="http://www.ibm.com/developerworks/analytics/">Business analytics</a></li>
+							<li><a href="http://www.ibm.com/developerworks/bpm/">Business process management</a></li>
+						</ul>     
+                    </div>
+					<div class="dw-mast-col-5-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/cloud/">Cloud computing</a></li>
+							<li><a href="http://www.ibm.com/developerworks/commerce/">Commerce</a></li>
+							<li><a href="http://www.ibm.com/developerworks/ibmi/">IBM i</a></li>    
+							<li><a href="http://www.ibm.com/developerworks/industry/">Industries</a></li>
+							<li><a href="http://www.ibm.com/developerworks/data/">Information management</a></li>
+						</ul>
+                    </div>
+					<div class="dw-mast-col-5-3">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/java/">Java technology</a></li>
+							<li><a href="http://www.ibm.com/developerworks/linux/">Linux</a></li>
+							<li><a href="http://www.ibm.com/developerworks/lotus/">Lotus (collaboration)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/mobile/">Mobile development</a></li>
+							<li><a href="http://www.ibm.com/developerworks/opensource/">Open source</a></li>
+						</ul>     
+                    </div>
+                    <div class="dw-mast-col-5-4">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/rational/">Rational</a></li>
+							<li><a href="http://www.ibm.com/developerworks/security/">Security</a></li>
+							<li><a href="http://www.ibm.com/developerworks/servicemanagement/">Tivoli (service management)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/web/">Web development</a></li>
+							<li><a href="http://www.ibm.com/developerworks/websphere/">WebSphere</a></li>
+						</ul> 
+                    </div>
+                    <div class="dw-mast-col-5-5">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/library/"><strong>Technical library</strong></a></li>
+							<li><a href="http://www.ibm.com/developerworks/products/"><strong>Products A to Z</strong></a></li>
+						</ul>
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-tech"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+				<!-- Evaluation software category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<h2><a id="dw-mast-nav-1-0" href="http://www.ibm.com/developerworks/downloads/">Evaluation software</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#ba">Business analytics</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#data">Information management</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#lotus">Lotus (collaboration)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#rational">Rational</a></li>
+						</ul>            
+                    </div>
+					<div class="dw-mast-col-2-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#tivoli">Tivoli (service management)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#websphere">WebSphere</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#more">More IBM products (Mobile, PureSystems, Security...)</a></li>
+						</ul>            
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-eval"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+				<!-- Community category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-3-1">
+						<h2><a id="dw-mast-nav-2-0" href="http://www.ibm.com/developerworks/community/index.html">Community</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/community/homepage/?lang=en">My home</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/profiles/?lang=en">Profiles</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/groups/?lang=en">Communities</a></li>
+						</ul>     
+                    </div>
+					<div class="dw-mast-col-3-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/community/blogs/?lang=en">Blogs</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/forums/?lang=en">Forums</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/wikis/?lang=en">Wikis</a></li>
+						</ul>
+                    </div>
+					<div class="dw-mast-col-3-3 dw-mast-col-3-3-en">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/community/activities/?lang=en">Activities</a></li>
+							<li><a href="https://www.ibm.com/developerworks/community/podcasts/?lang=en">Podcasts</a></li>    
+							<li><a href="http://www.ibm.com/developerworks/champion/">IBM Champion program</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-comm"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+				<!-- Events category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-1-1">
+						<h2><a id="dw-mast-nav-3-0" href="http://www.ibm.com/developerworks/events/">Events</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/find/webcasts/">Webcasts</a></li>
+							<li><a href="http://www.ibm.com/developerworks/find/events/">Find events (webcasts, conferences...)</a></li>
+						</ul>            
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-event"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div id="fdiv" class="ibm-access"><embed type="application/x-shockwave-flash" src="https://www.ibm.com/developerworks/js/dw-mf/connect.swf" width="1" height="1" id="sflash" name="sflash" quality="high" menu="false" wmode="window" movie="https://www.ibm.com/developerworks/js/dw-mf/connect.swf" swliveconnect="true" allowscriptaccess="always"></div>
+<!-- MASTHEAD_END --><!-- MASTHEAD_END -->
+
+<div id="ibm-pcon">
+
+<!-- CONTENT_BEGIN -->
+<div id="ibm-content">
+
+<!-- Navigation_Trail_BEGIN -->
+<!-- &nbsp; -->
+      <div id="ibm-content-head"><ul id="ibm-navigation-trail"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/">developerWorks</a></li><li><a href="http://www.ibm.com/developerworks/topics/">Technical topics</a></li><li><a href="http://www.ibm.com/developerworks/rational/">Rational</a></li><li><a href="http://www.ibm.com/developerworks/rational/library/">Technical library</a></li></ul></div>
+<!-- Navigation_Trail_END -->
+
+<!-- dW_Summary Area_START -->
+<div id="dw-summary-article">
+
+<div class="dw-content-head">
+<h1>UML basics: The component diagram</h1><p>
+</p></div>
+
+<div class="ibm-container-body ibm-two-column">
+
+<div class="ibm-column ibm-first">
+<div class="author"><a class="dwauthor" rel="#authortip1" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#author1">Donald Bell</a> (<a href="mailto:bellds@us.ibm.com?subject=The%20component%20diagram&cc=robinw@us.ibm.com">bellds@us.ibm.com</a>), IT Architect, IBM Corporation</div><div id="authortip1" class="dwauthor-onload-state ibm-no-print" style="display: none;"><div class="position"><img src="./UML basics- An introduction to the Unified Modeling Language_files/p-dbell.jpg" width="64" height="80" alt="Donald Bell photo"></div>Donald Bell is an IT architect for IBM Rational software, where he works with clients to define and adopt effective software delivery practices and tools.</div>
+<p></p>
+<p><strong>Summary:</strong>&nbsp; from The Rational Edge: This article introduces the component diagram, a structure diagram within the new Unified Modeling Language 2.0 specification.</p>
+<p class="ibm-no-print"><a href="http://www.ibm.com/developerworks/views/rational/libraryview.jsp?search_by=UML+basics:">View more content in this series</a></p>
+</div>
+
+<div class="ibm-column ibm-second">
+<p class="leading"><strong>Date:</strong>&nbsp; 15 Dec 2004
+<br><strong>Level: </strong>&nbsp;Introductory
+
+<br><strong>Also available in:&nbsp;</strong>
+&nbsp;<a href="http://www.ibm.com/developerworks/cn/rational/rationaledge/content/feb05/bell/bell.html">Chinese</a>
+
+
+
+&nbsp;<a href="http://www.ibm.com/developerworks/vn/library/bell2/">Vietnamese</a> 
+
+
+<br>
+<br><strong>Activity:</strong>&nbsp; 306214 views
+<br><strong>Comments:</strong> &nbsp; <span id="nCmts">0&nbsp;(<a class="dw-view-comment" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#icomments">View</a>&nbsp;|&nbsp;<a onclick="showSignIn();return false;" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#">Add comment</a> - Sign in)</span>
+<!-- Rating_Area_Begin -->
+</p><div id="art-rating-summary"><img alt="Average rating 4 stars based on 674 votes" src="./UML basics- An introduction to the Unified Modeling Language_files/stars120x20-4b.jpg" class="dw-avg-rating"> Average rating (674 votes)<br><a class="dw-view-comment" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#iratings">Rate this article</a></div>
+<!-- Rating_Area_End -->
+<p></p>
+</div>
+
+</div>
+</div>
+<!-- dW_Summary_Area_END -->
+
+<!-- CONTENT_BODY -->
+<div id="ibm-content-body">
+
+<!-- MAIN_COLUMN_BEGIN -->
+<div id="ibm-content-main">
+
+<!-- Related_Searches_Area -->
+<!-- Related_Searches_Area_Begin -->
+<script type="text/javascript" language="javascript">
+	     capture_referrer();
+</script>
+
+<div id="dw-related-searches-article" style="display:none">
+<div class="ibm-container ibm-alternate-two">
+<div class="ibm-container-body">
+
+<!--  START : HTML FOR ARTICLE SEARCH -->
+  <div id="article_results" style="display:block"></div>
+<!--  END : HTML FOR ARTICLE SEARCH -->
+
+</div>
+</div>
+</div>
+<!-- Related_Searches_Area_End -->
+<!-- MAIN_COLUMN_CONTAINER_BEGIN -->
+<div class="ibm-container">
+
+<!-- MAIN_COLUMN_CONTENT_BEGIN -->
+<p>
+				<img align="right" alt="Illustration" border="0" hspace="8" src="./UML basics- An introduction to the Unified Modeling Language_files/bell-illustr.jpg">
+				<em>This is the next installment in a series of articles about the essential diagrams used within the Unified Modeling Language, or UML. In my previous article on the <a href="http://www.ibm.com/developerworks/rational/library/content/RationalEdge/sep04/bell/index.html"> UML's class diagram</a>, (</em>The Rational Edge<em>, September 2004), I described how the class diagram's notation set is the basis for all UML 2's structure diagrams.  Continuing down the track of UML 2 structure diagrams, this article introduces the component diagram.</em>
+			</p>
+			<p><a name="N1006F"><span class="atitle">The diagram's purpose</span></a></p>
+		
+	<p>The component diagram's main purpose is to show the structural relationships between the components of a system.  In UML 1.1, a component represented implementation items, such as files and executables. Unfortunately, this conflicted with the more common use of the term component," which refers to things such as COM components. Over time and across successive releases of UML, the original UML meaning of components was mostly lost.  UML 2 officially changes the essential meaning of the component concept; in UML 2, components are considered autonomous, encapsulated units within a system or subsystem that provide one or more interfaces.  Although the UML 2 specification does not strictly state it, components are larger design units that represent things that will typically be implemented using replaceable" modules.  But, unlike UML 1.x, components are now strictly logical, design-time constructs.  The idea is that you can easily reuse and/or substitute a different component implementation in your designs because a component encapsulates behavior and implements specified interfaces. [Note: The physical items that UML1.x called components are now called "artifacts" in UML 2. An artifact is a physical unit, such as a file, executable, script, database, etc. Only artifacts live on physical nodes; classes and components do not have "location." However, an artifact may manifest components and other classifiers (i.e., classes). A single component could be manifested by multiple artifacts, which could be on the same or different nodes, so a single component could indirectly be implemented on multiple nodes.]</p>
+		<div class="ibm-container ibm-alt-header dw-container-sidebar"><h2>Resources we think you'll like</h2><div class="ibm-container-body">
+
+<ul>
+<li><a href="http://www-01.ibm.com/software/rational/offerings/architecture/">Free 90 day trial of IBM UML tools</a></li>
+<li><a href="http://www.ibm.com/developerworks/architecture/kits/archkit1/">IBM software architecture e-kit</a></li>
+<li><a href="https://www.ibm.com/developerworks/wikis/display/RSA/Home/">IBM Rational Software Architect wiki</a></li>
+<li><a href="https://www.ibm.com/developerworks/university/academicinitiative/">IBM Academic Initiative</a></li>
+ <li><a href="http://www.ibm.com/developerworks/rational/library/10/update-uml-modeling-features-in-rsa-v8-part1/index.html">Drive your UML modeling process with the new IBM Rational Software Architect Version 8.0 solution</a></li>
+<li><a href="http://www.ibm.com/developerworks/rational/library/model-element-conversion-wizard/index.html">Conversion of Elements in UML and BPMN Models in RSA</a></li>
+ </ul>
+</div></div>
+	<p>In component-based development (CBD), component diagrams offer architects a natural format to begin modeling a solution.  Component diagrams allow an architect to verify that a system's required functionality is being implemented by components, thus ensuring that the eventual system will be acceptable.</p>
+			<p>In addition, component diagrams are useful communication tools for various groups.  The diagrams can be presented to key project stakeholders and implementation staff.  While component diagrams are generally geared towards a system's implementation staff, component  diagrams can generally put stakeholders at ease because the diagram presents an early understanding of the overall system that is being built.</p>
+			<p>Developers find the component diagram useful because it provides them with a high-level, architectural view of the system that they will be building, which helps developers begin formalizing a roadmap for the implementation, and make decisions about task assignments and/or needed skill enhancements.  System administrators find component diagrams useful because they get an early view of the logical software components that will be running on their systems.  Although system administrators will not be able to identify the physical machines or the physical executables from the diagram, a component diagram will nevertheless be welcomed because it provides early information about the components and their relationships (which allows sys-admins to loosely plan ahead).</p>
+			<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N100AB"><span class="atitle">The notation</span></a></p>
+			<p>The component diagram notation set now makes it one of the easiest UML diagrams to draw.  Figure 1 shows a simple component diagram using the former UML 1.4 notation; the example shows a relationship between two components: an Order System component that uses the Inventory System component.  As you can see, a component in UML 1.4 was drawn as a rectangle with two smaller rectangles protruding from its left side.</p>
+			
+
+    <br><a name="N100B7"><strong>Figure 1: This simple component diagram shows the Order System's general dependency using UML 1.4 notation</strong></a><br>
+    <img alt="Simple component diagram showing the Order System&#39;s general dependency using UML 1.4 notation" height="264" src="./UML basics- An introduction to the Unified Modeling Language_files/Bell-Fig1.gif" width="224">
+<br>
+    
+			<p>The above UML 1.4 notation is still supported in UML 2.  However, the UML 1.4 notation set did not scale well in larger systems. For that reason, UML 2 dramatically enhances the notation set of the component diagram, as we will see throughout the rest of this article.  The UML 2 notation set scales better, and the notation set is also more informative while maintaining its ease of understanding. </p>
+			<p>Let's step through the component diagram basics according to UML 2.</p>
+			<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N100C9"><span class="atitle">The basics</span></a></p>
+			<p>Drawing a component in UML 2 is now very similar to drawing a class on a class diagram.  In fact, in UML 2 a component is merely a specialized version of the class concept.  Which means that the notation rules that apply to the class classifier also apply to the component classifier. (If you read and understood my previous article [http://www-106.ibm.com/developerworks/rational/library/content/RationalEdge/sep04/bell/index.html] regarding structure diagrams in general, and class diagrams in particular, you are well under way to understanding component diagrams.)</p>
+			<p>In UML 2, a component is drawn as a rectangle with optional compartments stacked vertically.  A high-level, abstracted view of a component in UML 2 can be modeled as just a rectangle with the component's name and the component stereotype text and/or icon.  The component stereotype's text is «component»" and the component stereotype icon is a rectangle with two smaller rectangles protruding on its left side (the UML 1.4 notation element for a component).  Figure 2 shows three different ways a component can be drawn using the UML 2 specification.</p>
+
+
+    <br><a name="N100D8"><strong>Figure 2: The different ways to draw a component's name compartment</strong></a><br>
+    <img alt="The different ways to draw a component&#39;s name compartment" height="110" src="./UML basics- An introduction to the Unified Modeling Language_files/Bell-Fig2.gif" width="504">
+<br>
+    
+
+			<p>When drawing a component on a diagram, it is important that you always include the component stereotype text (the word "component" inside double angle brackets, as shown in Figure 2) and/or icon.  The reason? In UML, a rectangle without any stereotype classifier is interpreted as a class element. The component stereotype and/or icon distinguishes this rectangle as a component element.</p>
+			<p><a name="N100E7"><span class="smalltitle">Modeling a component's interfaces  Provided/Required</span></a></p>
+			<p>The Order components drawn in Figure 2 all represent valid notation elements; however, a typical component diagram includes more information.  A component element can have additional compartments stacked below the name compartment.  As mentioned earlier, a component is an autonomous unit that provides one or more public interfaces.  The interfaces provided represent the formal contract of services the component provides to its consumers/clients.  Figure 3 shows the Order component having a second compartment that denotes what interfaces the Order component provides and requires. [Note: Even though components are autonomous units they still may depend on the services provided by other components. Because of this, documenting a component's required interfaces is useful.]</p>
+			
+
+    <br><a name="N100F2"><strong>Figure 3: The additional compartment here shows the interfaces that the Order component provides and requires</strong></a><br>
+    <img alt="Additional compartment showing the interfaces that the Order component provides and requires" height="187" src="./UML basics- An introduction to the Unified Modeling Language_files/Bell-Fig3.gif" width="197">
+<br>
+
+			<p>In the example Order component shown in Figure 3, the component provides the interfaces of OrderEntry and AccountPayable.  Additionally, the component also requires another component that provides the Person interface. [Note: Figure 3 does not show the Order component in its complete context. In a real-world model the OrderEntry, AccountPayable, and Person interfaces would be present in the system's model.]</p>
+
+			<p><a name="N10101"><span class="smalltitle">Another approach to modeling a component's interfaces</span></a></p>
+			<p>UML 2 has also introduced another way to show a component's provided and required interfaces.  This second way builds off the single rectangle, with the component's name in it, and places what the UML 2 specification calls interface symbols" connected to the outside of the rectangle.  This second approach is illustrated in Figure 4.</p>
+			
+
+    <br><a name="N1010C"><strong>Figure 4: An alternative approach (compare with Figure 3) to showing a component's provided/required interfaces using interface symbols</strong></a><br>
+    <img alt="Alternative approach to showing a component&#39;s provided/required interfaces using interface symbols" height="177" src="./UML basics- An introduction to the Unified Modeling Language_files/Bell-Fig4.gif" width="455">
+<br>
+    
+			<p>In this second approach the interface symbols with a complete circle at their end represent an interface that the component provides — this lollipop" symbol is shorthand for a realization relationship of an interface classifier.  Interface symbols with only a half circle at their end (a.k.a. sockets) represent an interface that the component requires (in both cases, the interface's name is placed near the interface symbol itself).  Even though Figure 4 looks much different from Figure 3, both figures provide the same information — i.e., the Order component <em>provides</em> two interfaces: OrderEntry and AccountPayable, and the Order component <em>requires</em> the Person interface.</p>
+			<p><a name="N10125"><span class="smalltitle">Modeling a component's relationships</span></a></p>
+			<p>When showing a component's relationship with other components, the lollipop and socket notation must also include a dependency arrow (as used in the class diagram).  On a component diagram with lollipops and sockets, note that the dependency arrow comes out of the consuming (requiring) socket and its arrow head connects with the provider's lollipop, as shown in Figure 5.</p>
+			
+
+
+    <br><a name="N10130"><strong>Figure 5: A component diagram that shows how the Order System component depends on other components</strong></a><br>
+    <img alt="A component diagram that shows how the Order System component depends on other components" height="266" src="./UML basics- An introduction to the Unified Modeling Language_files/Bell-Fig5.gif" width="468">
+<br>
+    
+
+			<p>Figure 5 shows that the Order System component depends both on the Customer Repository and Inventory System components.  Notice in Figure 5 the duplicated names of the interfaces CustomerLookup" and ProductAccessor." While this may seem unnecessarily repetitive in this example, the notation actually allows for different interfaces (and differing names) on each component depending on the implementation differences (e.g., one component provides an interface that is a subclass of a smaller required interface).</p>
+			<p><a name="N1013F"><span class="smalltitle">Subsystems</span></a></p>
+			<p>In UML 2 the subsystem classifier is a specialized version of a component classifier.  Because of this, the subsystem notation element inherits all the same rules as the component notation element.  The only difference is that a subsystem notation element has the keyword of subsystem" instead of component," as shown in Figure 6.  </p>
+			
+
+    <br><a name="N1014A"><strong>Figure 6: An example of a subsystem element</strong></a><br>
+    <img alt="An example of a subsystem element" height="89" src="./UML basics- An introduction to the Unified Modeling Language_files/Bell-Fig6.gif" width="140">
+<br>
+    
+
+			<p>The UML 2 specification is quite vague on how a subsystem is different from a component.  The specification does not treat a component or a subsystem any differently from a modeling perspective.  Compared with UML 1.x, this UML 2 modeling ambiguity is new. But there's a reason. In UML 1.x, a subsystem was considered a package, and this package notation was confusing to many UML practitioners; hence UML 2 aligned subsystems as a specialized component, since this is how most UML 1.x users understood it.  This change did introduce fuzziness into the picture, but this fuzziness is more of a reflection of reality versus a mistake in the UML 2 specification.</p>
+			<p>So right now you are probably scratching your head wondering when to use a component element versus a subsystem element.  Quite frankly, I do not have a direct answer for you.  I can tell you that the UML 2 specification says that the decision on when to use a component versus a subsystem is up to the methodology of the modeler.  I personally like this answer because it helps ensure that UML stays methodology independent, which helps keep it universally usable in software development.</p>
+			<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N1015C"><span class="atitle">Beyond the basics</span></a></p>
+			<p>The component diagram is one of the easier-to-understand diagrams, so there is not much to cover beyond the basics.  However, there is one area you may consider somewhat advanced.</p>
+			<p><a name="N10166"><span class="smalltitle">Showing a component's internal structure</span></a></p>
+			<p>There will be times when it makes sense to display a component's internal structure.  In my previous article on the class diagram, I showed how to model a class's internal structure; here I will focus on how to model a component's internal structure when it is composed of other components.</p>
+			<p>To show a component's inner structure, you merely draw the component larger than normal and place the inner parts inside the name compartment of the encompassing component.  Figure 7 show's the Store's component inner structure.</p>
+			
+
+    <br><a name="N10174"><strong>Figure 7: This component's inner structure is composed of other components</strong></a><br>
+    <img alt="Shows component&#39;s inner structure is composed of other components" src="./UML basics- An introduction to the Unified Modeling Language_files/Bell-Fig7.gif" width="580">
+<br>
+    
+    
+			<p>Using the example shown in Figure 7, the Store component provides the interface of OrderEntry and requires the interface of Account.  The Store component is made up of three components: Order, Customer, and Product components.  Notice how the Store's OrderEntry and Account interface symbols have a square on the edge of the component.  This square is called a port.  In a simplistic sense, ports provide a way to model how a component's <em>provided/required</em> interfaces relate to its internal parts. [Note: In actuality, ports are applicable to any type of classifier (i.e., to a class or some other classifier your model might have). To keep this article simple, I refer to ports in their use on component classifiers.</p>
+<p>By using a port, our diagram is able to de-couple the internals of the Store component from external entities.  In Figure 7, the OrderEntry port delegates to the Order component's OrderEntry interface for processing.  Also, the internal Customer component's required Account interface is delegated to the Store component's required Account interface port.  By connecting to the Account port, the internals of the Store component (e.g. the Customer component) can have a local representative of some unknown external entity which implements the port's interface.  The required Account interface will be implemented by a component outside of the Store component. [Note: Typically, when you draw a dependency relationship between a port and an interface, the dependent (requiring) interface will handle all the processing logic at execution time. However, this is not a hard and fast rule — it is completely acceptable for the encompassing component (e.g., the Store component in our example) to have its own processing logic instead of merely delegating the processing to the dependant interface.]</p>
+			<p>You will also notice in Figure 7 that the interconnections between the inner components are different from those shown in Figure 5.  This is because these depictions of internal structures are really collaboration diagrams nested inside the classifier (a component, in our case), since collaboration diagrams show instances or roles of classifiers. The relationship modeled between the internal components is drawn with what UML calls an assembly connector."  An assembly connector ties one component's <em>provided</em> interface with another component's <em>required</em> interface.  Assembly connectors are drawn as lollipop and socket symbols next to each other.  Drawing these assembly connectors in this manner makes the lollipop and socket symbols very easy to read.</p>
+			<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N10193"><span class="atitle">Conclusion</span></a></p>
+			<p>The component diagram is a very important diagram that architects will often create early in a project.  However, the component diagram's usefulness spans the life of the system.  Component diagrams are invaluable because they model and document a system's architecture.  Because component diagrams document a system's architecture, the developers and the eventual system administrators of the system find this work product-critical in helping them understand the system.</p>
+			
+
+		<!-- CMA ID: 87862 --> <!-- Site ID: 1 --> <!-- XSLT stylesheet used to transform this file: dw-document-html-6.0.xsl -->
+<br>
+<p><a name="resources"><span class="atitle">Resources</span></a></p><p><strong>Learn</strong></p><ul><li>
+Understand more about how the new functionality of the UML Modeler component common to both IBM Rational Software Architect Standard Edition Version 7.5 and IBM Rational Software Architect for WebSphere Software Version 7.5 by reading this article <a href="http://www.ibm.com/developerworks/rational/library/08/0926_diu/index.html" onmouseover="linkQueryAppend(this)">Using the new features of UML Modeler in IBM Rational Software Architect Version 7.5</a>.<br><br></li><li>
+Understand more about the new functionality of Rational Software Architect for WebSphere Software Version 7.5 by reading this article <a href="http://www.ibm.com/developerworks/rational/library/08/0926_arnold/index.html" onmouseover="linkQueryAppend(this)">Overview of Rational Software Architect for WebSphere Software Version 7.5</a>.<br><br></li><li>
+Learn about <a href="http://www.ibm.com/developerworks/rational/products/tau/" onmouseover="linkQueryAppend(this)">Rational Tau</a>.<br><br></li><li>
+Learn about other applications in the <a href="http://www.ibm.com/software/info/developer/index.html" onmouseover="linkQueryAppend(this)">IBM Rational Software Delivery Platform</a>, including collaboration tools for parallel development and geographically dispersed teams, plus specialized software for architecture management, asset management, change and release management, integrated requirements management, process and portfolio management, and quality management. You can find product manuals, installation guides, and other documentation in the <a href="http://www.ibm.com/software/rational/support/documentation/" onmouseover="linkQueryAppend(this)">IBM Rational Online Documentation Center</a>. <br><br></li><li>
+Visit the <a href="http://www.ibm.com/developerworks/rational" onmouseover="linkQueryAppend(this)">Rational software area on developerWorks</a> for technical resources and best practices for Rational Software Delivery Platform products.<br><br></li><li>
+Explore <a href="http://www.ibm.com/training/us/catalog/rational" onmouseover="linkQueryAppend(this)">Rational computer-based, Web-based, and instructor-led online courses</a>. Hone your skills and learn more about Rational tools with these courses, which range from introductory to advanced. The courses on this catalog are available for purchase through computer-based training or Web-based training. Some of the "Getting Started" courses are available free of charge. <br><br></li><li>
+Subscribe to the <a href="https://www.ibm.com/developerworks/newsletter/" onmouseover="linkQueryAppend(this)">IBM developerWorks newsletter</a>, a weekly update on the best of developerWorks tutorials, articles, downloads, community activities, webcasts and events. <br><br></li><li>
+Browse the <a href="http://www.ibm.com/developerworks/apps/SendTo?bookstore=safari">technology bookstore</a> for books on these and other technical topics. <br><br></li></ul><p><strong>Get products and technologies</strong></p><ul><li>
+Download a <a href="http://www.ibm.com/developerworks/downloads/r/rswm/" onmouseover="linkQueryAppend(this)">trial version of Rational Software Modeler.</a> <br><br></li><li>
+Download a <a href="http://www.ibm.com/developerworks/downloads/r/rsd/" onmouseover="linkQueryAppend(this)">trial version of Rational Software Architect</a> standard edition.<br><br></li><li>
+Download <a href="http://www.ibm.com/developerworks/downloads/r/rswa/learn.html" onmouseover="linkQueryAppend(this)">Rational Software Architect for Websphere Software.</a> <br><br></li><li>
+Download <a href="http://www.ibm.com/developerworks/downloads/" onmouseover="linkQueryAppend(this)">Other IBM product evaluation versions</a> and get your hands on application development tools and middleware products from DB2®, Lotus®, Rational®, Tivoli®, and WebSphere®. <br><br></li></ul><p><strong>Discuss</strong></p><ul><li>
+Check out <a href="http://www.ibm.com/developerworks/blogs/" onmouseover="linkQueryAppend(this)">developerWorks blogs</a> and get involved in the <a href="http://www.ibm.com/developerworks/community">developerWorks community</a>. <br><br></li><li>
+Join the <a href="http://www.ibm.com/developerworks/forums/forum.jspa?forumID=430" onmouseover="linkQueryAppend(this)">Development Tools forum </a>on developerWorks to discuss Rational Application Developer,  Rational Software Architect, and Rational Software Modeler.<br><br></li><li>
+Join the <a href="http://www.ibm.com/developerworks/forums/forum.jspa?forumID=1505" onmouseover="linkQueryAppend(this)">Rational Tau forum</a> on developerWorks. <br><br></li></ul>
+<p><a name="author"><span class="atitle">About the author</span></a></p><div class="ibm-container ibm-portrait-module ibm-alternate-two"><div class="ibm-container-body"><img src="./UML basics- An introduction to the Unified Modeling Language_files/p-dbell.jpg" class="dw-author-img" width="64" height="80" alt="Donald Bell photo"><p><a name="author1"> </a>Donald Bell is an IT architect for IBM Rational software, where he works with clients to define and adopt effective software delivery practices and tools.</p></div></div>
+<!-- MAIN_COLUMN_CONTENT_END -->
+
+<!-- OVERLAYS_START -->
+<!-- Report_Abuse_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlay">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlay">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p><strong>Thank you.</strong>  This entry has been flagged for moderator attention.</p>
+            <div class="ibm-overlay-rule"><hr></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide(&#39;reportabuseoverlay&#39;);return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close">
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Report_Abuse_Error_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlayerror">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlayerror">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p class="ibm-ind-error"><strong>Report abuse submission failed.  Please try again later.</strong></p>
+            <div class="ibm-overlay-rule"><hr></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide(&#39;reportabuseoverlayerror&#39;);return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close">
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE --> 
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>developerWorks: Sign in</h1>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:</label><span><input name="ibm-id" id="ibmid" size="25" value="" class="required" type="text" onkeypress="handleEP(event,this.form);"><br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#" onclick="(function () {window.location=&#39;/developerworks/dwwi/DWAuthRouter?m=reg&amp;d=&#39;+encodeURIComponent(location.href);})();">Need an IBM ID?</a><br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=en_US">Forgot your IBM ID?</a>   
+</span></p> 
+<p><label for="password">Password:</label><span><input name="password" id="password" size="25" value="" class="required" type="password" onkeypress="handleEP(event,this.form);"><br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=forgot&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(getAuthUrl())+&#39;%3Fm%3Dloginpage%26lang%3Den_US%26d%3D&#39;+encodeURIComponent(location.href);})();">Forgot your password?</a><br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=chpw&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(location.href);})();">Change your password</a></span></p>
+ 
+<p class="dw-perm-box">
+	<span><input id="perm" type="checkbox" name="perm_name"><label for="perm"> Keep me signed in.</label></span>
+</p>
+<p>By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide(&#39;signin_overlay&#39;);return false;"></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr></div>
+<p>The first time you sign into developerWorks, a profile is created for you.  <strong>Select information in your profile (name, country/region, and company) is displayed to the public and will accompany any content you post</strong>.  You may update your IBM account at any time.</p>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY ENDS HERE --> 
+ 
+
+<!-- Display name OVERLAY STARTS HERE --> 
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>Choose your display name</h1>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">The first time you sign in to developerWorks, a profile is created for you, so you need to choose a display name.  Your display name accompanies the content you post on developerWorks.</p>
+<p><strong>Please choose a display name between 3-31 characters</strong>. Your display name must be unique in the developerWorks community and should not be your email address for privacy reasons.</p>
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">Display name:</label><span><input name="displayname" id="displayname" size="25" value="" type="text" onkeypress="handleEP(event,this.form);"></span><span class="ibm-form-note">(Must be between 3 – 31 characters.)</span>
+</p>
+<p>By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide(&#39;displayname_overlay&#39;);return false;"></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr></div>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY ENDS HERE -->
+<!-- OVERLAYS_END -->
+
+<!-- RATINGS START -->
+<p class="ibm-no-print"><span class="atitle"><a name="iratings">Rate this article</a></span></p>
+<input id="art-rating" name="ratinga" type="hidden" value="4"><div id="art-rating-module"><p id="submitErr" class="ibm-ind-error" style="display: none;"><strong>Error: Submission failed. Please try again.</strong></p><p><span id="ratingSectUI"><img alt="Average rating 4 stars based on 674 votes" src="./UML basics- An introduction to the Unified Modeling Language_files/stars120x20-4gw.jpg" class="dw-avg-rating"> Average rating (674 votes)</span></p><div class="ibm-container" id="ratingForm"><div class="ibm-container-body dw-container-ratings"><form class="dw-ratings-form" onsubmit="artRating.submitRating(); return false;"><input type="radio" name="ratingstars" id="rat-1" value="1"><label class="rating-label" id="star1" for="rat-1">1 star</label><img id="rat-1-img" alt="1 star" title="1 star" src="./UML basics- An introduction to the Unified Modeling Language_files/stars120x20-1w.jpg" class="rating-image"><span class="dw-rating-text">1 star</span><br><input type="radio" name="ratingstars" id="rat-2" value="2"><label class="rating-label" id="star2" for="rat-2">2 stars</label><img id="rat-2-img" alt="2 stars" title="2 stars" src="./UML basics- An introduction to the Unified Modeling Language_files/stars120x20-2w.jpg" class="rating-image2"><span class="dw-rating-text">2 stars</span><br><input type="radio" name="ratingstars" id="rat-3" value="3"><label class="rating-label" id="star3" for="rat-3">3 stars</label><img id="rat-3-img" alt="3 stars" title="3 stars" src="./UML basics- An introduction to the Unified Modeling Language_files/stars120x20-3w.jpg" class="rating-image2"><span class="dw-rating-text">3 stars</span><br><input type="radio" name="ratingstars" id="rat-4" value="4"><label class="rating-label" id="star4" for="rat-4">4 stars</label><img id="rat-4-img" alt="4 stars" title="4 stars" src="./UML basics- An introduction to the Unified Modeling Language_files/stars120x20-4w.jpg" class="rating-image2"><span class="dw-rating-text">4 stars</span><br><input type="radio" name="ratingstars" id="rat-5" value="5"><label class="rating-label" id="star5" for="rat-5">5 stars</label><img id="rat-5-img" alt="5 stars" title="5 stars" src="./UML basics- An introduction to the Unified Modeling Language_files/stars120x20-5w.jpg" class="rating-image2"><span class="dw-rating-text">5 stars</span><div class="ibm-buttons-row"><p class="ibm-first"><input value="Submit" type="submit" name="ibm-submit" class="ibm-btn-arrow-pri dw-ratings-submit"></p></div></form></div></div></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+   // widget div id and article id as args
+   window.artRating.init('art-rating-module','art-rating-summary');
+// ]]>
+</script>
+<!-- RATINGS END -->
+
+<!-- INLINE_COMMENTS_START -->
+<p class="ibm-no-print"><span class="atitle"><a name="icomments">Comments</a></span></p>
+<div id="threadShow"><div id="cmtTog" style=""><div class="ibm-container ibm-alternate-two dw-commentbox dw-noborder"><p id="cmtHead"><label for="newCmt"><strong>Add comment:</strong></label></p><div class="ibm-container-body dw-commentbox dw-noborder"><p id="signInSect" style=""> <a onclick="showSignIn();return false;" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#">Sign in</a> or <a href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=register&lang=en&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2Fdec04%2Fbell%2F%23icomments">register</a>  to leave a comment.</p><p>Note: HTML elements are not supported within comments.</p><span id="infoCmt"></span><form focus="name" enctype="multipart/form-data" method="post" action="" name="form" class="ibm-column-form"><p><textarea cols="120" rows="5" name="newCmt" id="newCmt" class="dw-inoperable" disabled=""></textarea><br></p><span class="ibm-input-group"><input type="checkbox" value="1" name="comment_notification" id="comment_notification" disabled=""><label id="notifyText" class="ibm-form-note dw-btn-cancel-sec" for="comment_notification">Notify me when a comment is added</label></span><span class="ibm-form-note dw-btn-cancel-sec notifySection" id="maxCharsCount"><span id="charCount">1000</span> characters left</span><br><br><p></p><p class="ibm-buttons-row"><input type="button" value="Post" jquery1275054459750="11" name="postCmt" id="postCmt" class="ibm-btn-arrow-sec dw-btn-arrow-sec" alt="Post your comment" disabled=""><br><br></p></form></div></div><div id="topControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display: none;"><div class="ibm-container-body"><form id="selectComments" method="get" action=""><p><span class="dw-comment-totals-label"><strong>Total comments (<span id="numCmts">0</span>)</strong></span><span><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" width="100" height="10" alt=""></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts"><label for="howManyComments">Show:</label>&nbsp;<select name="comments" id="howManyComments" class="dw-how-many-comments"><option selected="selected" value="recent">Most recent comments   </option></select><input type="image" class="ibm-btn-go" name="ibm-go" value="Go" src="./UML basics- An introduction to the Unified Modeling Language_files/short-btn.gif" alt="Go"><br></span></p></form></div></div><div id="cmtSect"><div class="comment"><div class="dw-icomment-container"><table class="dw-icomment-body" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><p>There is a problem in retrieving the comments.  Please refresh the page later.</p></td></tr></tbody></table></div></div></div></div><div id="bottomControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display: none;"><div class="ibm-container-body"><form id="selectComments2" method="get" action=""><p><span class="dw-comment-totals-label"><strong>Total comments (<span id="numCmts2">0</span>)</strong></span><span><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" width="100" height="10" alt=""></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts2"><label for="howManyComments2">Show:</label>&nbsp;<select name="comments" id="howManyComments2" class="dw-how-many-comments"><option selected="selected" value="recent">Most recent comments   </option></select><input type="image" class="ibm-btn-go" name="ibm-go" value="Go" src="./UML basics- An introduction to the Unified Modeling Language_files/short-btn.gif" alt="Go"><br></span></p></form></div></div></div>
+<!-- INLINE_COMMENTS_END -->
+
+<p class="ibm-ind-link ibm-back-to-top"><a class="ibm-anchor-up-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#ibm-pcon">Back to top</a></p>
+
+<!-- Overlays -->
+
+</div>
+<!-- MAIN_COLUMN_CONTAINER_END -->
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=1</div><div class="metavalue">Zone=Rational</div><div class="metavalue">ArticleID=87862</div><div class="metavalue">ArticleTitle=UML basics: The component diagram</div><div class="metavalue">publish-date=12152004</div><div class="metavalue">author1-email=bellds@us.ibm.com</div><div class="metavalue">author1-email-cc=robinw@us.ibm.com</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace(/</g,  '%3C')+'</div>');</script><div class="metavalue">url=http://www.ibm.com/developerworks/rational/library/dec04/bell/</div><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- MAIN_COLUMN_END-->
+
+<!-- RIGHT_COLUMN_BEGIN -->
+<div id="ibm-content-sidebar">
+
+<!-- RIGHT_COLUMN_CONTENT_BEGIN --> 
+<div class="ibm-container"><h2>Table of contents</h2><div class="ibm-container-body"><img alt="" height="1" width="1" src="./UML basics- An introduction to the Unified Modeling Language_files/c(1).gif"><ul class="ibm-bullet-list"><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#N1006F">The diagram's purpose</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#N100AB">The notation</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#N100C9">The basics</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#N1015C">Beyond the basics</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#N10193">Conclusion</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#resources">Resources</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#author">About the author</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#icomments">Comments</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-nextsteps.xsl--><div class="ibm-container"><h2>Next steps from IBM</h2><div class="ibm-container-body"><img width="188" height="58" border="0" alt="" src="./UML basics- An introduction to the Unified Modeling Language_files/spot-nextsteps.jpg"><p>Rational Modeler is a free, UML 2.1 based environment that helps
+      users to improve communication by specifying, visualizing and documenting their system, architecture and software designs using a standard graphical language. </p><div class="ibm-rule"><hr></div><ul class="ibm-bullet-list"><li><a href="http://www.ibm.com/developerworks/downloads/r/modeler/index.html" class="ibm-feature-link">Try: Download a Rational Modeler, a free, UML 2.1 based environment for specifying systems, software, and architecture.</a></li><li><a href="http://www.ibm.com/developerworks/downloads/r/modeler/buy.html" class="ibm-feature-link">Buy: Rational Modeler Rhapsody Corporate Edition</a></li></ul></div></div>
+
+<!-- Dig_Deeper -->
+<div class="ibm-container"><h2>Dig deeper into Rational on developerWorks</h2><div class="ibm-container-body"><ul class="ibm-link-list"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/rational/" class="ibm-forward-link">Overview</a></li><li><a href="http://www.ibm.com/developerworks/rational/newto/" class="ibm-forward-link">New to Rational</a></li><li><a href="http://www.ibm.com/developerworks/rational/products/" class="ibm-forward-link">Products</a></li><li><a href="http://www.ibm.com/developerworks/rational/downloads/" class="ibm-forward-link">Downloads</a></li><li><a href="http://www.ibm.com/developerworks/rational/library/" class="ibm-forward-link">Technical library (articles, tutorials, and more)</a></li><li><a href="http://www.ibm.com/developerworks/rational/community/" class="ibm-forward-link">Community and forums</a></li><li><a href="http://www.ibm.com/developerworks/rational/find/events/" class="ibm-forward-link">Events</a></li></ul></div></div>
+<!-- High_Visibility_Offer -->
+<!--XSLT stylesheet used to transform this content: s-highvisibilityoffer.xsl--><div class="ibm-container"><h2>IBM SmartCloud trial. No charge.</h2><div class="ibm-container-body"><img width="188" height="70" border="0" alt="IBM PureSystems on a kaleideoscope background" src="./UML basics- An introduction to the Unified Modeling Language_files/hivis-cloud.jpg"><p>Unleash the power of hybrid cloud computing today!</p><div class="ibm-rule"><hr></div><p class="ibm-ind-link"><a href="http://www.ibm.com/developerworks/cloud/try/?ca=dti-hivis-troy" class="ibm-forward-link">Public and private solutions in one trial.</a></p></div></div>
+<!-- Special_Offers -->
+<div class="ibm-container"><h2>Special offers</h2><div class="ibm-container-body"><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/demos/"><img src="./UML basics- An introduction to the Unified Modeling Language_files/tile_v16_ondemanddemos.gif" width="158" height="50" border="0" alt="On demand demos: An easy way to watch and learn"></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/aboutdw/dwa/?ca=dti-dwarp"><img src="./UML basics- An introduction to the Unified Modeling Language_files/tile_v16_dwaarp.gif" width="158" height="50" border="0" alt="Get recognized! W Author Program"></a></p><p class="dw-special-offers"><a href="https://www.ibm.com/developerworks/cloud/index.html?ca=dti-cloudzone"><img src="./UML basics- An introduction to the Unified Modeling Language_files/tile_v16_cloudzoneA.gif" width="158" height="50" border="0" alt="Cloud Computing resources for IT professionals"></a></p><div class="ibm-rule"><hr></div><p class="ibm-ind-link"><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/downloads/?ca=dti-tilemoreoffers">Trial software offers</a></p></div></div>
+<!-- RIGHT_COLUMN_CONTENT_END -->
+
+</div>
+<!-- RIGHT_COLUMN_END -->
+
+<!-- CONTENT_BODY_END -->
+</div>
+
+</div>
+<!-- CONTENT_END -->
+
+ <!-- END_IBM-PCON -->
+</div>
+
+<!-- FOOTER_BEGIN -->
+<div id="ibm-footer">
+<!-- IBM footer container; disabled -->
+</div>
+
+<div id="ibm-page-tools-dw">
+	<div id="dw-footer-top-row">
+		<ul id="dw-foot-options">
+			<li id="dw-print"><a class="ibm-print-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#">Print this page</a></li>
+		</ul>
+		<ul id="ibm-foot-options-dw">
+			<li id="dw-foot-0"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#">Share this page</a></li>
+			<li id="dw-foot-1"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#">Follow developerWorks</a></li>
+		</ul>
+	</div>
+
+	<!-- TOP ROW SLIDER -->
+    <div id="dw-page-tools-menu">    
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+				<!-- Share this page -->			
+                <div class="dw-footer-columns">
+                    <div class="dw-footer-col-3-1">
+                        <h2>Share this page:</h2>                       
+						<ul class="ibm-link-list">
+							<li><a id="dw-foot-0-0" class="ibm-facebook-link" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2Fdec04%2Fbell%2F&t=UML%20basics%3A%20The%20component%20diagram">Facebook</a></li>
+							<li><a class="ibm-linkedin-link" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2Fdec04%2Fbell%2F&title=UML%20basics%3A%20The%20component%20diagram">LinkedIn</a></li>
+							<li><a class="ibm-twitter-link" href="http://twitter.com/home?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2Fdec04%2Fbell%2F%20-%20UML%20basics%3A%20The%20component%20diagram">Twitter</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-col-3-2">
+						<ul class="ibm-link-list">
+							<li><a class="ibm-delicious-link" href="http://delicious.com/post?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2Fdec04%2Fbell%2F&title=UML%20basics%3A%20The%20component%20diagram">Delicious</a></li>
+							<li><a class="ibm-digg-link" href="http://digg.com/submit?phase=2&url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2Fdec04%2Fbell%2F&title=UML%20basics%3A%20The%20component%20diagram">Digg</a></li>
+							<li><a class="ibm-stumbleupon" href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2Fdec04%2Fbell%2F&title=UML%20basics%3A%20The%20component%20diagram">StumbleUpon</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-col-3-3">
+						<ul class="ibm-link-list">
+							<li><a class="ibm-email-link" href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#">Email this page</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-close">
+						<ul>
+							<li><div class="dw-footer-close-share"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+                <!-- Follow developerWorks -->
+                <div class="dw-footer-columns">
+                    <div class="dw-footer-col-1-1">
+                        <h2>Follow developerWorks:</h2>
+						<ul class="ibm-link-list">
+							<li><a id="dw-foot-1-0" class="ibm-facebook-link" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2Fdec04%2Fbell%2F&t=UML%20basics%3A%20The%20component%20diagram">Facebook</a></li>
+							<li><a class="ibm-twitter-link" href="http://twitter.com/home?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2Fdec04%2Fbell%2F%20-%20UML%20basics%3A%20The%20component%20diagram">Twitter</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-close">
+						<ul>
+							<li><div class="dw-footer-close-follow"><a href="http://www.ibm.com/developerworks/rational/library/dec04/bell/#"><img src="./UML basics- An introduction to the Unified Modeling Language_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ibm-footer-module-dw">
+	<div class="dw-footer-columns">
+		<div class="dw-footer-col-6-1">
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/aboutdw/">About</a></li>
+				<li><a href="https://www.ibm.com/developerworks/feedback">Help</a></li>
+				<li><a href="http://www.ibm.com/developerworks/aboutdw/contacts.html">Contact us</a></li>
+				<li><a href="https://www.ibm.com/developerworks/ideas">Submit content</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-2">
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/feeds/">Feeds</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-3">
+			<ul>
+				<li><a href="https://www.ibm.com/developerworks/community/report/">Report abuse</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/terms/">Terms of use</a></li>
+				<li><a href="http://www.ibm.com/privacy/">IBM privacy</a></li>
+				<li><a href="http://www.ibm.com/accessibility/">IBM accessibility</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-4">
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/university/academicinitiative/">Faculty</a></li>
+				<li><a href="http://www.ibm.com/developerworks/university/students/">Students</a></li>
+				<li><a href="http://www.ibm.com/isv/">Business Partners</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-5">
+		</div>
+		<div class="dw-footer-col-6-6">
+		</div>
+	</div>
+	<!-- Language selector no-script -->
+	<noscript>
+	&lt;div id="dw-footer-selectlang"&gt;
+		&lt;h2&gt;&lt;a name="SELECTLANG"&gt;Select a language:&lt;/a&gt;&lt;/h2&gt;
+		&lt;ul&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/"&gt;English&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/cn/"&gt;中文&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/jp/"&gt;日本語&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/ru/"&gt;Русский&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/br/"&gt;Português (Brasil)&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/ssa/"&gt;Español&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/vn/"&gt;Việt&lt;/a&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+	</noscript>
+</div><!-- FOOTER_END -->
+
+ <!-- END_IBM-TOP -->
+<div id="ibm-overlay-top"></div></div>
+ 
+ <!-- SCRIPTS_INCLUDE_BEGIN -->
+<!-- JQuery start -->
+<script type="text/javascript" language="JavaScript" src="./UML basics- An introduction to the Unified Modeling Language_files/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" language="JavaScript" src="./UML basics- An introduction to the Unified Modeling Language_files/jquery.cluetip.js"></script>
+<!-- xM Masthead/Footer -->
+<script type="text/javascript" language="JavaScript" src="./UML basics- An introduction to the Unified Modeling Language_files/jquery.tools.min.js">//</script>
+<script type="text/javascript" language="JavaScript" src="./UML basics- An introduction to the Unified Modeling Language_files/jquery.jscroll.js">//</script>
+<script type="text/javascript" language="JavaScript" src="./UML basics- An introduction to the Unified Modeling Language_files/dw_v16.js">//</script>
+<script type="text/javascript" language="JavaScript" src="./UML basics- An introduction to the Unified Modeling Language_files/flash-detect(1).js">//</script>
+<script type="text/javascript" language="JavaScript" src="./UML basics- An introduction to the Unified Modeling Language_files/dwsi.js">//</script>
+<script type="text/javascript" language="JavaScript" src="./UML basics- An introduction to the Unified Modeling Language_files/showcomments.js">//</script>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+ jQuery('threadShow').showComments('95%',5,'nCmts','icomments');
+// ]]>
+</script>
+
+<script type="text/javascript" language="JavaScript">
+	jQuery.noConflict();     
+	// Put all your code in your document ready area
+	jQuery(document).ready(function(jQuery) {
+	// Do jQuery stuff using jQuery 
+	jQuery('a.dwauthor').cluetip({
+		local: true,
+		showTitle: false,
+		positionBy: 'bottomTop',
+		sticky: true,	
+		mouseOutClose: true,
+		closeText: '<img src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/i/x.gif" alt="Close" />',
+		arrows: false,
+		dropShadow: true,
+		cluetipClass: 'dwbasic'
+		});
+
+		rBHash = {};
+		rBHash['viperLang'] = 'en';
+		rBHash['urlLang'] = 'en';
+
+		// si
+		initSI();
+	});
+ </script>
+ <!-- JQuery end -->
+ <!-- Overlay js -->
+<script language="JavaScript" src="./UML basics- An introduction to the Unified Modeling Language_files/overlay.js" type="text/javascript"></script><!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=1&ibmAdoptPhase=648&ibmRole=31&ibmCmaId=87862&ibmContentAreas=rational";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="./UML basics- An introduction to the Unified Modeling Language_files/stats.js" type="text/javascript">//</script>
+</div>
+
+
+<div id="cluetip-waitimage" style="position: absolute; z-index: 95; display: none;"></div><div id="cluetip" style="z-index: 96; display: none; position: absolute;"><div style="z-index: 95; opacity: 0.1; top: 1px; left: 1px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 94; opacity: 0.1; top: 2px; left: 2px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 93; opacity: 0.1; top: 3px; left: 3px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 92; opacity: 0.1; top: 4px; left: 4px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 91; opacity: 0.1; top: 5px; left: 5px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 90; opacity: 0.1; top: 6px; left: 6px; position: absolute; background-color: rgb(0, 0, 0);"></div><div id="cluetip-outer" style="position: relative; z-index: 97;"><div id="cluetip-title"></div><div id="cluetip-inner"></div></div><div id="cluetip-extra"></div><div id="cluetip-arrows" class="cluetip-arrows" style="z-index: 97;"></div></div></body></html>

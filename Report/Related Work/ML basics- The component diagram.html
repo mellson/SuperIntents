@@ -1,0 +1,1247 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Strict//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
+<!-- saved from url=(0059)http://www.ibm.com/developerworks/rational/library/769.html -->
+<html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta http-equiv="Cache-control" content="no-cache">
+<title>UML basics: An introduction to the Unified Modeling Language</title>
+<meta http-equiv="PICS-Label" content="(PICS-1.1 &quot;http://www.icra.org/ratingsv02.html&quot; l gen true r (cz 1 lz 1 nz 1 oz 1 vz 1) &quot;http://www.rsac.org/ratingsv01.html&quot; l gen true r (n 0 s 0 v 0 l 0) &quot;http://www.classify.org/safesurf/&quot; l gen true r (SS~~000 1))">
+<link rel="schema.DC" href="http://purl.org/DC/elements/1.0/">
+<link rel="SHORTCUT ICON" href="http://www.ibm.com/favicon.ico">
+<meta name="Owner" content="developerWorks Content/Raleigh/IBM">
+<meta name="DC.Language" scheme="rfc1766" content="en">
+<meta name="IBM.Country" content="ZZ">
+<meta name="Security" content="Public">
+<meta name="IBM.SpecialPurpose" content="SP001">
+<meta name="IBM.PageAttributes" content="sid=1003,1004">
+<meta name="Source" content="v16 Template Generator">
+<meta name="Robots" content="index,follow">
+<meta name="Abstract" content="from The Rational Edge: This introduction to the Unified Modeling Language, or UML, provides an overview of the most important diagrams used in the visual modeling of computing programs. The article is ideal for those who have little knowledge of UML concepts, including managers as well as novice practitioners.">
+<meta name="Description" content="from The Rational Edge: This introduction to the Unified Modeling Language, or UML, provides an overview of the most important diagrams used in the visual modeling of computing programs. The article is ideal for those who have little knowledge of UML concepts, including managers as well as novice practitioners.">
+<meta name="Keywords" content="Rational, Analysis and Design, UML, Article, Rational Edge, architecture, dddrca">
+<meta name="DC.Date" scheme="iso8601" content="2003-06-15">
+<meta name="DC.Type" scheme="IBM_ContentClassTaxonomy" content="CT316">
+<meta name="DC.Subject" scheme="IBM_SubjectTaxonomy" content="BA.007D">
+<meta scheme="IBM_WTMCategory" name="IBM.WTMCategory" content="SOFDCRATZZ">
+<meta name="DC.Rights" content="© Copyright IBM Corporation 2003">
+<meta name="IBM.Effective" scheme="W3CDTF" content="2003-06-15">
+<meta name="title" content="UML basics: An introduction to the Unified Modeling Language">
+
+<!-- HEADER_SCRIPTS_AND_CSS_INCLUDE -->
+<link href="./ML basics- The component diagram_files/all.css" media="all" rel="stylesheet" title="www" type="text/css">
+<link href="./ML basics- The component diagram_files/screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./ML basics- The component diagram_files/screen-uas.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./ML basics- The component diagram_files/screen-fonts.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./ML basics- The component diagram_files/handheld.css" media="handheld" rel="stylesheet" title="www" type="text/css">
+<link href="./ML basics- The component diagram_files/print.css" media="print" rel="stylesheet" title="www" type="text/css">
+<link href="./ML basics- The component diagram_files/overlay.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<!-- dW-specific CSS -->
+<link href="./ML basics- The component diagram_files/dw-screen.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./ML basics- The component diagram_files/dw-screen-comments-ratings-signin.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<link href="./ML basics- The component diagram_files/jquery.cluetip.css" media="screen,projection" rel="stylesheet" title="www" type="text/css">
+<!-- xM Masthead/Footer -->
+<link href="./ML basics- The component diagram_files/dw-mf2013-03R.css" rel="stylesheet" title="www" type="text/css">
+<script src="./ML basics- The component diagram_files/ibmcommon.js" type="text/javascript">//</script><style type="text/css"></style><link rel="search" type="application/opensearchdescription+xml" href="http://www.ibm.com/search/opensearch/description.xml" title="IBM Search">
+<script src="./ML basics- The component diagram_files/dynamicnav.js" type="text/javascript">//</script>
+<!-- dW functional JS -->
+<script language="JavaScript" src="./ML basics- The component diagram_files/urltactic.js" type="text/javascript"></script>
+<!-- Rating_START -->
+<script language="JavaScript" src="./ML basics- The component diagram_files/showrating.js" type="text/javascript"></script>
+<style type="text/css">
+.metavalue {
+  display: none;
+}
+</style>
+<!-- Rating_END --><!-- RESERVED_HEADER_INCLUDE -->
+<script language="javascript" src="./ML basics- The component diagram_files/ajax1.js" type="text/javascript"></script>
+<script language="javascript" src="./ML basics- The component diagram_files/search_counter-maverick.js" type="text/javascript"></script>
+<script language="javascript" src="./ML basics- The component diagram_files/request_referer_capture-maverick.js" type="text/javascript"></script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ setDefaultQuery('rationalart');
+ //-->
+</script>
+<script language="JavaScript" type="text/javascript">
+ <!--
+ function openNewWindow(url,tar,arg){window.open(url,tar,arg);}
+ //-->
+</script>
+<!-- Include file support -->
+<script language="JavaScript" type="text/javascript">
+(function($) {
+	jQuery.extend({
+		getInc: function(u,d){
+			if(u==null)return;
+			jQuery.ajax({
+	    		type: "GET",
+			url: u,
+			dataType: "text",
+	        	success: function(t) {
+				jQuery(d).html(t);
+				ibmCommon.initShowHide(jQuery(d).children()[0]);			
+			},
+			async: true
+			});
+		}
+	});
+})(jQuery);
+</script>
+<script id="mhMenu" type="text/javascript" src="./ML basics- The component diagram_files/usen-utf8.js" charset="UTF-8"></script><script id="wiBundle" type="text/javascript" src="./ML basics- The component diagram_files/Controller" charset="UTF-8"></script></head>
+
+<body id="ibm-com">
+<div id="ibm-top" class="ibm-landing-page">
+
+<!-- MASTHEAD_BEGIN -->
+<!-- MASTHEAD_BEGIN -->
+<div class="ibm-access"><a href="http://www.ibm.com/developerworks/rational/library/769.html#ibm-content">Skip to main content</a></div>
+<div id="ibm-masthead-dw">
+  
+    <!-- TOP ROW -->    
+    <div id="dw-masthead-top-row">
+        <ul id="ibm-mast-options-dw">
+		    <li id="dw-mast-top-0">
+				<a class="" href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=loginpage&lang=en&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2F769.html" title="">Sign in (or register)</a>
+			</li>
+		    <li id="dw-mast-top-1">
+				<a href="http://www.ibm.com/developerworks/rational/library/769.html#SELECTLANG">English</a><img class="dw-preload" src="./ML basics- The component diagram_files/arrow-down-active.gif" width="8" height="7" alt="">
+			</li>
+		    <li id="dw-mast-top-2" class="dw-mf-hide">
+				<a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/photo.do" alt="PHOTO" class="dw-mast-profimg" width="20" height="20"> [userid]</a>
+			</li>
+			<li id="dw-mast-top-3">
+				<a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/ibm-smlogo.gif" width="44" height="16" alt="IBM®"></a>
+			</li>
+		</ul>
+	</div>
+    
+    <!-- TOP ROW SLIDER -->
+    <div id="ibm-my-menu-dw">    
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+                <!-- Sign-in -->
+				<div class="dw-mast-columns">                
+					<div class="dw-mast-col-1-1">
+						<div id="dw-mast-sso">
+							<div id="signin_error_mf" class="no-display"></div>
+							<div id="dw-mast-sso-form">
+								<form id="sForm_mf" action="" method="post" name="sForm_name_mf" onsubmit="return false;">
+									<div id="dw-mast-sso-id" class="dw-mast-sso-id-en">
+										<label for="ibmid_mf">IBM ID:</label>
+										<input id="ibmid_mf" type="text" value="" name="ibmid_name_mf" maxlength="100" onkeypress="handleEP(event,this.form,&#39;mf&#39;);" class="">
+									</div>
+									<div id="dw-mast-sso-pw" class="dw-mast-sso-pw-en">
+										<label for="pw_mf">Password:</label>
+										<input id="pw_mf" type="password" value="" name="pw_name_mf" maxlength="100" onkeypress="handleEP(event,this.form,&#39;mf&#39;);" class="">
+									</div>
+									<div id="dw-mast-sso-target" class="dw-mast-sso-target-en">
+										<p class="dw-mf-perm-box">
+											<input id="perm_mf" type="checkbox" name="perm_name_mf"><label for="perm_mf"> Keep me signed in.</label>
+										</p>
+									</div>					
+									<div id="dw-mast-sso-terms">
+										<p class="dw-mast-sso-terms-en">By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+									</div>
+									<div>
+										<input class="dw-mf-submit-btn" name="ibm_submit_name_mf" value="Submit" onclick="signin(&#39;mf&#39;);return false;" type="submit">
+									</div>
+								</form>
+							</div>
+							<div id="dw-mast-sso-update">
+								<div id="dw-mast-sso-update-id">
+									<ul>
+										<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/769.html#" onclick="(function () {window.location=&#39;/developerworks/dwwi/DWAuthRouter?m=reg&amp;lang=en&amp;d=&#39;+encodeURIComponent(location.href);})();">Need an IBM ID?</a></li>
+										<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=en_US">Forgot your IBM ID?</a></li>
+									</ul>
+								</div>
+								<div id="dw-mast-sso-update-pw">
+									<ul class="dw-mf-pwupdate">
+										<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/769.html#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=forgot&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(getAuthUrl())+&#39;%3Fm%3Dloginpage%26lang%3Den_US%26d%3D&#39;+encodeURIComponent(location.href);})();">Forgot your password?</a></li>
+										<li><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/769.html#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=chpw&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(location.href);})();">Change your password</a></li>
+									</ul>
+								</div>
+							</div>
+							<div id="dw-mast-sso-text">
+						<p>The first time you sign into developerWorks, a profile is created for you.  <strong>Select information in your profile (name, country/region, and company) is displayed to the public and will accompany any content you post</strong>.  You may update your IBM account at any time.</p>
+								<p class="dw-mf-secure">All information submitted is secure.</p>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign"><a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>							
+						</div>                    
+						<div id="dw-mast-dname" class="dw-mf-hide">
+							<p>The first time you sign in to developerWorks, a profile is created for you, so you need to choose a display name.  Your display name accompanies the content you post on developerworks.</p><p><strong>Please choose a display name between 3-31 characters</strong>.  Your display name must be unique in the developerWorks community and should not be your email address for privacy reasons.</p>
+							<div id="signin_dname_error_mf" class="no-display"></div>
+							<div id="dw-mast-dname-form">
+								<form id="dForm_mf" action="" method="post" name="dForm_name_mf" onsubmit="return false;">
+									<div id="dw-mast-dname-mf">
+										<label for="dname_mf">Display name:</label>
+										<input id="dname_mf" name="dname_name_mf" maxlength="31" size="25" value="" type="text" onkeypress="handleEP(event,this.form,&#39;mf&#39;);">
+									</div>
+									<div id="dw-mast-dname-terms">
+										<p>By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+									</div>
+									<div>
+										<input class="dw-mf-submit-btn" name="dname_submit_name_mf" value="Submit" onclick="signin(&#39;mf&#39;);return false;" type="submit">
+									</div>
+								</form>								
+							</div>
+							<div id="dw-mast-dname-secure">
+								<p class="dw-mf-secure">All information submitted is secure.</p>
+							</div>
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign"><a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>							
+						</div>
+						<div id="dw-mast-auth" class="dw-mf-hide">
+							<div>
+								<h2>My developerWorks:</h2>
+								<ul>
+									<li><a id="dw-mast-top-0-0" href="http://www.ibm.com/developerworks/community/homepage/web/updates/?lang=en">My home</a></li>
+									<li><a href="http://www.ibm.com/developerworks/community/profiles/html/myProfileView.do?lang=en">My profile</a></li>
+									<li><a href="http://www.ibm.com/developerworks/community/groups/service/html/mycommunities?lang=en">My communities</a></li>
+									<li><a href="http://www.ibm.com/developerworks/community/news">Settings</a></li>
+								</ul>     
+							</div>
+							<div id="dw-mast-notify" class="dw-mf-hide">
+								<h2>My notifications:</h2>
+								<ul>
+									<li><a id="new_notify" href="http://www.ibm.com/developerworks/community/homepage?lang=en">{[num_notify] new notifications}([num_notify] new notification)</a></li>
+									<li><a id="new_invite" href="http://www.ibm.com/developerworks/community/profiles/html/wc.do?action=in&requireAuth=true&widgetId=friends&lang=[lang]">{[num_invite] network requests}([num_invite] network request)</a></li>  
+								</ul>
+							</div>
+							<div class="dw-mast-more">
+								<ul class="ibm-link-list">
+									<li><a class="dw-more-link" href="http://www.ibm.com/developerworks/rational/library/769.html#" onclick="signOut(); return false;"><strong>Sign out</strong></a></li>
+								</ul>
+							</div>		
+							<div class="dw-mast-close">
+								<ul>
+									<li><div class="dw-mast-close-sign"><a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+								</ul>
+							</div>							
+						</div>						
+					</div>                   
+                </div>
+                <!-- Language selector --> 
+				<div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<h2>Select a language:</h2>
+						<ul>
+							<li><a id="dw-mast-top-1-0" href="http://www.ibm.com/developerworks/">English</a></li>
+							<li><a href="http://www.ibm.com/developerworks/cn/">中文</a></li>
+							<li><a href="http://www.ibm.com/developerworks/jp/">日本語</a></li>
+							<li><a href="http://www.ibm.com/developerworks/ru/">Русский</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-col-2-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/br/">Português (Brasil)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/ssa/">Español</a></li>
+							<li><a href="http://www.ibm.com/developerworks/vn/">Việt</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-lang"><a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+                </div>                
+                <div class="dw-mast-columns"><!-- Authenticated --></div>
+                <!-- IBM -->
+				<div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<ul>
+							<li><a id="dw-mast-top-3-0" href="http://www.ibm.com/">IBM home</a></li>
+							<li><a href="http://www.ibm.com/solutions/">Industries &amp; solutions</a></li>
+							<li><a href="http://www.ibm.com/technologyservices/">Services</a></li>
+							<li><a href="http://www.ibm.com/products/">Products</a></li>
+							<li><a href="http://www.ibm.com/support/">Support &amp; downloads</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-col-2-2 dw-mast-ibm">
+						<ul>
+							<li><a href="http://www.ibm.com/support/publications/us/library/index.shtml">Product information</a></li>
+							<li><a href="http://www.ibm.com/redbooks/">Redbooks</a></li>
+							<li><a href="http://www.ibm.com/software/">Software</a></li>
+							<li><a href="http://www.ibm.com/software/sw-services/">Software services</a></li>
+						</ul>
+					</div>
+					<div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-ibm"><a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOTTOM ROW -->
+    <div id="ibm-universal-nav-dw">
+        <ul id="ibm-unav-links-dw">
+            <li id="ibm-unav-home-dwlogo">
+				<a href="http://www.ibm.com/developerworks/"><img src="./ML basics- The component diagram_files/dw-wordmark.gif" width="218" height="32" alt="developerWorks®"></a>
+            </li>
+        </ul>
+        <ul id="ibm-menu-links-dw">
+            <li id="dw-mast-nav-0"><a href="http://www.ibm.com/developerworks/topics/">Technical topics</a></li>
+            <li id="dw-mast-nav-1"><a href="http://www.ibm.com/developerworks/downloads/">Evaluation software</a></li>
+            <li id="dw-mast-nav-2"><a href="http://www.ibm.com/developerworks/community/">Community</a></li>
+            <li id="dw-mast-nav-3"><a href="http://www.ibm.com/developerworks/events/">Events</a></li>
+        </ul>
+			<form id="ibm-search-form" action="http://www.ibm.com/search/csass/search/" method="get" name="form1">
+				<input type="hidden" name="sn" value="dw">
+				<input type="hidden" name="lang" value="en">
+				<input type="hidden" name="cc" value="US">
+				<input type="hidden" name="en" value="utf">
+				<input type="hidden" name="hpp" value="20">
+				<input type="hidden" name="dws" value="dw">
+				<p>
+				<label for="q"><img alt="Search developerWorks" height="1" width="1" src="./ML basics- The component diagram_files/c.gif"></label>
+				<input type="text" value="Search developerWorks" name="q" maxlength="100" id="q">
+				<input type="submit" id="ibm-search" class="ibm-btn-search" name="Search" value="Search">
+				</p>
+			</form>
+    </div>
+    
+    <!-- BOTTOM ROW SLIDER -->
+    <div id="ibm-common-menu-dw">
+        <div class="ibm-ribbon-pane-dw dw-ribbon-pane-en">
+            <div class="ibm-ribbon-section-dw">
+				<!-- Technical topics category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-5-1">
+						<h2><a id="dw-mast-nav-0-0" href="http://www.ibm.com/developerworks/topics/">Technical topics</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/agile/">Agile transformation</a></li>
+							<li><a href="http://www.ibm.com/developerworks/aix/">AIX and UNIX</a></li>
+							<li><a href="http://www.ibm.com/developerworks/bigdata/">Big data</a></li>
+							<li><a href="http://www.ibm.com/developerworks/analytics/">Business analytics</a></li>
+							<li><a href="http://www.ibm.com/developerworks/bpm/">Business process management</a></li>
+						</ul>     
+                    </div>
+					<div class="dw-mast-col-5-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/cloud/">Cloud computing</a></li>
+							<li><a href="http://www.ibm.com/developerworks/commerce/">Commerce</a></li>
+							<li><a href="http://www.ibm.com/developerworks/ibmi/">IBM i</a></li>    
+							<li><a href="http://www.ibm.com/developerworks/industry/">Industries</a></li>
+							<li><a href="http://www.ibm.com/developerworks/data/">Information management</a></li>
+						</ul>
+                    </div>
+					<div class="dw-mast-col-5-3">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/java/">Java technology</a></li>
+							<li><a href="http://www.ibm.com/developerworks/linux/">Linux</a></li>
+							<li><a href="http://www.ibm.com/developerworks/lotus/">Lotus (collaboration)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/mobile/">Mobile development</a></li>
+							<li><a href="http://www.ibm.com/developerworks/opensource/">Open source</a></li>
+						</ul>     
+                    </div>
+                    <div class="dw-mast-col-5-4">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/rational/">Rational</a></li>
+							<li><a href="http://www.ibm.com/developerworks/security/">Security</a></li>
+							<li><a href="http://www.ibm.com/developerworks/servicemanagement/">Tivoli (service management)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/web/">Web development</a></li>
+							<li><a href="http://www.ibm.com/developerworks/websphere/">WebSphere</a></li>
+						</ul> 
+                    </div>
+                    <div class="dw-mast-col-5-5">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/library/"><strong>Technical library</strong></a></li>
+							<li><a href="http://www.ibm.com/developerworks/products/"><strong>Products A to Z</strong></a></li>
+						</ul>
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-tech"><a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+				<!-- Evaluation software category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-2-1">
+						<h2><a id="dw-mast-nav-1-0" href="http://www.ibm.com/developerworks/downloads/">Evaluation software</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#ba">Business analytics</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#data">Information management</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#lotus">Lotus (collaboration)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#rational">Rational</a></li>
+						</ul>            
+                    </div>
+					<div class="dw-mast-col-2-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#tivoli">Tivoli (service management)</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#websphere">WebSphere</a></li>
+							<li><a href="http://www.ibm.com/developerworks/downloads/#more">More IBM products (Mobile, PureSystems, Security...)</a></li>
+						</ul>            
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-eval"><a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+				<!-- Community category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-3-1">
+						<h2><a id="dw-mast-nav-2-0" href="http://www.ibm.com/developerworks/community/index.html">Community</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/community/homepage/?lang=en">My home</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/profiles/?lang=en">Profiles</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/groups/?lang=en">Communities</a></li>
+						</ul>     
+                    </div>
+					<div class="dw-mast-col-3-2">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/community/blogs/?lang=en">Blogs</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/forums/?lang=en">Forums</a></li>
+							<li><a href="http://www.ibm.com/developerworks/community/wikis/?lang=en">Wikis</a></li>
+						</ul>
+                    </div>
+					<div class="dw-mast-col-3-3 dw-mast-col-3-3-en">
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/community/activities/?lang=en">Activities</a></li>
+							<li><a href="https://www.ibm.com/developerworks/community/podcasts/?lang=en">Podcasts</a></li>    
+							<li><a href="http://www.ibm.com/developerworks/champion/">IBM Champion program</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-comm"><a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+				<!-- Events category -->
+                <div class="dw-mast-columns">
+					<div class="dw-mast-col-1-1">
+						<h2><a id="dw-mast-nav-3-0" href="http://www.ibm.com/developerworks/events/">Events</a></h2>
+						<ul>
+							<li><a href="http://www.ibm.com/developerworks/find/webcasts/">Webcasts</a></li>
+							<li><a href="http://www.ibm.com/developerworks/find/events/">Find events (webcasts, conferences...)</a></li>
+						</ul>            
+                    </div>
+                    <div class="dw-mast-close">
+						<ul>
+							<li><div class="dw-mast-close-event"><a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+				</div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+<div id="fdiv" class="ibm-access"><embed type="application/x-shockwave-flash" src="https://www.ibm.com/developerworks/js/dw-mf/connect.swf" width="1" height="1" id="sflash" name="sflash" quality="high" menu="false" wmode="window" movie="https://www.ibm.com/developerworks/js/dw-mf/connect.swf" swliveconnect="true" allowscriptaccess="always"></div>
+<!-- MASTHEAD_END --><!-- MASTHEAD_END -->
+
+<div id="ibm-pcon">
+
+<!-- CONTENT_BEGIN -->
+<div id="ibm-content">
+
+<!-- Navigation_Trail_BEGIN -->
+<!-- &nbsp; -->
+      <div id="ibm-content-head"><ul id="ibm-navigation-trail"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/">developerWorks</a></li><li><a href="http://www.ibm.com/developerworks/topics/">Technical topics</a></li><li><a href="http://www.ibm.com/developerworks/rational/">Rational</a></li><li><a href="http://www.ibm.com/developerworks/rational/library/">Technical library</a></li></ul></div>
+<!-- Navigation_Trail_END -->
+
+<!-- dW_Summary Area_START -->
+<div id="dw-summary-article">
+
+<div class="dw-content-head">
+<h1>UML basics: An introduction to the Unified Modeling Language</h1><p>
+</p></div>
+
+<div class="ibm-container-body ibm-two-column">
+
+<div class="ibm-column ibm-first">
+<div class="author"><a class="dwauthor" rel="#authortip1" href="http://www.ibm.com/developerworks/rational/library/769.html#author1">Donald Bell</a> (<a href="mailto:bellds@us.ibm.com?subject=An%20introduction%20to%20the%20Unified%20Modeling%20Language&cc=robinw@us.ibm.com">bellds@us.ibm.com</a>), IT Architect, IBM Corporation</div><div id="authortip1" class="dwauthor-onload-state ibm-no-print" style="display: none;"><div class="position"><img src="./ML basics- The component diagram_files/p-dbell.jpg" width="64" height="80" alt="Donald Bell photo"></div>Donald Bell is an IT architect for IBM Rational software, where he works with clients to define and adopt effective software delivery practices and tools.</div>
+<p></p>
+<p><strong>Summary:</strong>&nbsp; from The Rational Edge: This introduction to the Unified Modeling Language, or UML, provides an overview of the most important diagrams used in the visual modeling of computing programs. The article is ideal for those who have little knowledge of UML concepts, including managers as well as novice practitioners.</p>
+<p class="ibm-no-print"><a href="http://www.ibm.com/developerworks/views/rational/libraryview.jsp?search_by=UML+basics:">View more content in this series</a></p>
+</div>
+
+<div class="ibm-column ibm-second">
+<p class="leading"><strong>Date:</strong>&nbsp; 15 Jun 2003
+<br><strong>Level: </strong>&nbsp;Introductory
+
+<br><strong>Also available in:&nbsp;</strong>
+
+
+
+
+&nbsp;<a href="http://www.ibm.com/developerworks/vn/library/769/">Vietnamese</a> 
+
+
+<br>
+<br><strong>Activity:</strong>&nbsp; 462572 views
+<br><strong>Comments:</strong> &nbsp; <span id="nCmts">0&nbsp;(<a class="dw-view-comment" href="http://www.ibm.com/developerworks/rational/library/769.html#icomments">View</a>&nbsp;|&nbsp;<a onclick="showSignIn();return false;" href="http://www.ibm.com/developerworks/rational/library/769.html#">Add comment</a> - Sign in)</span>
+<!-- Rating_Area_Begin -->
+</p><div id="art-rating-summary"><img alt="Average rating 4 stars based on 2450 votes" src="./ML basics- The component diagram_files/stars120x20-4b.jpg" class="dw-avg-rating"> Average rating (2450 votes)<br><a class="dw-view-comment" href="http://www.ibm.com/developerworks/rational/library/769.html#iratings">Rate this article</a></div>
+<!-- Rating_Area_End -->
+<p></p>
+</div>
+
+</div>
+</div>
+<!-- dW_Summary_Area_END -->
+
+<!-- CONTENT_BODY -->
+<div id="ibm-content-body">
+
+<!-- MAIN_COLUMN_BEGIN -->
+<div id="ibm-content-main">
+
+<!-- Related_Searches_Area -->
+<!-- Related_Searches_Area_Begin -->
+<script type="text/javascript" language="javascript">
+	     capture_referrer();
+</script>
+
+<div id="dw-related-searches-article" style="display:none">
+<div class="ibm-container ibm-alternate-two">
+<div class="ibm-container-body">
+
+<!--  START : HTML FOR ARTICLE SEARCH -->
+  <div id="article_results" style="display:block"></div>
+<!--  END : HTML FOR ARTICLE SEARCH -->
+
+</div>
+</div>
+</div>
+<!-- Related_Searches_Area_End -->
+<!-- MAIN_COLUMN_CONTAINER_BEGIN -->
+<div class="ibm-container">
+
+<!-- MAIN_COLUMN_CONTENT_BEGIN -->
+<p><img align="right" alt="Illustration" border="0" height="346" hspace="5" src="./ML basics- The component diagram_files/2772_intro.jpg" width="260"> <em>Way back in the late twentieth century — 
+</em></p> 
+<p><em>1997 to be exact — the Object Management Group (OMG) 
+released the Unified Modeling Language (UML). One of the purposes of UML was 
+to provide the development community with a stable and common design language 
+that could be used to develop and build computer applications. UML brought forth 
+a unified standard modeling notation that IT professionals had been wanting 
+for years. Using UML, IT professionals could now read and disseminate system 
+structure and design plans — just as construction workers have been doing 
+for years with blueprints of buildings.</em></p> 
+<p><em>It is now the twenty-first century — 2003 to be precise — 
+and UML has gained traction in our profession. On 75 percent of the 
+resumes I see, there is a bullet point claiming knowledge of UML. 
+However, after speaking with a majority of these job candidates, it 
+becomes clear that they do not truly know UML. Typically, they are 
+either using it as a buzz word, or they have had a sliver of 
+exposure to UML. This lack of understanding inspired me to write 
+this quick introduction to  UML, focused on the basic diagrams used in visual modeling. When you are finished reading 
+you will not have enough knowledge to put UML on your resume, but 
+you will have a starting point for digging more deeply into the 
+language.</em></p> 
+<p><a name="N1007D"><span class="atitle">A little background</span></a></p> 
+<p>As I mentioned, UML was meant to be a unifying language enabling 
+IT professionals to model computer applications. The primary authors 
+were Jim Rumbaugh, Ivar Jacobson, and Grady Booch, who originally 
+had their own competing methods (OMT, OOSE, and Booch). Eventually, 
+they joined forces and brought about an open standard. (Sound 
+familiar? A similar phenomenon spawned J2EE, SOAP, and Linux.) One 
+reason UML has become a <em>standard </em>modeling language is that it 
+is programming-language independent. (UML modeling tools from IBM 
+Rational are used extensively in J2EE shops as well in .NET shops.) 
+Also, the UML notation set is a language and not a methodology. This 
+is important, because a language, as opposed to a methodology, can 
+easily fit into any company's way of conducting business without 
+requiring change.</p>
+		<div class="ibm-container ibm-alt-header dw-container-sidebar"><h2>Resources we think you'll like</h2><div class="ibm-container-body">
+
+<ul>
+<li><a href="http://www-01.ibm.com/software/rational/offerings/architecture/">Free 90 day trial of IBM UML tools</a></li>
+<li><a href="http://www.ibm.com/developerworks/architecture/kits/archkit1/">IBM software architecture e-kit</a></li>
+<li><a href="https://www.ibm.com/developerworks/wikis/display/RSA/Home/">IBM Rational Software Architect wiki</a></li>
+<li><a href="https://www.ibm.com/developerworks/university/academicinitiative/">IBM Academic Initiative</a></li>
+ <li><a href="http://www.ibm.com/developerworks/rational/library/10/update-uml-modeling-features-in-rsa-v8-part1/index.html">Drive your UML modeling process with the new IBM Rational Software Architect Version 8.0 solution</a></li>
+<li><a href="http://www.ibm.com/developerworks/rational/library/model-element-conversion-wizard/index.html">Conversion of Elements in UML and BPMN Models in RSA</a></li>
+<li><a href="http://www.ibm.com/developerworks/rational/library/create-editable-sequence-diagram/index.html">Create editable sequence diagrams with Rational Software Architect</a></li>
+<li><a href="http://www.ibm.com/developerworks/rational/library/rational-software-architect-8-5-design-manager-4-beta/">What's new in Rational Software Architect 8.5 and Design Manager 4 beta</a></li>
+ </ul>
+</div></div>
+<p>Since UML is not a methodology, it does not require any formal 
+work products (i.e., "artifacts" in IBM Rational Unified 
+Process® lingo). Yet it does provide several types of 
+diagrams that, when used within a given methodology, increase the 
+ease of understanding an application under development. There is 
+more to UML than these diagrams, but for my purposes here, the 
+diagrams offer a good introduction to the language and the 
+principles behind its use. By placing standard UML diagrams in your 
+methodology's work products, you make it easier for UML-proficient 
+people to join your project and quickly become productive. The most 
+useful, standard UML diagrams are: use case diagram, class diagram, 
+sequence diagram, statechart diagram, activity diagram, component 
+diagram, and deployment diagram.</p> 
+<p>It is beyond the scope of this introductory article to go into 
+great detail about each type of diagram. Instead, I will provide you 
+with enough information for a general understanding of each one and 
+then supply more details in later articles. </p> 
+<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/769.html#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N100C6"><span class="atitle">Use-case diagram</span></a></p> 
+<p>A use case illustrates a unit of functionality provided by the 
+system. The main purpose of the use-case diagram is to help 
+development teams visualize the functional requirements of a system, 
+including the relationship of "actors" (human beings who will 
+interact with the system) to essential processes, as well as the 
+relationships among different use cases. Use-case diagrams generally 
+show groups of use cases — either all use cases for the complete 
+system, or a breakout of a particular group of use cases with 
+related functionality (e.g., all security administration-related use 
+cases). To show a use case on a use-case diagram, you draw an oval 
+in the middle of the diagram and put the name of the use case in the 
+center of, or below, the oval. To draw an actor (indicating a system 
+user) on a use-case diagram, you draw a stick person to the left or 
+right of your diagram (and just in case you're wondering, some 
+people draw prettier stick people than others). Use simple lines to 
+depict relationships between actors and use cases, as shown in 
+Figure 1. </p> 
+
+
+    <br><a name="N100D5"><strong>Figure 1: Sample use-case diagram</strong></a><br>
+    <img alt="Sample use-case diagram" src="./ML basics- The component diagram_files/2772_fig1.jpg">
+<br>
+
+<p>A use-case diagram is typically used to communicate the 
+high-level functions of the system and the system's scope. By 
+looking at our use-case diagram in Figure 1, you can easily tell the 
+functions that our example system provides. This system lets the 
+band manager view a sales statistics report and the Billboard 200 
+report for the band's CDs. It also lets the record manager view a 
+sales statistics report and the Billboard 200 report for a 
+particular CD. The diagram also tells us that our system delivers 
+Billboard reports from an external system called Billboard Reporting 
+Service.</p> 
+<p>In addition, the absence of use cases in this diagram shows what 
+the system <em>doesn't</em> do. For example, it does not provide a way 
+for a band manager to listen to songs from the different albums on 
+the Billboard 200 — i.e., we see no reference to a use case called 
+Listen to Songs from Billboard 200. This absence is not a trivial 
+matter. With clear and simple use-case descriptions provided on such 
+a diagram, a project sponsor can easily see if needed functionality 
+is present or not present in the system.</p> 
+<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/769.html#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N100EA"><span class="atitle">Class diagram</span></a></p> 
+<p>The class diagram shows how the different entities (people, 
+things, and data) relate to each other; in other words, it shows the 
+static structures of the system. A class diagram can be used to 
+display logical classes, which are typically the kinds of things the 
+business people in an organization talk about — rock bands, CDs, 
+radio play; or loans, home mortgages, car loans, and interest rates. 
+Class diagrams can also be used to show implementation classes, 
+which are the things that programmers typically deal with. An 
+implementation class diagram will probably show some of the same 
+classes as the logical classes diagram.The implementation class 
+diagram won't be drawn with the same attributes, however, because it 
+will most likely have references to things like Vectors and 
+HashMaps.<br><br>A class is depicted on the class diagram as a 
+rectangle with three horizontal sections, as shown in Figure 2. The 
+upper section shows the class's name; the middle section contains 
+the class's attributes; and the lower section contains the class's 
+operations (or "methods"). </p>
+
+
+
+    <br><a name="N100FC"><strong>Figure 2: Sample class object in a class diagram</strong></a><br>
+    <img alt="Sample class object in a class diagram" src="./ML basics- The component diagram_files/2772_fig2.gif">
+<br>
+    
+
+<p>In my experience, almost every developer knows what this diagram 
+is, yet I find that most programmers draw the relationship lines 
+incorrectly. For a class diagram like the one in Figure 3, you should 
+draw the inheritance relationship<a href="http://www.ibm.com/developerworks/rational/library/769.html#footnotes"><sup>1</sup></a> 
+using a line with an arrowhead at the top pointing to the super 
+class, and the arrowhead should be a <em>completed triangle</em>. [Note: For more information on inheritance and other object-oriented principles, see the Java tutorial <a href="http://java.sun.com/docs/books/tutorial/java/concepts/inheritance.html">What Is Inheritance?</a>] An 
+association relationship should be a solid line if both classes are 
+aware of each other and a line with an <em>open arrowhead</em> if the 
+association is known by only one of the classes.</p> 
+
+
+    <br><a name="fig3"><strong>Figure 3: A complete class diagram, including the class object shown in Figure 2</strong></a><br>
+    <img alt="A complete class diagram" border="0" src="./ML basics- The component diagram_files/2772_fig3s.jpg">
+<br>
+<p><a href="http://www.ibm.com/developerworks/rational/library/769a.html">Larger view of Figure 3.</a></p>   
+
+<p>In Figure 3, we see both the inheritance relationship and two 
+association relationships. The CDSalesReport class inherits from the 
+Report class. A CDSalesReport is associated with one CD, but the CD 
+class doesn't know anything about the CDSalesReport class. The CD 
+and the Band classes both know about each other, and both classes 
+can be associated to one or more of each other.</p> 
+<p>A class diagram can incorporate many more concepts, which we will 
+cover later in this article series. </p> 
+<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/769.html#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N10130"><span class="atitle">Sequence diagram</span></a></p> 
+<p>Sequence diagrams show a detailed flow for a specific use case or 
+even just part of a specific use case. They are almost self 
+explanatory; they show the calls between the different objects in 
+their sequence and can show, at a detailed level, different calls to 
+different objects. </p> 
+<p>A sequence diagram has two dimensions: The vertical dimension 
+shows the sequence of messages/calls in the time order that they 
+occur; the horizontal dimension shows the object instances to which 
+the messages are sent. </p> 
+<p>A sequence diagram is very simple to draw. Across the top of your 
+diagram, identify the class instances (objects) by putting each 
+class instance inside a box (see Figure 4). In the box, put the 
+class instance name and class name separated by a space/colon/space 
+" : " (e.g., myReportGenerator : ReportGenerator). If a class 
+instance sends a message to another class instance, draw a line with 
+an open arrowhead pointing to the receiving class instance; place 
+the name of the message/method above the line. Optionally, for 
+important messages, you can draw a dotted line with an arrowhead 
+pointing back to the originating class instance; label the return 
+value above the dotted line. Personally, I always like to include 
+the return value lines because I find the extra details make it 
+easier to read.</p> 
+<p>Reading a sequence diagram is very simple. Start at the top left 
+corner with the "driver" class instance that starts the sequence. 
+Then follow each message down the diagram. Remember: Even though the 
+example sequence diagram in Figure 4 shows a return message for each 
+sent message, this is optional. </p>
+
+
+    <br><a name="fig4"><strong>Figure 4: A sample sequence diagram </strong></a><br>
+    <img alt="A sample sequence diagram" border="0" src="./ML basics- The component diagram_files/2772_fig4s.jpg">
+<br>
+<p><a href="http://www.ibm.com/developerworks/rational/library/769b.html">Larger view of Figure 4.</a></p>   
+
+
+<p>By reading our sample sequence diagram in Figure 4, you can see 
+how to create a CD Sales Report. The aServlet object is our example 
+driver. aServlet sends a message to the ReportGenerator class 
+instance named gen. The message is labeled generateCDSalesReport, 
+which means that the ReportGenerator object implements this message 
+handler. On closer inspection, the generateCDSalesReport message 
+label has cdId in parentheses, which means that aServlet is passing 
+a variable named cdId with the message. When gen instance receives a 
+generateCDSalesReport message, it then makes subsequent calls to the 
+CDSalesReport class, and an actual instance of a CDSalesReport 
+called aCDReport gets returned. The gen instance then makes calls to 
+the returned aCDReport instance, passing it parameters on each 
+message call. At the end of the sequence, the gen instance returns 
+aCDReport to its caller aServlet.</p> 
+<p>Please note: The sequence diagram in Figure 4 is arguably too 
+detailed for a typical sequence diagram. However, I believe it is 
+simple enough to understand, and it shows how nested calls are 
+drawn. Also, with junior developers, sometimes it is necessary to 
+break down sequences to this explicit level to help them understand 
+what they are supposed to do.</p> 
+<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/769.html#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N1015C"><span class="atitle">Statechart diagram</span></a></p> 
+<p>The statechart diagram models the different states that a class 
+can be in and how that class transitions from state to state. It can 
+be argued that every class has a state, but that every class 
+shouldn't have a statechart diagram. Only classes with "interesting" 
+states — that is, classes with three or more potential states 
+during system activity — should be modeled. </p> 
+<p>As shown in Figure 5, the notation set of the statechart diagram 
+has five basic elements: the initial starting point, which is drawn 
+using a solid circle; a transition between states, which is drawn 
+using a line with an open arrowhead; a state, which is drawn using a 
+rectangle with rounded corners; a decision point, which is drawn as 
+an open circle; and one or more termination points, which are drawn 
+using a circle with a solid circle inside it. To draw a statechart 
+diagram, begin with a starting point and a transition line pointing 
+to the initial state of the class. Draw the states themselves 
+anywhere on the diagram, and then simply connect them using the 
+state transition lines.</p> 
+
+
+    <br><a name="fig5"><strong>Figure 5: Statechart diagram showing the various states that classes pass through in a functioning system</strong></a><br>
+    <img alt="Statechart diagram" border="0" src="./ML basics- The component diagram_files/2772_fig5s.jpg">
+<br>
+<p><a href="http://www.ibm.com/developerworks/rational/library/769c.html">Larger view of Figure 5.</a></p>
+
+
+<p>The example statechart diagram in Figure 5 shows some of the 
+potential information they can communicate. For instance, you can 
+tell that loan processing begins in the Loan Application state. When 
+the pre-approval process is done, depending on the outcome, you move 
+to either the Loan Pre-approved state or the Loan Rejected state. 
+This decision, which is made during the transition process, is shown 
+with a decision point — the empty circle in the transition line. By 
+looking at the example, a person can tell that a loan cannot go from 
+the Loan Pre-Approved state to the Loan in Maintenance state without 
+going through the Loan Closing state. Also, by looking at our 
+example diagram, a person can tell that all loans will end in either 
+the Loan Rejected state or the Loan in Maintenance state.</p> 
+<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/769.html#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N10185"><span class="atitle">Activity diagram</span></a></p> 
+<p>Activity diagrams show the procedural flow of control between two 
+or more class objects while processing an activity. Activity 
+diagrams can be used to model higher-level business process at the 
+business unit level, or to model low-level internal class actions. 
+In my experience, activity diagrams are best used to model 
+higher-level processes, such as how the company is currently doing 
+business, or how it would like to do business. This is because 
+activity diagrams are "less technical" in appearance, compared to 
+sequence diagrams, and business-minded people tend to understand 
+them more quickly. </p> 
+<p>An activity diagram's notation set is similar to that used in a 
+statechart diagram. Like a statechart diagram, the activity diagram 
+starts with a solid circle connected to the initial activity. The 
+activity is modeled by drawing a rectangle with rounded edges, 
+enclosing the activity's name. Activities can be connected to other 
+activities through transition lines, or to decision points that 
+connect to different activities guarded by conditions of the 
+decision point. Activities that terminate the modeled process are 
+connected to a termination point (just as in a statechart diagram). 
+Optionally, the activities can be grouped into swimlanes, which are 
+used to indicate the object that actually performs the activity, as 
+shown in Figure 6. </p> 
+
+
+    <br><a name="N10195"><strong>Figure 6: Activity diagram, with two swimlanes to indicate 
+control of activity by two objects: the band manager, and the 
+reporting tool</strong></a><br>
+    <img alt="Activity diagram, with two swimlanes" src="./ML basics- The component diagram_files/2772_fig6.gif">
+<br>
+
+<p>In our example activity diagram, we have two swimlanes because we 
+have two objects that control separate activities: a band manager 
+and a reporting tool. The process starts with the band manager 
+electing to view the sales report for one of his bands. The 
+reporting tool then retrieves and displays all the bands that person 
+manages and asks him to choose one. After the band manager selects a 
+band, the reporting tool retrieves the sales information and 
+displays the sales report. The activity diagram shows that 
+displaying the report is the last step in the process. </p> 
+<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/769.html#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N101A2"><span class="atitle"><br>Component diagram</span></a></p> 
+<p>A component diagram provides a physical view of the system. Its 
+purpose is to show the dependencies that the software has on the 
+other software components (e.g., software libraries) in the system. 
+The diagram can be shown at a very high level, with just the 
+large-grain components, or it can be shown at the component package 
+level. [Note: The phrase component package level is a programming language-neutral way of referring to class container levels such as .NET's namespaces (e.g., System.Web.UI) or Java's packages (e.g., java.util).] 
+</p> 
+<p>Modeling a component diagram is best described through an 
+example. Figure 7 shows four components: Reporting Tool, Billboard 
+Service, Servlet 2.2 API, and JDBC API. The arrowed lines from the 
+Reporting Tool component to the Billboard Service, Servlet 2.2 API, 
+and JDBC API components mean that the Reporting Tool is dependent on 
+those three components.</p> 
+
+
+    <br><a name="N101B3"><strong>Figure 7: A component diagram shows 
+interdependencies of various software components the system 
+comprises</strong></a><br>
+    <img alt="Component diagram" src="./ML basics- The component diagram_files/2772_fig7.jpg">
+<br>
+   
+<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/769.html#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N101BD"><span class="atitle">Deployment diagram</span></a></p> 
+<p>The deployment diagram shows how a system will be physically 
+deployed in the hardware environment. Its purpose is to show where 
+the different components of the system will physically run and how 
+they will communicate with each other. Since the diagram models the 
+physical runtime, a system's production staff will make considerable 
+use of this diagram. </p> 
+<p>The notation in a deployment diagram includes the notation 
+elements used in a component diagram, with a couple of additions, 
+including the concept of a node. A node represents either a physical 
+machine or a virtual machine node (e.g., a mainframe node). To model 
+a node, simply draw a three-dimensional cube with the name of the 
+node at the top of the cube. Use the naming convention used in 
+sequence diagrams: [instance name] : [instance type] (e.g., 
+"w3reporting.myco.com : Application Server"). </p>
+
+
+    <br><a name="fig8"><strong>Figure 8: Deployment diagram</strong></a><br>
+    <img alt="Deployment diagram" border="0" src="./ML basics- The component diagram_files/2772_fig8s.jpg">
+<br>
+<p><a href="http://www.ibm.com/developerworks/rational/library/769d.html">Larger view of Figure 8.</a></p>
+
+
+<p>The deployment diagram in Figure 8 shows that the users 
+access the Reporting Tool by using a browser running on their local 
+machine and connecting via HTTP over their company's intranet to the 
+Reporting Tool. This tool physically runs on the Application Server 
+named w3reporting.myco.com. The diagram shows the Reporting Tool 
+component drawn inside of IBM WebSphere, which in turn is drawn 
+inside of the node w3.reporting.myco.com. The Reporting Tool 
+connects to its reporting database using the Java language to IBM 
+DB2's JDBC interface, which then communicates to the actual DB2 
+database running on the server named db1.myco.com using native DB2 
+communication. In addition to talking to the reporting database, the 
+Report Tool component communicates via SOAP over HTTPS to the 
+Billboard Service.</p> 
+<div class="ibm-alternate-rule"><hr></div><p class="ibm-ind-link ibm-back-to-top"><a href="http://www.ibm.com/developerworks/rational/library/769.html#ibm-pcon" class="ibm-anchor-up-link">Back to top</a></p><p><a name="N101E0"><span class="atitle">Conclusion</span></a></p> 
+<p>Although this article provides only a brief introduction to 
+Unified Modeling Language, I encourage you to start applying the 
+information you have learned here to your own projects and to dig 
+more deeply into UML. There are several software tools that help you 
+to integrate UML diagrams into your software development process, 
+but even without automated tools, you can use markers on a 
+whiteboard or paper and pencils to draw your UML diagrams and still 
+achieve benefits. </p>  
+
+<!-- CMA ID: 769 --> <!-- Site ID: 1 --> <!-- XSLT stylesheet used to transform this file: dw-document-html-6.0.xsl -->
+<br>
+<p><a name="resources"><span class="atitle">Resources</span></a></p><p><strong>Learn</strong></p><ul><li>
+Understand more about how the new functionality of the UML Modeler component common to both IBM Rational Software Architect Standard Edition Version 7.5 and IBM Rational Software Architect for WebSphere Software Version 7.5 by reading this article <a href="http://www.ibm.com/developerworks/rational/library/08/0926_diu/index.html" onmouseover="linkQueryAppend(this)">Using the new features of UML Modeler in IBM Rational Software Architect Version 7.5</a>.<br><br></li><li>
+Understand more about the new functionality of Rational Software Architect for WebSphere Software Version 7.5 by reading this article <a href="http://www.ibm.com/developerworks/rational/library/08/0926_arnold/index.html" onmouseover="linkQueryAppend(this)">Overview of Rational Software Architect for WebSphere Software Version 7.5</a>.<br><br></li><li>
+Learn about <a href="http://www.ibm.com/developerworks/rational/products/tau/" onmouseover="linkQueryAppend(this)">Rational Tau</a>.<br><br></li><li>
+Learn about other applications in the <a href="http://www.ibm.com/software/info/developer/index.html" onmouseover="linkQueryAppend(this)">IBM Rational Software Delivery Platform</a>, including collaboration tools for parallel development and geographically dispersed teams, plus specialized software for architecture management, asset management, change and release management, integrated requirements management, process and portfolio management, and quality management. You can find product manuals, installation guides, and other documentation in the <a href="http://www.ibm.com/software/rational/support/documentation/" onmouseover="linkQueryAppend(this)">IBM Rational Online Documentation Center</a>. <br><br></li><li>
+Visit the <a href="http://www.ibm.com/developerworks/rational" onmouseover="linkQueryAppend(this)">Rational software area on developerWorks</a> for technical resources and best practices for Rational Software Delivery Platform products.<br><br></li><li>
+Explore <a href="http://www.ibm.com/training/us/catalog/rational" onmouseover="linkQueryAppend(this)">Rational computer-based, Web-based, and instructor-led online courses</a>. Hone your skills and learn more about Rational tools with these courses, which range from introductory to advanced. The courses on this catalog are available for purchase through computer-based training or Web-based training. Some of the "Getting Started" courses are available free of charge. <br><br></li><li>
+Subscribe to the <a href="https://www.ibm.com/developerworks/newsletter/" onmouseover="linkQueryAppend(this)">IBM developerWorks newsletter</a>, a weekly update on the best of developerWorks tutorials, articles, downloads, community activities, webcasts and events. <br><br></li><li>
+Browse the <a href="http://www.ibm.com/developerworks/apps/SendTo?bookstore=safari">technology bookstore</a> for books on these and other technical topics. <br><br></li></ul><p><strong>Get products and technologies</strong></p><ul><li>
+Download a <a href="http://www.ibm.com/developerworks/downloads/r/rswm/" onmouseover="linkQueryAppend(this)">trial version of Rational Software Modeler.</a> <br><br></li><li>
+Download a <a href="http://www.ibm.com/developerworks/downloads/r/rsd/" onmouseover="linkQueryAppend(this)">trial version of Rational Software Architect</a> standard edition.<br><br></li><li>
+Download <a href="http://www.ibm.com/developerworks/downloads/r/rswa/learn.html" onmouseover="linkQueryAppend(this)">Rational Software Architect for Websphere Software.</a> <br><br></li><li>
+Download <a href="http://www.ibm.com/developerworks/downloads/" onmouseover="linkQueryAppend(this)">Other IBM product evaluation versions</a> and get your hands on application development tools and middleware products from DB2®, Lotus®, Rational®, Tivoli®, and WebSphere®. <br><br></li></ul><p><strong>Discuss</strong></p><ul><li>
+Check out <a href="http://www.ibm.com/developerworks/blogs/" onmouseover="linkQueryAppend(this)">developerWorks blogs</a> and get involved in the <a href="http://www.ibm.com/developerworks/community">developerWorks community</a>. <br><br></li><li>
+Join the <a href="http://www.ibm.com/developerworks/forums/forum.jspa?forumID=430" onmouseover="linkQueryAppend(this)">Development Tools forum </a>on developerWorks to discuss Rational Application Developer,  Rational Software Architect, and Rational Software Modeler.<br><br></li><li>
+Join the <a href="http://www.ibm.com/developerworks/forums/forum.jspa?forumID=1505" onmouseover="linkQueryAppend(this)">Rational Tau forum</a> on developerWorks. <br><br></li></ul>
+<p><a name="author"><span class="atitle">About the author</span></a></p><div class="ibm-container ibm-portrait-module ibm-alternate-two"><div class="ibm-container-body"><img src="./ML basics- The component diagram_files/p-dbell.jpg" class="dw-author-img" width="64" height="80" alt="Donald Bell photo"><p><a name="author1"> </a>Donald Bell is an IT architect for IBM Rational software, where he works with clients to define and adopt effective software delivery practices and tools.</p></div></div>
+<!-- MAIN_COLUMN_CONTENT_END -->
+
+<!-- OVERLAYS_START -->
+<!-- Report_Abuse_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlay">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/rational/library/769.html#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlay">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p><strong>Thank you.</strong>  This entry has been flagged for moderator attention.</p>
+            <div class="ibm-overlay-rule"><hr></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide(&#39;reportabuseoverlay&#39;);return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close">
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Report_Abuse_Error_Start -->
+<div class="ibm-common-overlay ibm-no-print" id="reportabuseoverlayerror">
+   <div class="ibm-head"><p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/rational/library/769.html#">Close [x]</a></p></div>
+   <div class="ibm-body">
+      <div class="ibm-main">
+         <a class="ibm-access" name="reportabuseoverlayerror">Report abuse help</a>   
+         <div class="ibm-title"><h1>Report abuse</h1></div>
+         <div class="ibm-container ibm-alternate">
+            <p class="ibm-ind-error"><strong>Report abuse submission failed.  Please try again later.</strong></p>
+            <div class="ibm-overlay-rule"><hr></div>
+            <div class="ibm-buttons-row">
+               <input type="button" onclick="ibmCommon.Overlays.hide(&#39;reportabuseoverlayerror&#39;);return false;" class="ibm-btn-cancel-sec dw-btn-cancel-sec" name="ibm-cancel" value="Close">
+            </div>
+         </div>
+      </div> 
+   </div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY STARTS HERE --> 
+<div class="ibm-common-overlay" id="signin_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/rational/library/769.html#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>developerWorks: Sign in</h1>
+<div id="ibm-overlay-error-signin" class="no-display"></div>
+</div>
+
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<form class="ibm-column-form" id="sFormId" action="" method="post" name="sForm" onsubmit="return false;">
+<p><label for="ibmid">IBM ID:</label><span><input name="ibm-id" id="ibmid" size="25" value="" class="required" type="text" onkeypress="handleEP(event,this.form);"><br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/769.html#" onclick="(function () {window.location=&#39;/developerworks/dwwi/DWAuthRouter?m=reg&amp;d=&#39;+encodeURIComponent(location.href);})();">Need an IBM ID?</a><br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/dwwi/jsp/WSHelp.jsp?lang=en_US">Forgot your IBM ID?</a>   
+</span></p> 
+<p><label for="password">Password:</label><span><input name="password" id="password" size="25" value="" class="required" type="password" onkeypress="handleEP(event,this.form);"><br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/769.html#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=forgot&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(getAuthUrl())+&#39;%3Fm%3Dloginpage%26lang%3Den_US%26d%3D&#39;+encodeURIComponent(location.href);})();">Forgot your password?</a><br><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/rational/library/769.html#" onclick="(function () {window.location=&#39;https://www.ibm.com/account/profile?page=chpw&amp;lang=en_US&amp;appname=ibm&amp;required=null&amp;d=&#39;+encodeURIComponent(location.href);})();">Change your password</a></span></p>
+ 
+<p class="dw-perm-box">
+	<span><input id="perm" type="checkbox" name="perm_name"><label for="perm"> Keep me signed in.</label></span>
+</p>
+<p>By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide(&#39;signin_overlay&#39;);return false;"></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr></div>
+<p>The first time you sign into developerWorks, a profile is created for you.  <strong>Select information in your profile (name, country/region, and company) is displayed to the public and will accompany any content you post</strong>.  You may update your IBM account at any time.</p>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Sign in OVERLAY ENDS HERE --> 
+ 
+
+<!-- Display name OVERLAY STARTS HERE --> 
+<div class="ibm-common-overlay" id="displayname_overlay">
+<div class="ibm-head">
+<p><a class="ibm-common-overlay-close" href="http://www.ibm.com/developerworks/rational/library/769.html#" onclick="clearForm();">Close [x]</a></p>
+</div>
+<div class="ibm-body">
+<div class="ibm-main">
+<div class="ibm-title ibm-subtitle">
+<h1>Choose your display name</h1>
+<div id="ibm-overlay-error-dname" class="no-display"></div>
+</div>
+<div class="ibm-container ibm-alternate ibm-buttons-last">
+<div class="ibm-container-body">
+<p class="ibm-overlay-intro">The first time you sign in to developerWorks, a profile is created for you, so you need to choose a display name.  Your display name accompanies the content you post on developerWorks.</p>
+<p><strong>Please choose a display name between 3-31 characters</strong>. Your display name must be unique in the developerWorks community and should not be your email address for privacy reasons.</p>
+<form id="dFormId" method="post" action="" name="dForm" onsubmit="return false;" class="ibm-column-form">
+<p><label for="displayname">Display name:</label><span><input name="displayname" id="displayname" size="25" value="" type="text" onkeypress="handleEP(event,this.form);"></span><span class="ibm-form-note">(Must be between 3 – 31 characters.)</span>
+</p>
+<p>By clicking <strong>Submit</strong>, you agree to the <a href="https://www.ibm.com/developerworks/community/terms/">developerWorks terms of use</a>.</p>
+<div class="ibm-buttons-row">
+   <p><input class="ibm-btn-arrow-pri" name="ibm-submit" value="Submit" onclick="signin();return false;" type="submit"><span class="ibm-sep">&nbsp;</span>
+<input value="Cancel" type="button" name="ibm-cancel" class="ibm-btn-cancel-sec" onclick="clearForm();ibmCommon.Overlays.hide(&#39;displayname_overlay&#39;);return false;"></p>
+</div>
+</form>
+<div class="ibm-overlay-rule"><hr></div>
+<div class="dw-overlay-legal"><p>All information submitted is secure.</p></div>
+</div>
+</div>
+</div>
+</div>
+<div class="ibm-footer"></div>
+</div>
+<!-- Display name OVERLAY ENDS HERE -->
+<!-- OVERLAYS_END -->
+
+<!-- RATINGS START -->
+<p class="ibm-no-print"><span class="atitle"><a name="iratings">Rate this article</a></span></p>
+<input id="art-rating" name="ratinga" type="hidden" value="4"><div id="art-rating-module"><p id="submitErr" class="ibm-ind-error" style="display: none;"><strong>Error: Submission failed. Please try again.</strong></p><p><span id="ratingSectUI"><img alt="Average rating 4 stars based on 2450 votes" src="./ML basics- The component diagram_files/stars120x20-4gw.jpg" class="dw-avg-rating"> Average rating (2450 votes)</span></p><div class="ibm-container" id="ratingForm"><div class="ibm-container-body dw-container-ratings"><form class="dw-ratings-form" onsubmit="artRating.submitRating(); return false;"><input type="radio" name="ratingstars" id="rat-1" value="1"><label class="rating-label" id="star1" for="rat-1">1 star</label><img id="rat-1-img" alt="1 star" title="1 star" src="./ML basics- The component diagram_files/stars120x20-1w.jpg" class="rating-image"><span class="dw-rating-text">1 star</span><br><input type="radio" name="ratingstars" id="rat-2" value="2"><label class="rating-label" id="star2" for="rat-2">2 stars</label><img id="rat-2-img" alt="2 stars" title="2 stars" src="./ML basics- The component diagram_files/stars120x20-2w.jpg" class="rating-image2"><span class="dw-rating-text">2 stars</span><br><input type="radio" name="ratingstars" id="rat-3" value="3"><label class="rating-label" id="star3" for="rat-3">3 stars</label><img id="rat-3-img" alt="3 stars" title="3 stars" src="./ML basics- The component diagram_files/stars120x20-3w.jpg" class="rating-image2"><span class="dw-rating-text">3 stars</span><br><input type="radio" name="ratingstars" id="rat-4" value="4"><label class="rating-label" id="star4" for="rat-4">4 stars</label><img id="rat-4-img" alt="4 stars" title="4 stars" src="./ML basics- The component diagram_files/stars120x20-4w.jpg" class="rating-image2"><span class="dw-rating-text">4 stars</span><br><input type="radio" name="ratingstars" id="rat-5" value="5"><label class="rating-label" id="star5" for="rat-5">5 stars</label><img id="rat-5-img" alt="5 stars" title="5 stars" src="./ML basics- The component diagram_files/stars120x20-5w.jpg" class="rating-image2"><span class="dw-rating-text">5 stars</span><div class="ibm-buttons-row"><p class="ibm-first"><input value="Submit" type="submit" name="ibm-submit" class="ibm-btn-arrow-pri dw-ratings-submit"></p></div></form></div></div></div>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+   // widget div id and article id as args
+   window.artRating.init('art-rating-module','art-rating-summary');
+// ]]>
+</script>
+<!-- RATINGS END -->
+
+<!-- INLINE_COMMENTS_START -->
+<p class="ibm-no-print"><span class="atitle"><a name="icomments">Comments</a></span></p>
+<div id="threadShow"><div id="cmtTog" style=""><div class="ibm-container ibm-alternate-two dw-commentbox dw-noborder"><p id="cmtHead"><label for="newCmt"><strong>Add comment:</strong></label></p><div class="ibm-container-body dw-commentbox dw-noborder"><p id="signInSect" style=""> <a onclick="showSignIn();return false;" href="http://www.ibm.com/developerworks/rational/library/769.html#">Sign in</a> or <a href="http://www.ibm.com/developerworks/dwwi/DWAuthRouter?m=register&lang=en&d=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2F769.html%23icomments">register</a>  to leave a comment.</p><p>Note: HTML elements are not supported within comments.</p><span id="infoCmt"></span><form focus="name" enctype="multipart/form-data" method="post" action="" name="form" class="ibm-column-form"><p><textarea cols="120" rows="5" name="newCmt" id="newCmt" class="dw-inoperable" disabled=""></textarea><br></p><span class="ibm-input-group"><input type="checkbox" value="1" name="comment_notification" id="comment_notification" disabled=""><label id="notifyText" class="ibm-form-note dw-btn-cancel-sec" for="comment_notification">Notify me when a comment is added</label></span><span class="ibm-form-note dw-btn-cancel-sec notifySection" id="maxCharsCount"><span id="charCount">1000</span> characters left</span><br><br><p></p><p class="ibm-buttons-row"><input type="button" value="Post" jquery1275054459750="11" name="postCmt" id="postCmt" class="ibm-btn-arrow-sec dw-btn-arrow-sec" alt="Post your comment" disabled=""><br><br></p></form></div></div><div id="topControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display: none;"><div class="ibm-container-body"><form id="selectComments" method="get" action=""><p><span class="dw-comment-totals-label"><strong>Total comments (<span id="numCmts">0</span>)</strong></span><span><img src="./ML basics- The component diagram_files/c.gif" width="100" height="10" alt=""></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts"><label for="howManyComments">Show:</label>&nbsp;<select name="comments" id="howManyComments" class="dw-how-many-comments"><option selected="selected" value="recent">Most recent comments   </option></select><input type="image" class="ibm-btn-go" name="ibm-go" value="Go" src="./ML basics- The component diagram_files/short-btn.gif" alt="Go"><br></span></p></form></div></div><div id="cmtSect"><div class="comment"><div class="dw-icomment-container"><table class="dw-icomment-body" cellpadding="0" cellspacing="0" width="100%"><tbody><tr><td><p>There is a problem in retrieving the comments.  Please refresh the page later.</p></td></tr></tbody></table></div></div></div></div><div id="bottomControl" class="ibm-container ibm-alternate-two dw-comment-totals" style="display: none;"><div class="ibm-container-body"><form id="selectComments2" method="get" action=""><p><span class="dw-comment-totals-label"><strong>Total comments (<span id="numCmts2">0</span>)</strong></span><span><img src="./ML basics- The component diagram_files/c.gif" width="100" height="10" alt=""></span><span class="dw-how-many-comments-label" style="display:none" id="dropdownCmts2"><label for="howManyComments2">Show:</label>&nbsp;<select name="comments" id="howManyComments2" class="dw-how-many-comments"><option selected="selected" value="recent">Most recent comments   </option></select><input type="image" class="ibm-btn-go" name="ibm-go" value="Go" src="./ML basics- The component diagram_files/short-btn.gif" alt="Go"><br></span></p></form></div></div></div>
+<!-- INLINE_COMMENTS_END -->
+
+<p class="ibm-ind-link ibm-back-to-top"><a class="ibm-anchor-up-link" href="http://www.ibm.com/developerworks/rational/library/769.html#ibm-pcon">Back to top</a></p>
+
+<!-- Overlays -->
+
+</div>
+<!-- MAIN_COLUMN_CONTAINER_END -->
+
+<!-- Rating_Meta_BEGIN -->
+<!--Rating_Meta_BEGIN--><div class="metavalue">static.content.url=http://www.ibm.com/developerworks/js/artrating/</div><div class="metavalue">SITE_ID=1</div><div class="metavalue">Zone=Rational</div><div class="metavalue">ArticleID=769</div><div class="metavalue">ArticleTitle=UML basics: An introduction to the Unified Modeling Language</div><div class="metavalue">publish-date=06152003</div><script language="javascript" type="text/javascript">document.write('<div class="metavalue">url='+location.href.replace(/</g,  '%3C')+'</div>');</script><div class="metavalue">url=http://www.ibm.com/developerworks/rational/library/769.html</div><!--Rating_Meta_END-->
+<!-- Rating_Meta_END -->
+
+</div>
+<!-- MAIN_COLUMN_END-->
+
+<!-- RIGHT_COLUMN_BEGIN -->
+<div id="ibm-content-sidebar">
+
+<!-- RIGHT_COLUMN_CONTENT_BEGIN --> 
+<div class="ibm-container"><h2>Table of contents</h2><div class="ibm-container-body"><img alt="" height="1" width="1" src="./ML basics- The component diagram_files/c(1).gif"><ul class="ibm-bullet-list"><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#N1007D">A little background</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#N100C6">Use-case diagram</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#N100EA">Class diagram</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#N10130">Sequence diagram</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#N1015C">Statechart diagram</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#N10185">Activity diagram</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#N101A2">Component diagram</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#N101BD">Deployment diagram</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#N101E0">Conclusion</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#resources">Resources</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#author">About the author</a></li><li><a class="ibm-feature-link" href="http://www.ibm.com/developerworks/rational/library/769.html#icomments">Comments</a></li></ul></div></div>
+<!--XSLT stylesheet used to transform this content: s-nextsteps.xsl--><div class="ibm-container"><h2>Next steps from IBM</h2><div class="ibm-container-body"><img width="188" height="58" border="0" alt="" src="./ML basics- The component diagram_files/spot-nextsteps.jpg"><p>Rational Modeler is a free, UML 2.1 based environment that helps
+      users to improve communication by specifying, visualizing and documenting their system, architecture and software designs using a standard graphical language. </p><div class="ibm-rule"><hr></div><ul class="ibm-bullet-list"><li><a href="http://www.ibm.com/developerworks/downloads/r/modeler/index.html" class="ibm-feature-link">Try: Download a Rational Modeler, a free, UML 2.1 based environment for specifying systems, software, and architecture.</a></li><li><a href="http://www.ibm.com/developerworks/downloads/r/modeler/buy.html" class="ibm-feature-link">Buy: Rational Modeler Rhapsody Corporate Edition</a></li></ul></div></div>
+
+<!-- Dig_Deeper -->
+<div class="ibm-container"><h2>Dig deeper into Rational on developerWorks</h2><div class="ibm-container-body"><ul class="ibm-link-list"><li class="ibm-first"><a href="http://www.ibm.com/developerworks/rational/" class="ibm-forward-link">Overview</a></li><li><a href="http://www.ibm.com/developerworks/rational/newto/" class="ibm-forward-link">New to Rational</a></li><li><a href="http://www.ibm.com/developerworks/rational/products/" class="ibm-forward-link">Products</a></li><li><a href="http://www.ibm.com/developerworks/rational/downloads/" class="ibm-forward-link">Downloads</a></li><li><a href="http://www.ibm.com/developerworks/rational/library/" class="ibm-forward-link">Technical library (articles, tutorials, and more)</a></li><li><a href="http://www.ibm.com/developerworks/rational/community/" class="ibm-forward-link">Community and forums</a></li><li><a href="http://www.ibm.com/developerworks/rational/find/events/" class="ibm-forward-link">Events</a></li></ul></div></div>
+<!-- High_Visibility_Offer -->
+<!--XSLT stylesheet used to transform this content: s-highvisibilityoffer.xsl--><div class="ibm-container"><h2>IBM SmartCloud trial. No charge.</h2><div class="ibm-container-body"><img width="188" height="70" border="0" alt="IBM PureSystems on a kaleideoscope background" src="./ML basics- The component diagram_files/hivis-cloud.jpg"><p>Unleash the power of hybrid cloud computing today!</p><div class="ibm-rule"><hr></div><p class="ibm-ind-link"><a href="http://www.ibm.com/developerworks/cloud/try/?ca=dti-hivis-troy" class="ibm-forward-link">Public and private solutions in one trial.</a></p></div></div>
+<!-- Special_Offers -->
+<div class="ibm-container"><h2>Special offers</h2><div class="ibm-container-body"><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/demos/"><img src="./ML basics- The component diagram_files/tile_v16_ondemanddemos.gif" width="158" height="50" border="0" alt="On demand demos: An easy way to watch and learn"></a></p><p class="dw-special-offers"><a href="http://www.ibm.com/developerworks/aboutdw/dwa/?ca=dti-dwarp"><img src="./ML basics- The component diagram_files/tile_v16_dwaarp.gif" width="158" height="50" border="0" alt="Get recognized! W Author Program"></a></p><p class="dw-special-offers"><a href="https://www.ibm.com/developerworks/cloud/index.html?ca=dti-cloudzone"><img src="./ML basics- The component diagram_files/tile_v16_cloudzoneA.gif" width="158" height="50" border="0" alt="Cloud Computing resources for IT professionals"></a></p><div class="ibm-rule"><hr></div><p class="ibm-ind-link"><a class="ibm-forward-link" href="http://www.ibm.com/developerworks/downloads/?ca=dti-tilemoreoffers">Trial software offers</a></p></div></div>
+<!-- RIGHT_COLUMN_CONTENT_END -->
+
+</div>
+<!-- RIGHT_COLUMN_END -->
+
+<!-- CONTENT_BODY_END -->
+</div>
+
+</div>
+<!-- CONTENT_END -->
+
+ <!-- END_IBM-PCON -->
+</div>
+
+<!-- FOOTER_BEGIN -->
+<div id="ibm-footer">
+<!-- IBM footer container; disabled -->
+</div>
+
+<div id="ibm-page-tools-dw">
+	<div id="dw-footer-top-row">
+		<ul id="dw-foot-options">
+			<li id="dw-print"><a class="ibm-print-link" href="http://www.ibm.com/developerworks/rational/library/769.html#">Print this page</a></li>
+		</ul>
+		<ul id="ibm-foot-options-dw">
+			<li id="dw-foot-0"><a href="http://www.ibm.com/developerworks/rational/library/769.html#">Share this page</a></li>
+			<li id="dw-foot-1"><a href="http://www.ibm.com/developerworks/rational/library/769.html#">Follow developerWorks</a></li>
+		</ul>
+	</div>
+
+	<!-- TOP ROW SLIDER -->
+    <div id="dw-page-tools-menu">    
+        <div class="ibm-ribbon-pane-dw">
+            <div class="ibm-ribbon-section-dw">
+				<!-- Share this page -->			
+                <div class="dw-footer-columns">
+                    <div class="dw-footer-col-3-1">
+                        <h2>Share this page:</h2>                       
+						<ul class="ibm-link-list">
+							<li><a id="dw-foot-0-0" class="ibm-facebook-link" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2F769.html&t=UML%20basics%3A%20An%20introduction%20to%20the%20Unified%20Modeling%20Language">Facebook</a></li>
+							<li><a class="ibm-linkedin-link" href="http://www.linkedin.com/shareArticle?mini=true&url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2F769.html&title=UML%20basics%3A%20An%20introduction%20to%20the%20Unified%20Modeling%20Language">LinkedIn</a></li>
+							<li><a class="ibm-twitter-link" href="http://twitter.com/home?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2F769.html%20-%20UML%20basics%3A%20An%20introduction%20to%20the%20Unified%20Modeling%20Language">Twitter</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-col-3-2">
+						<ul class="ibm-link-list">
+							<li><a class="ibm-delicious-link" href="http://delicious.com/post?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2F769.html&title=UML%20basics%3A%20An%20introduction%20to%20the%20Unified%20Modeling%20Language">Delicious</a></li>
+							<li><a class="ibm-digg-link" href="http://digg.com/submit?phase=2&url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2F769.html&title=UML%20basics%3A%20An%20introduction%20to%20the%20Unified%20Modeling%20Language">Digg</a></li>
+							<li><a class="ibm-stumbleupon" href="http://www.stumbleupon.com/submit?url=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2F769.html&title=UML%20basics%3A%20An%20introduction%20to%20the%20Unified%20Modeling%20Language">StumbleUpon</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-col-3-3">
+						<ul class="ibm-link-list">
+							<li><a class="ibm-email-link" href="http://www.ibm.com/developerworks/rational/library/769.html#">Email this page</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-close">
+						<ul>
+							<li><div class="dw-footer-close-share"><a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+                <!-- Follow developerWorks -->
+                <div class="dw-footer-columns">
+                    <div class="dw-footer-col-1-1">
+                        <h2>Follow developerWorks:</h2>
+						<ul class="ibm-link-list">
+							<li><a id="dw-foot-1-0" class="ibm-facebook-link" href="http://www.facebook.com/sharer.php?u=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2F769.html&t=UML%20basics%3A%20An%20introduction%20to%20the%20Unified%20Modeling%20Language">Facebook</a></li>
+							<li><a class="ibm-twitter-link" href="http://twitter.com/home?status=http%3A%2F%2Fwww.ibm.com%2Fdeveloperworks%2Frational%2Flibrary%2F769.html%20-%20UML%20basics%3A%20An%20introduction%20to%20the%20Unified%20Modeling%20Language">Twitter</a></li>
+						</ul>
+                    </div>
+                    <div class="dw-footer-close">
+						<ul>
+							<li><div class="dw-footer-close-follow"><a href="http://www.ibm.com/developerworks/rational/library/769.html#"><img src="./ML basics- The component diagram_files/c.gif" alt="Close [x]" width="20" height="10" border="0"></a></div></li>
+						</ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div id="ibm-footer-module-dw">
+	<div class="dw-footer-columns">
+		<div class="dw-footer-col-6-1">
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/aboutdw/">About</a></li>
+				<li><a href="https://www.ibm.com/developerworks/feedback">Help</a></li>
+				<li><a href="http://www.ibm.com/developerworks/aboutdw/contacts.html">Contact us</a></li>
+				<li><a href="https://www.ibm.com/developerworks/ideas">Submit content</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-2">
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/feeds/">Feeds</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-3">
+			<ul>
+				<li><a href="https://www.ibm.com/developerworks/community/report/">Report abuse</a></li>
+				<li><a href="https://www.ibm.com/developerworks/community/terms/">Terms of use</a></li>
+				<li><a href="http://www.ibm.com/privacy/">IBM privacy</a></li>
+				<li><a href="http://www.ibm.com/accessibility/">IBM accessibility</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-4">
+			<ul>
+				<li><a href="http://www.ibm.com/developerworks/university/academicinitiative/">Faculty</a></li>
+				<li><a href="http://www.ibm.com/developerworks/university/students/">Students</a></li>
+				<li><a href="http://www.ibm.com/isv/">Business Partners</a></li>
+			</ul>
+		</div>
+		<div class="dw-footer-col-6-5">
+		</div>
+		<div class="dw-footer-col-6-6">
+		</div>
+	</div>
+	<!-- Language selector no-script -->
+	<noscript>
+	&lt;div id="dw-footer-selectlang"&gt;
+		&lt;h2&gt;&lt;a name="SELECTLANG"&gt;Select a language:&lt;/a&gt;&lt;/h2&gt;
+		&lt;ul&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/"&gt;English&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/cn/"&gt;中文&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/jp/"&gt;日本語&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/ru/"&gt;Русский&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/br/"&gt;Português (Brasil)&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/ssa/"&gt;Español&lt;/a&gt;&lt;/li&gt;
+			&lt;li&gt;&lt;a href="http://www.ibm.com/developerworks/vn/"&gt;Việt&lt;/a&gt;&lt;/li&gt;
+		&lt;/ul&gt;
+	&lt;/div&gt;
+	</noscript>
+</div><!-- FOOTER_END -->
+
+ <!-- END_IBM-TOP -->
+<div id="ibm-overlay-top"></div></div>
+ 
+ <!-- SCRIPTS_INCLUDE_BEGIN -->
+<!-- JQuery start -->
+<script type="text/javascript" language="JavaScript" src="./ML basics- The component diagram_files/jquery.hoverIntent.minified.js"></script>
+<script type="text/javascript" language="JavaScript" src="./ML basics- The component diagram_files/jquery.cluetip.js"></script>
+<!-- xM Masthead/Footer -->
+<script type="text/javascript" language="JavaScript" src="./ML basics- The component diagram_files/jquery.tools.min.js">//</script>
+<script type="text/javascript" language="JavaScript" src="./ML basics- The component diagram_files/jquery.jscroll.js">//</script>
+<script type="text/javascript" language="JavaScript" src="./ML basics- The component diagram_files/dw_v16.js">//</script>
+<script type="text/javascript" language="JavaScript" src="./ML basics- The component diagram_files/flash-detect.js">//</script>
+<script type="text/javascript" language="JavaScript" src="./ML basics- The component diagram_files/dwsi.js">//</script>
+<script type="text/javascript" language="JavaScript" src="./ML basics- The component diagram_files/showcomments.js">//</script>
+<script language="JavaScript" type="text/javascript">
+// <![CDATA[
+ jQuery('threadShow').showComments('95%',5,'nCmts','icomments');
+// ]]>
+</script>
+
+<script type="text/javascript" language="JavaScript">
+	jQuery.noConflict();     
+	// Put all your code in your document ready area
+	jQuery(document).ready(function(jQuery) {
+	// Do jQuery stuff using jQuery 
+	jQuery('a.dwauthor').cluetip({
+		local: true,
+		showTitle: false,
+		positionBy: 'bottomTop',
+		sticky: true,	
+		mouseOutClose: true,
+		closeText: '<img src="//dw1.s81c.com/developerworks/js/jquery/cluetip98/i/x.gif" alt="Close" />',
+		arrows: false,
+		dropShadow: true,
+		cluetipClass: 'dwbasic'
+		});
+
+		rBHash = {};
+		rBHash['viperLang'] = 'en';
+		rBHash['urlLang'] = 'en';
+
+		// si
+		initSI();
+	});
+ </script>
+ <!-- JQuery end -->
+ <!-- Overlay js -->
+<script language="JavaScript" src="./ML basics- The component diagram_files/overlay.js" type="text/javascript"></script><!-- BEGIN: Use this section to set page specific variables for the Unica Page Tag -->
+<script language="JavaScript">var NTPT_PGEXTRA="ibmSkillLevel=1&ibmAdoptPhase=648&ibmRole=636&ibmCmaId=769&ibmContentAreas=rational";</script>
+<!--END --><!-- SCRIPTS_INCLUDE_END -->
+
+<div id="ibm-metrics">
+<script src="./ML basics- The component diagram_files/stats.js" type="text/javascript">//</script>
+</div>
+
+
+<div id="cluetip-waitimage" style="position: absolute; z-index: 95; display: none;"></div><div id="cluetip" style="z-index: 96; display: none; position: absolute;"><div style="z-index: 95; opacity: 0.1; top: 1px; left: 1px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 94; opacity: 0.1; top: 2px; left: 2px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 93; opacity: 0.1; top: 3px; left: 3px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 92; opacity: 0.1; top: 4px; left: 4px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 91; opacity: 0.1; top: 5px; left: 5px; position: absolute; background-color: rgb(0, 0, 0);"></div><div style="z-index: 90; opacity: 0.1; top: 6px; left: 6px; position: absolute; background-color: rgb(0, 0, 0);"></div><div id="cluetip-outer" style="position: relative; z-index: 97;"><div id="cluetip-title"></div><div id="cluetip-inner"></div></div><div id="cluetip-extra"></div><div id="cluetip-arrows" class="cluetip-arrows" style="z-index: 97;"></div></div></body></html>
