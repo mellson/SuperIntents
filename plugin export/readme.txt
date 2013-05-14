@@ -5,11 +5,14 @@ Installation steps
 Eclipse Modelling Tools, install a vanilla modelling  http://www.eclipse.org/downloads/packages/eclipse-modeling-tools/junosr2
 
 2.
+Install "Android Development Tools for Eclipse" and "Android ADT extentions" from Eclipse Marketplace.
+
+3.
 Put the SuperIntents_0.44.0.jar file in your dropins folder.
 The dropins folder is located inside your Eclipse installation folder.
 
-3.
+4.
 Launch Eclipse and find the plugin view in the category SMDP.
 
-4.
+5.
 Happy Android Intent Coding.
